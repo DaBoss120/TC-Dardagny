@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -25,16 +25,16 @@
             <input type="text" placeholder="Search">
         </div>
         <div class="bottom_header">
-            <a href="#"><img src="IMG/TCD_Logo.png" alt="TCD_Logo" srcset=""></a>
+            <a href="index.html"><img src="IMG/TCD_Logo.png" alt="TCD_Logo" srcset=""></a>
             <nav>
                 <ul>
                     <li>
-                        <a href="#">HOME</a>
+                        <a href="index.html">HOME</a>
                     </li>
                     <li class="LeClub">
                         <a href="#">LE CLUB <i class="fa fa-caret-down"></i></a>
                         <div class="subnav-content">
-                            <a href="#">COMITE</a>
+                            <a href="comite.html">COMITE</a>
                             <a href="#">COURS DE TENNIS</a>
                             <a href="#">ADHESION</a>
                             <a href="#">PAIEMENT</a>
@@ -66,9 +66,9 @@
 
                 <img src="IMG/CarouselIMG2.png" alt="CarouselIMG2" style="width:100%">
                 <div class="slideText">
-                    <h2 >Cours Juniors</h2>
-                    <h2 >Hiver 2023-2024</h2>
-                    <h3 >Inscriptions ouvertes</h3>
+                    <h2>Cours Juniors</h2>
+                    <h2>Hiver 2023-2024</h2>
+                    <h3>Inscriptions ouvertes</h3>
                 </div>
             </div>
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -112,7 +112,7 @@
                     <p>venez partager un moment de convivialité autour du terrain et
                         fêter le début de la saison
                     </p>
-                    <p>En cas de pluie, l’événement sera reporté au jeudi 25 avril de 17h à 20h
+                    <p>En cas de pluie, l'événement sera reporté au jeudi 25 avril de 17h à 20h
                     </p>
                 </div>
                 <img src="IMG/TennisApero18Avril.png" alt="Affiche tennis apreo 18 Avril">
@@ -123,6 +123,34 @@
 
 
     <script src="JS/script.js"></script>
+    <script>
+        let slideIndex = 1;
+        showSlides(slideIndex)
+        function plusSlides(nb) {
+            showSlides(slideIndex += nb);
+        }
+
+        function currentSlide(nb) {
+            showSlides(slideIndex = nb);
+        }
+
+        function showSlides(nb) {
+
+            let i;
+            let slides = document.getElementsByClassName("carouselSlides");
+            let dots = document.getElementsByClassName("dot");
+            if (nb > slides.length) { slideIndex = 1 };
+            if (nb < 1) { slideIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+        }
+    </script>
 </body>
 
 </html>
