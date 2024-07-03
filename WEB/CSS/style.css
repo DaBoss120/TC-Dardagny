@@ -724,10 +724,10 @@ div.unBlur {
     animation-duration: .6s infinite; */
 }
 .textBlurButton{
-    animation: textBlurBtn .6s;
+    animation: textBlurBtn .6s cubic-bezier(.12, 0, .18, 1);
 }
 .textBlurButtonUnhover{
-    animation: textBlurBtnUhover .6s;
+    animation: textBlurBtnUhover .6s cubic-bezier(.12, 0, .18, 1);
 }
 @keyframes textBlurBtn {
     from{
