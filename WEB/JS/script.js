@@ -17,39 +17,41 @@ document.querySelector('.LeClub').addEventListener('mouseout', event => {
 });
 
 document.querySelectorAll('.personnes-comite').forEach(element => {
-    element.addEventListener('mouseover', event =>{
+    element.addEventListener('mouseover', event => {
         let par = event.target.querySelector('p');
-    
+
         // let par = document.querySelector('.personnes-comite p');
         event.target.querySelector('p').classList.add('showPar');
         setTimeout(() => {
             event.target.querySelector('p').classList.add('unBlur');
-            
-        },1);
-    
+
+        }, 1);
+
         // par.style.display = "block";
         // par.style.filter = "blur(0px)";
         // par.style.transition = "0.3s";
     })
-}); 
+});
 document.querySelectorAll('.personnes-comite').forEach(element => {
-    element.addEventListener('mouseout', event =>{
-    
+    element.addEventListener('mouseout', event => {
+
         let par = event.target.querySelector('p');
         // par.style.display = 'none';
-        if(!element.matches(':hover')){
-            setTimeout(()=>{
-                event.target.querySelector('p').classList.remove('showPar');
-    
+        if (!element.matches(':hover')) {
+            setTimeout(() => {
+                if (!element.matches(':hover')) {
+
+                    event.target.querySelector('p').classList.remove('showPar');
+                }
             }, 250)
             event.target.querySelector('p').classList.remove('unBlur');
-    
+
         }
         // setTimeout(()=>{
         //     document.querySelector('.personnes-comite p').style.display = "none";
         // }, 200);
     })
-}); 
+});
 // function plusSlides(nb) {
 //     showSlides(slideIndex += nb);
 // }
