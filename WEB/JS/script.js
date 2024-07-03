@@ -101,14 +101,14 @@ document.querySelectorAll('.personnes-professeurs').forEach(element => {
     })
 });
 
-document.querySelectorAll('.cours-bouttons button').forEach(element => {
+document.querySelectorAll('.button1 button').forEach(element => {
     element.addEventListener('mouseover', event => {
         event.target.querySelector('p').classList.add('textBlurButton');
         event.target.querySelector('p').classList.remove('textBlurButtonUnhover');
     }
     )
 });
-document.querySelectorAll('.cours-bouttons button').forEach(element => {
+document.querySelectorAll('.button1 button').forEach(element => {
     element.addEventListener('mouseout', event => {
         if (!element.matches(':hover') /* && element.classList.contains('textBlurButton')*/) {
             event.target.querySelector('p').classList.remove('textBlurButton');

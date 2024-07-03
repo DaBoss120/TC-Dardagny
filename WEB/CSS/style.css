@@ -691,7 +691,13 @@ div.unBlur {
     text-align: center;
     padding-top: 36px;
 }
-
+.button1 button{
+ background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
 .cours-bouttons {
     display: flex;
     flex-direction: column;
@@ -709,11 +715,7 @@ div.unBlur {
     padding: 12px;
     margin: 12px;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+   
 }
 .cours-bouttons button:hover{
     transform: scale(1.15);
