@@ -14,11 +14,18 @@ html * {
     box-sizing: border-box;
     font-family: Open-sans;
 }
-
+html, body{
+    height: 100%;
+}
+main{
+    height: 100%;
+}
 *:focus {
     outline: none;
 }
-
+.big-back-img{
+    height: 100%;
+}
 .top_header {
     height: 57.14px;
     background-color: #1a3150;
@@ -119,6 +126,7 @@ html * {
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.25);
     margin-top: 5px;
+    padding: 0 5px;
     position: absolute;
     z-index: 0;
 }
@@ -489,7 +497,6 @@ li {
     align-items: center;
     /* height: 80vh; */
     background-image: url("../IMG/TennisServe.jpg");
-    height: 50vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -554,27 +561,36 @@ li {
     filter: blur(0px);
     opacity: 1;
 }
-
-.professeurs {
-    margin-bottom: 48px;
+.coursDeTennis{
+    height: auto;
+    display: flex;
+    flex-direction: column;
 }
-
+.professeurs {
+    height: 70%;
+}
+.inscriptions{
+margin-top: 16px;
+}
 .titre-professeurs {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
+
 .back-img-presentation{
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 70vh;
+    height: 100%;
     width: 100%;
     background-position: center;
     background-repeat: no-repeat;
 }
 .equipe-professeurs {
+    height: 80vh;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -669,7 +685,7 @@ div.unBlur {
 .cours-et-stages {
     background-image: url('../IMG/TennisFloorCourtWithLines.jpg');
     justify-content: space-between;
-
+    height: 70vh;
 }
 
 .titre {
@@ -808,10 +824,12 @@ letter-spacing: 1px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.25);
-    margin: 0 80px;
+    margin: 28px 80px;
 }
+
 .devenirMembreContent{
-justify-content: space-between;
+    height: 100%;
+    justify-content: space-between;
     margin-top: 30px;
     background-image: url("/WEB/IMG/YelowBallSpinningWithWater.jpg");
     /* justify-content: center; */
@@ -838,6 +856,7 @@ margin-bottom: 50px;
 }
 .paiement-text{
     margin-top: 28px;
+    margin-bottom: 10px;
 }
 .paiement-text p{
     margin-bottom: 20px;
@@ -846,12 +865,27 @@ margin-bottom: 50px;
     margin-bottom: 0px;
 }
 .paiement-text:nth-of-type(2){
-    margin-bottom: 28px;
+    margin: 10px 80px;
+    padding-bottom: 15px;
+}
+.paiement-content div:nth-of-type(3){
+    margin: 10px 80px;
+}
+.paiement-content div:nth-of-type(3) p{
+    color: white;
 }
 .paiement-text img{
-    object-fit: contain;
+    /* object-fit: contain; */
     width: 40vw;
-    height: 25vh;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    padding: 0px;
+    margin: 0px;
+    box-shadow: 0 0px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px)
+    /* height: 25vh; */
     /* max-width: 100%;
     max-height: 100%; */
     /* min-width: 500px; */
