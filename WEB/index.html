@@ -133,7 +133,11 @@
     <script src="JS/script.js"></script>
     <script>
         let slideIndex = 1;
+        let slideAuto = setInterval(() => {
+            plusSlides(1)
+        }, 5000)
         showSlides(slideIndex)
+        
         function plusSlides(nb) {
             showSlides(slideIndex += nb);
         }
@@ -149,20 +153,24 @@
             let dots = document.getElementsByClassName("dot");
             if (nb > slides.length) { slideIndex = 1 };
             if (nb < 1) { slideIndex = slides.length }
-            // Update slides
+            // Hide all slides
             for (i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";
             }
-            // Update dots
+            // Deactivate all dots
             for (i = 0; i < dots.length; i++) {
                 dots[i].className = dots[i].className.replace(" active", "");
             }
+            // Show correct slide and dot
             slides[slideIndex - 1].style.display = "block";
             dots[slideIndex - 1].className += " active";
+            // Clear interval so whan dot or arrow is clicked the five seconds reset to prevent slide skip to fast
+            clearInterval(slideAuto);
+            slideAuto = setInterval(() => {
+                plusSlides(1)
+            }, 5000)
         }
-        setInterval(() => {
-            plusSlides(1)
-        }, 5000)
+
     </script>
 </body>
 
