@@ -724,6 +724,15 @@ div.unBlur {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.25);
+
+    transition: all 0.3s;
+    width: 350px;
+    font-size: 24px;
+    font-weight: 600;
+
+    padding: 12px;
+    margin: 12px;
+    border-radius: 12px;
 }
 
 .button1 button:hover {
@@ -743,14 +752,7 @@ div.unBlur {
 }
 
 .button1 button {
-    transition: all 0.3s;
-    width: 350px;
-    font-size: 24px;
-    font-weight: 600;
 
-    padding: 12px;
-    margin: 12px;
-    border-radius: 12px;
 }
 
 .button1 button p {
@@ -967,6 +969,7 @@ div.adhesion-bouton {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    margin-top: 16px;
 }
 
 .img-with-gadient-content {
@@ -978,14 +981,35 @@ div.adhesion-bouton {
     /* width: 70%;
     height: 70%; */
 }
+.court-img{
+    filter: blur(0px);
+    -webkit-filter: blur(0px);
+}
 .court-img img{
     margin-top: 10px;
-    width: 70vw;
-    object-fit: contain;
+    width: 60vw;
+    /* max-height: 800px; */
+    max-width: 1200px;
     height: auto;
-    max-height: 1080px;
-    max-width: 1980px;
     border-radius: 20px;
-    border: 1px solid;
     box-shadow: 0px 0px 30px  rgba(0, 0, 0, 0.5)
+}
+.court-img p{
+    z-index: 2;
+}
+.court-img div {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 63%;
+    left: 48%;
+}
+.court-img div p{
+color: #1a3150;
+}
+.court-img div:first-of-type {
+    padding:10px 60px;
+    top: 25%;
+    left: 48%;
+    /* filter: blur(20px);
+    -webkit-filter: blur(20px); */
 }
