@@ -191,7 +191,9 @@ ul {
 li {
     list-style: none;
 }
-
+#copyableText:hover{
+cursor: pointer;
+}
 .carousel {
     max-width: 1800px;
     position: relative;
@@ -491,12 +493,6 @@ li {
     max-width: 650px;
 }
 
-.titre-comite {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .equipe-comite {
     display: flex;
     justify-content: space-around;
@@ -506,7 +502,7 @@ li {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    margin-top: 15px;
+
     /* margin-left: 15vw; */
 }
 
@@ -578,9 +574,6 @@ li {
     height: 70%;
 }
 
-.inscriptions {
-    margin-top: 16px;
-}
 
 .titre-professeurs {
     display: flex;
@@ -598,6 +591,7 @@ li {
     width: 100%;
     background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .equipe-professeurs {
@@ -610,7 +604,7 @@ li {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    margin-top: 15px;
+
     /* margin-left: 15vw; */
 }
 
@@ -704,6 +698,10 @@ div.unBlur {
     margin: 0 24px;
 }
 
+.titre h1 {
+    margin-bottom: 16px;
+}
+
 .titre h2 {
     margin-bottom: 15px;
 }
@@ -751,9 +749,7 @@ div.unBlur {
     justify-content: center;
 }
 
-.button1 button {
-
-}
+.button1 button {}
 
 .button1 button p {
     color: white;
@@ -860,10 +856,45 @@ letter-spacing: 1px;
     margin: 28px 80px;
 }
 
+.text-bubble-img-presentation2 {
+    font-weight: 600;
+    text-align: center;
+    padding: 20px;
+    font-size: 20px;
+    border-radius: 90px;
+    background: rgba(255, 255, 255, 0.10);
+    box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    margin: 28px ;
+}
+
+.bubble-hover {
+    transition: all 0.5s cubic-bezier(.12, 0, .18, 1);
+}
+
+.bubble-hover:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.4);
+
+}
+.round-img-in-bubble{
+    border-radius: 100%;
+    max-width: 300px;
+    margin: 20px;
+    background: rgba(255, 255, 255, 0.10);
+    box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.text-in-bubble{
+    
+}
 .devenirMembreContent {
     height: 100%;
     justify-content: space-between;
-    margin-top: 30px;
     background-image: url("/WEB/IMG/YelowBallSpinningWithWater.jpg");
     /* justify-content: center; */
 }
@@ -888,7 +919,6 @@ div.adhesion-bouton {
 
 .paiement-content {
     background-image: url("/WEB/IMG/BallOnRacketUpClose.jpg");
-    margin-top: 30px;
     justify-content: space-between;
     /* flex-wrap: wrap; */
 }
@@ -936,11 +966,6 @@ div.adhesion-bouton {
         /* min-width: 500px; */
 }
 
-.reglement-text {
-    margin-top: 28px;
-
-}
-
 .reglement-text p {
     color: white;
 }
@@ -948,7 +973,6 @@ div.adhesion-bouton {
 .reglement-et-statuts-contnent {
     background-image: url("/WEB/IMG/PLAY.jpg");
     justify-content: space-around;
-    margin-top: 30px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -958,9 +982,11 @@ div.adhesion-bouton {
 .reglement-bouton {
     height: 100%;
 }
-.reservation-content{
+
+.reservation-content {
     height: 100%;
 }
+
 .img-with-gadient {
     height: 110%;
     background-image: url("/WEB/IMG/court2.png");
@@ -973,43 +999,66 @@ div.adhesion-bouton {
 }
 
 .img-with-gadient-content {
-    position:absolute;
-    top: 70%;
+    position: absolute;
+    /* Top + bottom at 50% = better centered in y axis */
+    top: 50%;
+    bottom: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
     /* width: 70%;
     height: 70%; */
 }
-.court-img{
+
+.court-img {
     filter: blur(0px);
     -webkit-filter: blur(0px);
 }
-.court-img img{
-    margin-top: 10px;
+
+.court-img img {
     width: 60vw;
     /* max-height: 800px; */
-    max-width: 1200px;
+
+    max-width: 1000px;
     height: auto;
     border-radius: 20px;
-    box-shadow: 0px 0px 30px  rgba(0, 0, 0, 0.5)
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5)
 }
-.court-img p{
+
+.court-img p {
     z-index: 2;
 }
+
 .court-img div {
     transform: translate(-50%, -50%);
     position: absolute;
     top: 63%;
     left: 48%;
 }
-.court-img div p{
-color: #1a3150;
+
+.court-img div p {
+    color: #1a3150;
 }
+
 .court-img div:first-of-type {
-    padding:10px 60px;
+    padding: 10px 60px;
     top: 25%;
     left: 48%;
     /* filter: blur(20px);
     -webkit-filter: blur(20px); */
+}
+
+.contactContent {
+    background-image: url("/WEB/IMG/MailWithGradient.png");
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-text p {
+    color: white;
+}
+.contactContent div:nth-of-type(2){
+position: absolute;
+top: 30%;
 }

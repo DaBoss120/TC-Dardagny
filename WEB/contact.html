@@ -52,33 +52,45 @@
         </div>
     </header>
     <main>
-        <div class="devenirMembre big-back-img">
+        <div class="big-back-img">
             <div class="titre">
-                <h1>Devenir membre</h1>
+                <h1>Contact</h1>
             </div>
-            <div class="devenirMembreContent back-img-presentation">
-                <div class="text-bubble-img-presentation devenirMembre-text">
-                    <p>Pour s'inscrire au club, veuillez svp télécharger le formulaire d'inscription,
-                        le remplir et l'envoyer par e-mail à info@tcdardagny.ch ou par courrier à :</p>
-                    <p><br><b>
-                            Silvine Beucler<br>
-                            Chemin du Rebiolon 9<br>
-                            1283 Dardagny
-                        </b>
-                    </p>
+            <div class="contactContent back-img-presentation">
+                <div class="text-bubble-img-presentation contact-text">
+                    <p>Si vous désirez une information, si vous avez une question concernant les tournois,<br> le tennis
+                        loisir, ou bien les cours, n'hésitez pas à nous contacter. </p>
                 </div>
-                <div class="adhesion-bouton button1">
-                    <button>
-                        <p>Formulaire d'adhesion</p>
-                    </button>
-                </div>
-                <div class="text-bubble-img-presentation">
-                    <p>Merci de votre inscription</p>
+                <div class="text-bubble-img-presentation bubble-hover">
+                    <h1>Contactez-nous</h1>
+
+                    <a href="mailto:%20info@tcdardagny.ch"><img class="bubble-hover round-img-in-bubble"
+                            src="IMG/Email.png" alt="Email image" style="border-radius: 100%;"></a>
+                    <div class="text-bubble-img-presentation2 bubble-hover text-in-bubble" id="copyableText" onclick="CopyEmail()">
+                        <p>info@tcdardagny.ch</p>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
     <script src="JS/script.js"></script>
+    <script>
+        function CopyEmail(){
+            navigator.clipboard.writeText("info@tcdardagny.ch");
+
+            let text = document.querySelector("#copyableText p");
+            text.innerHTML = "Copié !"
+            
+            text.classList.add('textBlurButton');
+            text.classList.remove('textBlurButtonUnhover');
+
+            setTimeout(() =>{
+                text.innerHTML = "info@tcdardagny.ch"
+                text.classList.remove('textBlurButton');
+                text.classList.add('textBlurButtonUnhover');
+            }, 3000)
+        }
+    </script>
 </body>
 
 </html>
