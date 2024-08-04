@@ -455,6 +455,7 @@ cursor: pointer;
     justify-content: center;
     flex-wrap: wrap;
     color: #1a3150;
+    margin-bottom: 100px;
 
 }
 
@@ -492,7 +493,29 @@ cursor: pointer;
     min-width: 444px;
     max-width: 650px;
 }
+.agenda{
+    margin: auto;
+    background-color: rgb(129, 198, 129);
+    background-image: linear-gradient(green blue);
+}
+.agendaElement{
+display: flex;
+flex-direction: row;
+justify-content: center;
 
+}
+.agendaElement>*{
+    margin: 40px 2vw;
+}
+.agendaElement img{
+    width: 30vw;
+    min-width: 410px;
+    max-width: 600px;
+}
+.agendaElement div{
+    width: 30vw;
+    min-width: 410px;
+    max-width: 600px;}
 .equipe-comite {
     display: flex;
     justify-content: space-around;
