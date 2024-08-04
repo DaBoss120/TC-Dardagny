@@ -900,6 +900,8 @@ letter-spacing: 1px;
 .bubble-hover:hover {
     transform: scale(1.1);
     box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
 
 }
 .round-img-in-bubble{
