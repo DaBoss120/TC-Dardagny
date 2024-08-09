@@ -102,6 +102,7 @@ li {
 .button1 button p {
     color: white;
 }
+
 .button2 {
     display: flex;
     flex-direction: column;
@@ -109,6 +110,7 @@ li {
     align-self: center;
     justify-content: center;
 }
+
 .button2 button {
     background: rgba(255, 255, 255, 0.10);
     box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
@@ -131,6 +133,7 @@ li {
 .button2 button p {
     color: white;
 }
+
 .button2 button:hover {
     transform: scale(1.15);
     cursor: pointer;
@@ -293,6 +296,11 @@ li {
     animation-name: fade;
     animation-duration: .6s;
 }
+@media screen and (min-width: 1800px) {
+    .carouselSlides img{
+        border-radius: 20px;
+    }    
+}
 
 @keyframes fade {
     from {
@@ -345,14 +353,6 @@ li {
 
 }
 
-/* .carouselSlides:first-of-type{
-    width: 100%;
-    height: 500px;
-    background-color: #16283f;
-    background-image:url("../IMG/CarouselIMG1.png") ;
-    background-repeat: no-repeat;
-    background-
-} */
 .slideText {
     font-weight: bolder;
 }
@@ -380,20 +380,6 @@ li {
     color: #ffcc00;
 }
 
-/* .carouselSlides:first-of-type .captionTitle {
-    text-align: center;
-    font-size: 3rem;
-    font-weight: bolder;
-    top: 0vh;
-    color: #ffcc00;
-}
-
-.carouselSlides:first-of-type .captionText {
-    font-size: 1.3rem;
-    text-align: center;
-    color: #ffcc00;
-    top: 6vh;
-} */
 .carouselSlides:nth-of-type(2) .slideText h2:first-of-type {
     font-weight: bolder;
     font-family: Rammetto-One;
@@ -443,26 +429,6 @@ li {
     color: white;
 }
 
-/*
-.carouselSlides:nth-of-type(2) .captionTitle {
-
-    font-size: 2.5vw;
-    font-weight: bolder;
-    top: 30%;
-    left: 5vw;
-}
-
-.carouselSlides:nth-of-type(2) .captionTitle:nth-of-type(2) {
-    top: 40%;
-    left: 5vw;
-    margin-bottom: 3vh;
-}
-
-.carouselSlides:nth-of-type(2) .captionText {
-    font-size: 1.5vw;
-    top: 50%;
-    left: 5vw;
-} */
 
 @media screen and (min-width: 1500px) {
     .carouselSlides:nth-of-type(2) .captionTitle {
@@ -698,15 +664,18 @@ li {
     border-radius: 60px;
 
 }
-.agendaElement p{
+
+.agendaElement p {
     font-size: larger;
     font-weight: 600;
-} 
-.agendaElement h1{
-    font-size: 28px    ;
 }
+
+.agendaElement h1 {
+    font-size: 28px;
+}
+
 .agendaElement .button2 button {
-    margin:0px 0px 8px 0px;
+    margin: 0px 0px 8px 0px;
 }
 
 .agendaElement .button2 p {
@@ -1136,6 +1105,10 @@ div.adhesion-bouton {
     margin-bottom: 28px;
 }
 
+.devenirMembreContent div:nth-of-type(3) p {
+    color: white;
+}
+
 .paiement-content {
     background-image: url("/WEB/IMG/BallOnRacketUpClose.jpg");
     justify-content: space-between;
@@ -1165,7 +1138,7 @@ div.adhesion-bouton {
 }
 
 .paiement-content div:nth-of-type(3) p {
-    color: whie;
+    color: white;
 }
 
 .paiement-text img {
