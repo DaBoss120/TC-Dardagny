@@ -321,7 +321,7 @@ li {
     position: absolute;
     top: 50%;
     width: auto;
-    margin-top: -22px;
+    /* margin-top: -22px; */
     padding: 16px;
     color: white;
     font-weight: bold;
@@ -329,6 +329,8 @@ li {
     transition: 0.6s ease;
     border-radius: 0 3px 3px 0;
     user-select: none;
+    transform: translate(0%, -50%);
+
 }
 
 .next {
