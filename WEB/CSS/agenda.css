@@ -1,0 +1,175 @@
+.agenda {
+    /* margin: auto; */
+    min-height: 100%;
+    min-width: fit-content;
+    padding: 0px 32px;
+    /* background-color: rgb(129, 198, 129); */
+    /* background-image: linear-gradient( , blue); */
+    /* background: linear-gradient(270deg, #385c8a, #d55c00);
+    background-size: 400% 400%;
+
+    -webkit-animation: AnimationName 31s ease infinite;
+    -moz-animation: AnimationName 31s ease infinite;
+    -o-animation: AnimationName 31s ease infinite;
+    animation: AnimationName 31s ease infinite; */
+    background: linear-gradient(270deg, #385c8a, #d55c00, #edc359);
+    background-size: 600% 600%;
+
+    -webkit-animation: AnimationName 29s ease infinite;
+    -moz-animation: AnimationName 29s ease infinite;
+    -o-animation: AnimationName 29s ease infinite;
+    animation: AnimationName 29s ease infinite;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+/* @-webkit-keyframes AnimationName {
+    0%{background-position:14% 0%}
+    50%{background-position:87% 100%}
+    100%{background-position:14% 0%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:14% 0%}
+    50%{background-position:87% 100%}
+    100%{background-position:14% 0%}
+}
+@-o-keyframes AnimationName {
+    0%{background-position:14% 0%}
+    50%{background-position:87% 100%}
+    100%{background-position:14% 0%}
+}
+@keyframes AnimationName {
+    0%{background-position:14% 0%}
+    50%{background-position:87% 100%}
+    100%{background-position:14% 0%}
+} */
+@-webkit-keyframes AnimationName {
+    0% {
+        background-position: 7% 0%
+    }
+
+    50% {
+        background-position: 94% 100%
+    }
+
+    100% {
+        background-position: 7% 0%
+    }
+}
+
+@-moz-keyframes AnimationName {
+    0% {
+        background-position: 7% 0%
+    }
+
+    50% {
+        background-position: 94% 100%
+    }
+
+    100% {
+        background-position: 7% 0%
+    }
+}
+
+@-o-keyframes AnimationName {
+    0% {
+        background-position: 7% 0%
+    }
+
+    50% {
+        background-position: 94% 100%
+    }
+
+    100% {
+        background-position: 7% 0%
+    }
+}
+
+@keyframes AnimationName {
+    0% {
+        background-position: 7% 0%
+    }
+
+    50% {
+        background-position: 94% 100%
+    }
+
+    100% {
+        background-position: 7% 0%
+    }
+}
+
+
+
+
+.agendaElement {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: fit-content;
+    height: fit-content;
+    margin: 32px 016px 0px 16px;
+    /* padding: 36px; */
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    /* background-image: linear-gradient(green, blue); */
+    border-radius: 60px;
+
+}
+
+.agendaElement p {
+    font-size: larger;
+    font-weight: 600;
+}
+
+.agendaElement h1 {
+    font-size: 28px;
+}
+
+.agendaElement .button2 button {
+    margin: 0px 0px 8px 0px;
+}
+
+.agendaElement .button2 p {
+    font-size: 24px;
+    color: var(--color1);
+}
+
+.agendaElement:first-of-type {
+    margin-top: 32px;
+}
+
+.agendaElement>* {
+    margin: 40px;
+}
+
+.agendaElement img {
+    width: 20vw;
+    height: auto;
+    min-width: 320px;
+    max-width: 450px;
+    border-radius: 20px;
+}
+
+.agendaElement div {
+    width: 20vw;
+
+    min-width: 320px;
+    max-width: 450px;
+}
+
+.agendaElement .button2 {
+    width: 0px;
+    position: absolute;
+
+    /* transform: translate(-50%, -50%); */
+    /* top: 85%;
+left: 78%; */
+    bottom: 32px;
+    right: 40px;
+}

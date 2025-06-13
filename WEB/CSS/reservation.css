@@ -1,0 +1,63 @@
+.court-img {
+    filter: blur(0px);
+    -webkit-filter: blur(0px);
+}
+
+.court-img img {
+    width: 60vw;
+    /* max-height: 800px; */
+
+    max-width: 1000px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5)
+}
+
+.court-img p {
+    z-index: 2;
+}
+
+.court-img div {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 63%;
+    left: 48%;
+}
+
+.court-img div p {
+    color: #1a3150;
+}
+
+.court-img div:first-of-type {
+    padding: 10px 60px;
+    top: 25%;
+    left: 48%;
+    /* filter: blur(20px);
+    -webkit-filter: blur(20px); */
+}
+
+.img-with-gadient {
+    height: 110%;
+    background-image: url("/WEB/IMG/court2.png");
+    filter: blur(20px);
+    -webkit-filter: blur(20px);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 16px;
+}
+
+.img-with-gadient-content {
+    position: absolute;
+    /* Top + bottom at 50% = better centered in y axis */
+    top: 50%;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    /* width: 70%;
+    height: 70%; */
+}
+.reservation-content {
+    height: 100%;
+}

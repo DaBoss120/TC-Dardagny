@@ -1,0 +1,15 @@
+.contactContent {
+    background-image: url("/WEB/IMG/MailWithGradient.png");
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-text p {
+    color: white;
+}
+
+.contactContent div:nth-of-type(2) {
+    position: absolute;
+    top: 30%;
+}

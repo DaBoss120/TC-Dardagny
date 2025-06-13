@@ -1,0 +1,16 @@
+.reglement-text p {
+    color: white;
+}
+
+.reglement-et-statuts-contnent {
+    background-image: url("/WEB/IMG/PLAY.jpg");
+    justify-content: space-around;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+}
+
+.reglement-bouton {
+    height: 100%;
+}

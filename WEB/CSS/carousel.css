@@ -1,0 +1,220 @@
+.carousel {
+    max-width: 1800px;
+    position: relative;
+    margin: auto;
+}
+
+.carousel img {
+    object-fit: cover;
+    height: 35vh;
+}
+
+.carouselSlides {
+    display: none;
+    animation-name: fade;
+    animation-duration: .6s;
+}
+
+@media screen and (min-width: 1800px) {
+    .carouselSlides img {
+        border-radius: 20px;
+    }
+}
+
+@keyframes fade {
+    from {
+        filter: blur(12px);
+        opacity: .4;
+    }
+
+    to {
+        filter: blur(0px);
+        opacity: 1;
+    }
+}
+
+.prev,
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    /* margin-top: -22px; */
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    transform: translate(0%, -50%);
+
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover,
+.next:hover {
+    background: rgba(255, 255, 255, 0.13);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+/* Caption text */
+.captionText,
+.captionTitle {
+    color: #f2f2f2;
+    position: absolute;
+    width: 100%;
+    font-family: Rammetto-One;
+
+}
+
+.slideText {
+    font-weight: bolder;
+}
+
+.carouselSlides .slideText h2 {
+    color: #ffcc00;
+    font-weight: bolder;
+    font-family: Rammetto-One;
+    font-size: 3rem;
+}
+
+.carouselSlides .slideText p {
+    font-weight: bolder;
+    font-family: Rammetto-One;
+    font-size: 1.3rem;
+    color: #ffcc00;
+}
+
+.carouselSlides:first-of-type .slideText {
+    text-align: center;
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffcc00;
+}
+
+.carouselSlides:nth-of-type(2) .slideText h2:first-of-type {
+    font-weight: bolder;
+    font-family: Rammetto-One;
+    font-size: 2rem;
+    color: white;
+}
+
+.carouselSlides:nth-of-type(2) .slideText h2:nth-of-type(2) {
+    font-weight: bolder;
+    font-family: Rammetto-One;
+    font-size: 2.5rem;
+    color: white;
+
+}
+
+.carouselSlides:nth-of-type(2) .slideText h3 {
+    font-weight: bolder;
+    font-family: Rammetto-One;
+    font-size: 1.5rem;
+    color: white;
+
+}
+
+.carouselSlides:nth-of-type(2) .slideText {
+    color: white;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 22%;
+    transform: translate(-50%, -50%);
+}
+
+.carouselSlides:nth-of-type(3) .slideText {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.carouselSlides:nth-of-type(3) .slideText h2,
+.carouselSlides:nth-of-type(3) .slideText p {
+    color: white;
+}
+
+
+@media screen and (min-width: 1500px) {
+    .carouselSlides:nth-of-type(2) .captionTitle {
+        font-size: 37.4833px;
+
+    }
+
+    .carouselSlides:nth-of-type(2) .captionText {
+        font-size: 22.49px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .carouselSlides:nth-of-type(2) .captionTitle {
+        font-size: 22.6px;
+
+    }
+
+    .carouselSlides:nth-of-type(2) .captionText {
+        font-size: 13.56px;
+    }
+}
+
+.dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    top: 92%;
+    transform: translate(-50%, -50%);
+    padding: 5px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 90px;
+    box-shadow: 0 0px 25px rgba(0, 0, 0, .25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    /* background-color: #bbb; */
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 90px;
+    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    display: inline-block;
+    transition:
+        /*background-color*/
+        0.2s ease;
+}
+
+.active,
+.dot:hover {
+    /* background-color: #717171; */
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 90px;
+    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    transform: scale(1.1);
+}
