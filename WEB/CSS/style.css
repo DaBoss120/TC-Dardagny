@@ -227,8 +227,8 @@ li {
 }   
 /* Button hover light effect */
 /* Add relative positioning and overflow hidden to button containers */
-.button1,
-.button2 {
+.button1 button,
+.button2 button {
     position: relative;
     overflow: hidden;
     /* Ensure other transitions still work as intended */
@@ -236,8 +236,8 @@ li {
 }
 
 /* Light effect pseudo-element */
-.button1::before,
-.button2::before {
+.button1 button::before,
+.button2 button::before {
     content: '';
     position: absolute;
     /* Position will be set by JS via CSS custom properties */
@@ -255,8 +255,8 @@ li {
 }
 
 /* Show and expand the light effect on hover */
-.button1:hover::before,
-.button2:hover::before {
+.button1 button:hover::before,
+.button2 button:hover::before {
     width: 150px; /* Adjust size of the light effect as needed */
     height: 150px; /* Adjust size of the light effect as needed */
     transform: translate(-50%, -50%) scale(1);
@@ -264,8 +264,8 @@ li {
 }
 
 /* Ensure button text stays above the light effect */
-.button1 p,
-.button2 p {
+.button1 button p,
+.button2 button p {
     position: relative;
     z-index: 1;
 }
