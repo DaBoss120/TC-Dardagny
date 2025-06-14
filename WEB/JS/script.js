@@ -3,17 +3,62 @@
 // let slideIndex = 1;
 // showSlides(slideIndex)
 
-document.querySelector('.LeClub').addEventListener('mouseover', event => {
-    document.querySelector('.subnav-content').classList.add('show');
-});
-document.querySelector('.LeClub').addEventListener('mouseout', event => {
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('header').innerHTML = `<div class="top_header">
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#">Bookmarks</a>
+                    </li>
+                    <li>
+                        <a href="#">Login</a>
+                    </li>
+                </ul>
+            </nav>
+            <input type="text" placeholder="Search">
+        </div>
+        <div class="bottom_header">
+            <a href="index.html"><img src="IMG/TCD_Logo.png" alt="TCD_Logo" srcset=""></a>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="index.html">HOME</a>
+                    </li>
+                    <li class="LeClub">
+                        <a href="#">LE CLUB <i class="fa fa-caret-down"></i></a>
+                        <div class="subnav-content">
+                            <a href="comite.html">COMITE</a>
+                            <a href="coursDeTennis.html">COURS DE TENNIS</a>
+                            <a href="adhesion.html">ADHESION</a>
+                            <a href="paiement.html">PAIEMENT</a>
+                            <a href="reglementEtStatuts.html">REGLEMENT ET STATUTS</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="agenda.html">AGENDA</a>
+                    </li>
+                    <li>
+                        <a href="reservation.html">RÉSERVATION</a>
+                    </li>
 
-    setTimeout(() => {
-        if (!document.querySelector('.LeClub').matches(':hover')) {
-            document.querySelector('.subnav-content').classList.remove('show')
-        }
-    }, 1000);
-
+                    <li>
+                        <a href="contact.html">CONTACT</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>`
+        document.querySelector('.LeClub').addEventListener('mouseover', event => {
+            document.querySelector('.subnav-content').classList.add('show');
+        });
+        document.querySelector('.LeClub').addEventListener('mouseout', event => {
+        
+            setTimeout(() => {
+                if (!document.querySelector('.LeClub').matches(':hover')) {
+                    document.querySelector('.subnav-content').classList.remove('show')
+                }
+            }, 1000);
+        
+        });
 });
 
 document.querySelectorAll('.personnes-comite').forEach(element => {
