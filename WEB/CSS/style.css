@@ -162,7 +162,7 @@ li {
 }
 
 .textBlurButtonUnhover {
-    animation: textBlurBtnUhover .6s cubic-bezier(.12, 0, .18, 1);
+    animation: textBlurBtnUnhover .6s cubic-bezier(.12, 0, .18, 1);
 }
 
 @keyframes textBlurBtn {
@@ -195,7 +195,7 @@ li {
     }
 }
 
-@keyframes textBlurBtnUhover {
+@keyframes textBlurBtnUnhover {
 
     /* from{
         filter: blur(8px);
@@ -502,4 +502,32 @@ div.unBlur {
     box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+}
+
+@keyframes blurUnBlur {
+    from {
+        opacity: 0;
+        line-height: 34px;
+        filter: blur(12px);
+    }
+    
+    to {
+        opacity: 1;
+        line-height: 23px;
+        filter: blur(0px);
+    }
+    
+}
+@keyframes unBlurBlur {
+    from{
+        opacity: 1;
+        line-height: 23px;
+        filter: blur(0px);
+    }
+
+    to {
+        opacity: 0;
+        line-height: 34px;
+        filter: blur(12px);
+    }
 }
