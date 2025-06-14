@@ -124,37 +124,37 @@ document.addEventListener('DOMContentLoaded', () => {
 //     })
 // });
 // Button of class 1
-document.querySelectorAll('.button1 button').forEach(element => {
-    element.addEventListener('mouseover', event => {
-        event.target.querySelector('p').classList.add('textBlurButton');
-        event.target.querySelector('p').classList.remove('textBlurButtonUnhover');
-    }
-    )
-});
-document.querySelectorAll('.button1 button').forEach(element => {
-    element.addEventListener('mouseout', event => {
-        if (!element.matches(':hover') /* && element.classList.contains('textBlurButton')*/) {
-            event.target.querySelector('p').classList.remove('textBlurButton');
-            event.target.querySelector('p').classList.add('textBlurButtonUnhover');
-        }
-    }
-    )
-});
+// document.querySelectorAll('.button1 button').forEach(element => {
+//     element.addEventListener('mouseover', event => {
+//         event.target.querySelector('p').classList.add('textBlurButton');
+//         event.target.querySelector('p').classList.remove('textBlurButtonUnhover');
+//     }
+//     )
+// });
+// document.querySelectorAll('.button1 button').forEach(element => {
+//     element.addEventListener('mouseout', event => {
+//         if (!element.matches(':hover') /* && element.classList.contains('textBlurButton')*/) {
+//             event.target.querySelector('p').classList.remove('textBlurButton');
+//             event.target.querySelector('p').classList.add('textBlurButtonUnhover');
+//         }
+//     }
+//     )
+// });
 
-// Button of class 2
-document.querySelectorAll('.button2 button').forEach(element => {
-    element.addEventListener('mouseover', event => {
-        event.target.querySelector('p').classList.add('textBlurButton');
-        event.target.querySelector('p').classList.remove('textBlurButtonUnhover');
-    }
-    )
-});
-document.querySelectorAll('.button2 button').forEach(element => {
-    element.addEventListener('mouseout', event => {
-        if (!element.matches(':hover') /* && element.classList.contains('textBlurButton')*/) {
-            event.target.querySelector('p').classList.remove('textBlurButton');
-            event.target.querySelector('p').classList.add('textBlurButtonUnhover');
-        }
-    }
-    )
-});
+// // Button of class 2
+// document.querySelectorAll('.button2 button').forEach(element => {
+//     element.addEventListener('mouseover', event => {
+//         event.target.querySelector('p').classList.add('textBlurButton');
+//         event.target.querySelector('p').classList.remove('textBlurButtonUnhover');
+//     }
+//     )
+// });
+// document.querySelectorAll('.button2 button').forEach(element => {
+//     element.addEventListener('mouseout', event => {
+//         if (!element.matches(':hover') /* && element.classList.contains('textBlurButton')*/) {
+//             event.target.querySelector('p').classList.remove('textBlurButton');
+//             event.target.querySelector('p').classList.add('textBlurButtonUnhover');
+//         }
+//     }
+//     )
+// });
