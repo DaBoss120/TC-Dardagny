@@ -108,7 +108,7 @@
 
 .agendaElement {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     width: fit-content;
     height: fit-content;
