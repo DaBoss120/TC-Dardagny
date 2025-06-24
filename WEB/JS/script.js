@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </ul>
             </nav>
         </div>`
+<<<<<<< HEAD
     document.querySelector('.LeClub').addEventListener('mouseover', event => {
         document.querySelector('.subnav-content').classList.add('show');
     });
@@ -69,56 +70,20 @@ document.addEventListener('DOMContentLoaded', () => {
         originalButtonDimensions.set(button, {
             width: parseFloat(computedStyle.width),
             height: parseFloat(computedStyle.height)
+=======
+        document.querySelector('.LeClub').addEventListener('mouseover', event => {
+            document.querySelector('.subnav-content').classList.add('show');
+>>>>>>> parent of 087552f (Light buttons)
         });
-
-        button.addEventListener('mousemove', (e) => {
-            const rect = button.getBoundingClientRect();
-            const originalDims = originalButtonDimensions.get(button);
-
-            let currentScaleX = 1;
-            let currentScaleY = 1;
-
-            if (originalDims && originalDims.width > 0) {
-                currentScaleX = rect.width / originalDims.width;
-            }
-            if (originalDims && originalDims.height > 0) {
-                currentScaleY = rect.height / originalDims.height;
-            }
-            // Your CSS uses scale(1.15), which is uniform. 
-            // If scaling was ever non-uniform, you'd use currentScaleY for the y-coordinate.
-            // For uniform scaling, currentScaleX and currentScaleY should be very similar (or equal).
-            // We'll use currentScaleX for both as scale() is uniform.
-
-            const xInButton = e.clientX - rect.left; // Mouse x position within the visual (scaled) button box
-            const yInButton = e.clientY - rect.top;  // Mouse y position within the visual (scaled) button box
-
-            // Convert visual/scaled coordinates back to the button's unscaled coordinate space
-            // because CSS 'left' and 'top' for the pseudo-element are set in that unscaled space.
-            const unscaledX = xInButton / currentScaleX;
-            const unscaledY = yInButton / currentScaleX; // Using currentScaleX assuming uniform scaling from CSS `scale()`
-
-            button.style.setProperty('--mouse-x', `${unscaledX}px`);
-            button.style.setProperty('--mouse-y', `${unscaledY}px`);
-
-            // const buttons = document.querySelectorAll('.button1 button, .button2 button');
-
-            // buttons.forEach(button => {
-            //     button.addEventListener('mousemove', (e) => {
-            //         const rect = button.getBoundingClientRect();
-            //         const x = e.clientX - rect.left; // Mouse x position within the button
-            //         const y = e.clientY - rect.top;  // Mouse y position within the button
-
-            //         button.style.setProperty('--mouse-x', `${x}px`);
-            //         button.style.setProperty('--mouse-y', `${y}px`);
-            //     });
-
-            // Optional: Reset on mouseleave if you want the effect to fade out from the center
-            // button.addEventListener('mouseleave', () => {
-            //     button.style.removeProperty('--mouse-x');
-            //     button.style.removeProperty('--mouse-y');
-            // });
+        document.querySelector('.LeClub').addEventListener('mouseout', event => {
+        
+            setTimeout(() => {
+                if (!document.querySelector('.LeClub').matches(':hover')) {
+                    document.querySelector('.subnav-content').classList.remove('show')
+                }
+            }, 1000);
+        
         });
-    });
 });
 
 // document.querySelectorAll('.personnes-comite').forEach(element => {
