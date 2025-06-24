@@ -47,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </ul>
             </nav>
         </div>`
-<<<<<<< HEAD
     document.querySelector('.LeClub').addEventListener('mouseover', event => {
         document.querySelector('.subnav-content').classList.add('show');
     });
@@ -70,10 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
         originalButtonDimensions.set(button, {
             width: parseFloat(computedStyle.width),
             height: parseFloat(computedStyle.height)
-=======
-        document.querySelector('.LeClub').addEventListener('mouseover', event => {
-            document.querySelector('.subnav-content').classList.add('show');
->>>>>>> parent of 087552f (Light buttons)
         });
         document.querySelector('.LeClub').addEventListener('mouseout', event => {
         
@@ -84,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1000);
         
         });
+    });
 });
 
 // document.querySelectorAll('.personnes-comite').forEach(element => {
