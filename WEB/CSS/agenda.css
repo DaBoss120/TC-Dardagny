@@ -27,6 +27,7 @@
     justify-content: center;
     box-shadow: inset 0px 100px 30px -50px rgb(255, 255, 255);
 }
+
 /* @-webkit-keyframes AnimationName {
     0%{background-position:14% 0%}
     50%{background-position:87% 100%}
@@ -108,11 +109,12 @@
 
 .agendaElement {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: fit-content;
-    height: fit-content;
-    margin: 32px 016px 0px 16px;
+    flex-direction: column;
+    align-items: center;
+    width: 40vw;
+    max-width: 500px;
+    height: max-content;
+    margin: 32px 16px 0px 16px;
     /* padding: 36px; */
     background: rgba(255, 255, 255, 0.25);
     box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
@@ -121,56 +123,94 @@
     border: 1px solid rgba(255, 255, 255, 0.25);
     /* background-image: linear-gradient(green, blue); */
     border-radius: 60px;
+    position: relative;
+    /* Required for positioning the ::after pseudo-element */
+    overflow: hidden;
+    /* Ensures the effect is clipped by the border-radius */
+}
 
+
+.agendaElement img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 60px 60px 0 0;
+     mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+     filter:blur(8px);
+    z-index: 0;
 }
-.agendaElement p {
-    font-size: larger;
-    font-weight: 600;
-}
+
+
+
+.agendaElement::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    object-fit: cover;
+    object-position:0 30%;
+    aspect-ratio: 1 / 1;
+    /* Use the variable again to create the clear top layer */
+     background-image: var(--image-url);
+    background-size: cover;
+    /* background-position: center;  */
+
+    /* Apply a mask to this TOP layer. Where the mask is transparent (at the bottom),
+       the blurred ::before pseudo-element underneath will show through. */
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 95%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 95%);
+} 
+
+
 
 .agendaElement h1 {
     font-size: 28px;
 }
 
-.agendaElement .button2 button {
-    margin: 0px 0px 8px 0px;
+.agendaElement button {
+    margin: 8px 0px 0px 0px;
 }
 
-.agendaElement .button2 p {
+.agendaElement button p {
     font-size: 24px;
     color: var(--color1);
 }
 
-.agendaElement:first-of-type {
-    margin-top: 32px;
+.agendaContent{
+    width: 100%;
+    padding: 0px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+        transform: translate(0px, -45px);
+    z-index: 2;
+}
+.agendaText{
+    width: 100%;
+    padding: 0px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    position: relative;
+
+}
+.agendaText>p {
+    font-size: larger;
+    font-weight: 600;
+    margin: 10px 0px;
 }
 
-.agendaElement>* {
+/* .agendaElement>* {
     margin: 40px;
-}
+} */
 
-.agendaElement img {
+/* .agendaElement img {
     width: 20vw;
     height: auto;
     min-width: 320px;
     max-width: 450px;
     border-radius: 20px;
-}
-
-.agendaElement div {
-    width: 20vw;
-
-    min-width: 320px;
-    max-width: 450px;
-}
-
-.agendaElement .button2 {
-    width: 0px;
-    position: absolute;
-
-    /* transform: translate(-50%, -50%); */
-    /* top: 85%;
-left: 78%; */
-    bottom: 32px;
-    right: 40px;
-}
+} */

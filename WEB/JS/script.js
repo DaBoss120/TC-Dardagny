@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
 
     });
-    const buttons = document.querySelectorAll('.button1 button, .button2 button');
+    const buttons = document.querySelectorAll('.button1, .button2');
     const originalButtonDimensions = new Map();
 
     buttons.forEach(button => {

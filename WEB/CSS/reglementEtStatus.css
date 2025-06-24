@@ -10,7 +10,9 @@
     background-position: center center;
 
 }
-
-.reglement-bouton {
-    height: 100%;
+a{
+    text-decoration: none;
+}
+button p{
+    color: var(--color1);
 }
