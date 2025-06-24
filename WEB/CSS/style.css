@@ -224,6 +224,7 @@ li {
         letter-spacing: 0px;
         filter: blur(0px);
     }
+<<<<<<< HEAD
 }   
 /* Button hover light effect */
 /* Add relative positioning and overflow hidden to button containers */
@@ -268,6 +269,8 @@ li {
 .button2 p {
     position: relative;
     z-index: 1;
+=======
+>>>>>>> parent of 087552f (Light buttons)
 }
 
 
