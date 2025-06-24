@@ -47,8 +47,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 </ul>
             </nav>
         </div>`
-        document.querySelector('.LeClub').addEventListener('mouseover', event => {
-            document.querySelector('.subnav-content').classList.add('show');
+    document.querySelector('.LeClub').addEventListener('mouseover', event => {
+        document.querySelector('.subnav-content').classList.add('show');
+    });
+    document.querySelector('.LeClub').addEventListener('mouseout', event => {
+
+        setTimeout(() => {
+            if (!document.querySelector('.LeClub').matches(':hover')) {
+                document.querySelector('.subnav-content').classList.remove('show')
+            }
+        }, 1000);
+
+    });
+
+    const buttons = document.querySelectorAll('.button1, .button2');
+    const originalButtonDimensions = new Map();
+
+    buttons.forEach(button => {
+        // Store original width and height when the DOM is loaded and buttons are unscaled
+        const computedStyle = getComputedStyle(button);
+        originalButtonDimensions.set(button, {
+            width: parseFloat(computedStyle.width),
+            height: parseFloat(computedStyle.height)
         });
         document.querySelector('.LeClub').addEventListener('mouseout', event => {
         
@@ -59,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1000);
         
         });
+    });
 });
 
 // document.querySelectorAll('.personnes-comite').forEach(element => {
