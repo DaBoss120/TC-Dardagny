@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1000);
         
         });
+    });
 });
 
 // document.querySelectorAll('.personnes-comite').forEach(element => {
