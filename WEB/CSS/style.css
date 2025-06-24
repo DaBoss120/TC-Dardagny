@@ -80,7 +80,7 @@ li {
 }
 
 /* Button styles */
-.button1 button {
+.button1 {
     background: rgba(255, 255, 255, 0.25);
     box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(10px);
@@ -97,7 +97,7 @@ li {
     border-radius: 12px;
 }
 
-.button1 button:hover {
+.button1:hover {
     transform: scale(1.15);
     cursor: pointer;
     box-shadow: 0 0px 30px rgba(0, 0, 0, 0.30);
@@ -108,21 +108,13 @@ li {
         animation-timing-function: ease;
     }
 }
-.button1 button:not(:hover) {
+.button1:not(:hover) {
     p {
         animation: textBlurBtnUnhover .6s cubic-bezier(.12, 0, .18, 1);
     }
 }
 
-.button1 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-self: center;
-    justify-content: center;
-}
-
-.button1 button p {
+.button1 p {
     color: white;
 }
 
@@ -134,7 +126,7 @@ li {
     justify-content: center;
 }
 
-.button2 button {
+.button2 {
     background: rgba(255, 255, 255, 0.10);
     box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(8px);
@@ -153,11 +145,11 @@ li {
 
 }
 
-.button2 button p {
+.button2 p {
     color: white;
 }
 
-.button2 button:hover {
+.button2:hover {
     transform: scale(1.15);
     cursor: pointer;
     box-shadow: 0 0px 30px rgba(0, 0, 0, 0.30);
@@ -169,7 +161,7 @@ li {
         animation-timing-function: ease;
     }
 }
-.button2 button:not(:hover) {
+.button2:not(:hover) {
     p {
         animation: textBlurBtnUnhover .6s cubic-bezier(.12, 0, .18, 1);
     }
@@ -235,8 +227,8 @@ li {
 }   
 /* Button hover light effect */
 /* Add relative positioning and overflow hidden to button containers */
-.button1 button,
-.button2 button {
+.button1,
+.button2 {
     position: relative;
     overflow: hidden;
     /* Ensure other transitions still work as intended */
@@ -244,8 +236,8 @@ li {
 }
 
 /* Light effect pseudo-element */
-.button1 button::before,
-.button2 button::before {
+.button1::before,
+.button2::before {
     content: '';
     position: absolute;
     /* Position will be set by JS via CSS custom properties */
@@ -263,8 +255,8 @@ li {
 }
 
 /* Show and expand the light effect on hover */
-.button1 button:hover::before,
-.button2 button:hover::before {
+.button1:hover::before,
+.button2:hover::before {
     width: 150px; /* Adjust size of the light effect as needed */
     height: 150px; /* Adjust size of the light effect as needed */
     transform: translate(-50%, -50%) scale(1);
@@ -272,8 +264,8 @@ li {
 }
 
 /* Ensure button text stays above the light effect */
-.button1 button p,
-.button2 button p {
+.button1 p,
+.button2 p {
     position: relative;
     z-index: 1;
 }
