@@ -4,21 +4,34 @@
 // showSlides(slideIndex)
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('header').innerHTML = `<div class="top_header">
-            <nav>
-                <ul>
-                    <li>
-                        <a href="#">Bookmarks</a>
-                    </li>
-                    <li>
-                        <a href="#">Login</a>
-                    </li>
-                </ul>
-            </nav>
-            <input type="text" placeholder="Search">
+    //     <nav>
+    //     <ul>
+    //         <li>
+    //             <a href="#">Bookmarks</a>
+    //         </li>
+    //         <li>
+    //             <a href="#">Login</a>
+    //         </li>
+    //     </ul>
+    // </nav>
+    // <input type="text" placeholder="Search"></input>
+    let hamburger = document.createElement('label');
+    hamburger.classList.add('bar');
+    hamburger.setAttribute('for', 'check');
+    hamburger.innerHTML = ` 
+    <input type="checkbox" id="check">
+    <span class="top"></span>
+    <span class="middle"></span>
+    <span class="bottom"></span>`;
+    // hamburger.addEventListener('click', toggleMenu);
+    document.querySelector('header').innerHTML = `
+    <div class="top_header">
+        <a href="index.html"><img src="IMG/TCD_Logo_Square.png" alt="TCD_Logo_Square" class="TCD_Logo_Square"></a>
+   
+</label>
         </div>
         <div class="bottom_header">
-            <a href="index.html"><img src="IMG/TCD_Logo.png" alt="TCD_Logo" srcset=""></a>
+            <a href="index.html"><img src="IMG/TCD_Logo.png" alt="TCD_Logo" class="TCD_Logo" srcset=""></a>
             <nav>
                 <ul>
                     <li>
@@ -47,17 +60,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 </ul>
             </nav>
         </div>`
+    document.querySelector('.top_header').appendChild(hamburger);
+    document.querySelector('#check').addEventListener('change', toggleMenu);
+
     document.querySelector('.LeClub').addEventListener('mouseover', event => {
-        document.querySelector('.subnav-content').classList.add('show');
+        if (window.innerWidth > 1100) {
+            document.querySelector('.subnav-content').classList.add('show');
+        }
     });
     document.querySelector('.LeClub').addEventListener('mouseout', event => {
-
-        setTimeout(() => {
-            if (!document.querySelector('.LeClub').matches(':hover')) {
-                document.querySelector('.subnav-content').classList.remove('show')
-            }
-        }, 1000);
-
+        if (window.innerWidth > 1100) {
+            setTimeout(() => {
+                if (!document.querySelector('.LeClub').matches(':hover')) {
+                    document.querySelector('.subnav-content').classList.remove('show')
+                }
+            }, 1000);
+        }
+    });
+    // --- Mobile Subnav Click Logic ---
+    document.querySelector('.LeClub > a').addEventListener('click', event => {
+        // Only run on mobile view
+        if (window.innerWidth <= 1100) {
+            event.preventDefault(); // Prevent link from navigating
+            event.currentTarget.parentElement.classList.toggle('subnav-open');
+        }
     });
     const buttons = document.querySelectorAll('.button1, .button2');
     const originalButtonDimensions = new Map();
@@ -119,6 +145,50 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+function toggleMenu() {
+    // const hamburger = document.querySelector(".hamburger");
+    // menu.style.display == 'block' ? menu.style.display = "none" : menu.style.display = 'block';
+
+    const menu = document.querySelector('.bottom_header nav');
+    // If the menu is currently shown, hide it with animation
+    if (menu.classList.contains('show')) {
+        menu.classList.remove('show');
+        menu.classList.add('closing');
+        // Close the subnav if it's open
+        document.querySelector('.LeClub').classList.remove('subnav-open');
+        // When the close animation ends, clean up
+        menu.addEventListener('animationend', function handler(event) {
+            if (event.target === menu) {
+                if (event.animationName === 'menuBackgroundSlideUp') {
+                    menu.classList.remove('closing');
+                    // Wait for all animations to end
+                    setTimeout(() => {
+                        menu.removeEventListener('animationend', handler);
+                        document.body.classList.remove('no-scroll');
+                    }, 200);
+                }
+            }
+        });
+
+    }
+    // If the menu is currently hidden, show it with animation
+    else {
+        menu.classList.add('show');
+        menu.style.display = 'flex';
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        setTimeout(() => {
+            document.body.classList.add('no-scroll');
+        }, 200);
+    }
+    // if (menu.style.display === 'block') {
+    //     menu.style.display = 'none';
+    // } else {
+    //     menu.style.display = 'block';
+    // }
+};
 
 // document.querySelectorAll('.personnes-comite').forEach(element => {
 //     element.addEventListener('mouseover', event => {

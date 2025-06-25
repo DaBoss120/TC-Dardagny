@@ -1,3 +1,5 @@
+@import url('hamburger.css');
+
 @font-face {
     font-family: Open-sans;
     src: url(../FONT/Open-Sans.woff2);
@@ -30,6 +32,10 @@ body {
 /* Global styles */
 main {
     height: 100%;
+}
+
+body.no-scroll {
+    overflow: hidden;
 }
 
 *:focus {
@@ -121,8 +127,6 @@ li {
         animation: textBlurBtnUnhover .6s cubic-bezier(.12, 0, .18, 1);
     }
 }
-
-.button1 {}
 
 .button1 button p {
     color: white;
@@ -244,8 +248,10 @@ li {
     position: relative;
     overflow: hidden;
     /* Ensure other transitions still work as intended */
-    transition: all 0.3s, transform 0.3s cubic-bezier(.33,.22,.5,1.35), box-shadow 0.3s, backdrop-filter 0.3s;
-    
+    transition: all 0.3s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)
+        /* cubic-bezier(.33, .22, .5, 1.35)*/
+        , box-shadow 0.3s, backdrop-filter 0.3s;
+
 }
 
 /* Light effect pseudo-element */
@@ -260,7 +266,9 @@ li {
     height: 0;
     background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
     border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
+    transform: translate(-50%, -50%)
+        /* scale(0) */
+    ;
     transition: width 0.4s ease-out, height 0.4s ease-out, transform 0.4s ease-out, opacity 0.4s ease-out;
     opacity: 0;
     pointer-events: none;
@@ -276,7 +284,7 @@ li {
     /* Adjust size of the light effect as needed */
     height: 150px;
     /* Adjust size of the light effect as needed */
-    transform: translate(-50%, -50%) scale(1);
+    /* transform: translate(-50%, -50%) scale(1); */
     opacity: 1;
 }
 
@@ -402,12 +410,13 @@ li {
 }
 
 .subnav-content a {
-    transition: all 0.3s;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     margin: 0px;
     z-index: 0;
     font-size: 2px;
-    filter: blur(12px);
+    opacity: 0;
+    /* filter: blur(12px); */
 }
 
 .subnav-content.show a {
@@ -415,10 +424,47 @@ li {
     color: #385c8a;
     z-index: 1;
     font-size: 1rem;
-    filter: blur(0px);
+    /* filter: blur(0px); */
 }
 
+.subnav-content.show a {
+    animation: LeClubLinkAnimationIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
 
+.subnav-content.show a:nth-of-type(1) {
+    animation-delay: 0.1s
+}
+
+.subnav-content.show a:nth-of-type(2) {
+    animation-delay: 0.2s;
+}
+
+.subnav-content.show a:nth-of-type(3) {
+    animation-delay: 0.3s;
+}
+
+.subnav-content.show a:nth-of-type(4) {
+    animation-delay: 0.4s;
+}
+
+.subnav-content.show a:nth-of-type(5) {
+    animation-delay: 0.5s;
+}
+
+@keyframes LeClubLinkAnimationIn {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+        filter: blur(8px);
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+        filter: blur(0px);
+    }
+
+}
 
 .events {
     display: flex;
@@ -517,6 +563,7 @@ div.unBlur {
 
 /* Text bubble styles */
 .text-bubble-img-presentation {
+
     font-weight: 600;
     text-align: center;
     padding: 20px;
@@ -527,7 +574,7 @@ div.unBlur {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.25);
-    margin: 28px 80px;
+    margin: 28px 0px;
 }
 
 .text-bubble-img-presentation2 {
@@ -593,4 +640,325 @@ div.unBlur {
         line-height: 34px;
         filter: blur(12px);
     }
+}
+
+.TCD_Logo_Square {
+    display: none;
+}
+
+.bar {
+    display: none;
+}
+
+@media screen and (max-width: 1100px) {
+    * {
+        /* Prevent default browser usual effect when clicking on a link */
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    .top_header {
+        justify-content: space-between;
+        padding: 0px 20px;
+        z-index: 2;
+        position: relative;
+    }
+
+    .TCD_Logo_Square {
+        display: block;
+        width: 50px;
+        border-radius: 5px;
+    }
+
+    .TCD_Logo {
+        display: none;
+    }
+
+    .bar {
+        display: block;
+        position: relative;
+        z-index: 3;
+        width: 50px;
+        cursor: pointer;
+    }
+
+    .bottom_header {
+        align-items: center;
+
+    }
+
+    .bottom_header nav {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        /* transform: translate(-50%, -50%); */
+        /* top: 50%;
+        left: 50%; */
+        top: 0;
+        left: 0;
+        height: 0;
+        width: 100vw;
+        background: rgba(255, 255, 255, 0.60);
+        box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 1;
+        overflow: hidden;
+        transition: none;
+        opacity: 0.5;
+        /* Add a mask to create a fade-out effect at the bottom */
+        -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+        mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    }
+
+    .bottom_header nav.show {
+        display: flex;
+        animation: menuBackgroundSlideDown 0.5s ease-out forwards, backgroundFadeIn 0.5s linear forwards;
+    }
+
+    @keyframes menuBackgroundSlideDown {
+
+        from {
+            height: 0;
+        }
+
+        to {
+            height: 115vh;
+        }
+    }
+
+    @keyframes backgroundFadeIn {
+        from {
+            opacity: 0.5;
+        }
+
+        to {
+            opacity: 1;
+        }
+
+    }
+
+    .bottom_header nav.closing {
+        animation: menuBackgroundSlideUp 0.4s ease-in forwards;
+    }
+
+    @keyframes menuBackgroundSlideUp {
+
+        from {
+            height: 115vh;
+            opacity: 1;
+        }
+
+        to {
+            height: 0;
+            opacity: 0.5;
+        }
+    }
+
+    .bottom_header nav ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        height: 100%;
+        width: 100%;
+        margin: auto;
+        padding-top: 15vh;
+    }
+
+    .bottom_header nav ul li {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+    }
+
+    .bottom_header nav ul li a {
+
+        opacity: 1;
+        width: 75%;
+        text-align: center;
+        margin: auto;
+        font-size: 25px;
+        font-weight: 700;
+        background: none;
+        color: var(--color1);
+        padding: 15px 0;
+    }
+
+    .bottom_header nav.show ul li a {
+        animation: linkAnimationIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        opacity: 0;
+    }
+
+
+
+
+    .bottom_header nav.show ul li:nth-of-type(1) a {
+        animation-delay: 0.2s;
+    }
+
+    .bottom_header nav.show ul li:nth-of-type(2) a {
+        animation-delay: 0.3s;
+    }
+
+    .bottom_header nav.show ul li:nth-of-type(3) a {
+        animation-delay: 0.4s;
+    }
+
+    .bottom_header nav.show ul li:nth-of-type(4) a {
+        animation-delay: 0.5s;
+    }
+
+    .bottom_header nav.show ul li:nth-of-type(5) a {
+        animation-delay: 0.6s;
+    }
+
+    .bottom_header nav.closing ul li a {
+        animation: linkAnimationOut 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+
+    }
+
+    @keyframes linkAnimationIn {
+        from {
+            transform: translateY(-40px);
+            opacity: 0;
+            filter: blur(8px);
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+            filter: blur(0px);
+        }
+    }
+
+    @keyframes linkAnimationOut {
+        from {
+            transform: translateY(0);
+            opacity: 1;
+            filter: blur(0px);
+        }
+
+        to {
+            transform: translateY(-40px);
+            opacity: 0;
+            filter: blur(8px);
+        }
+
+    }
+
+    /* --- Subnav Mobile Styles --- */
+    .bottom_header nav .LeClub>a {
+        display: flex;
+        /* To align caret icon */
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .bottom_header nav .LeClub .fa-caret-down {
+        transition: transform 0.3s ease;
+    }
+
+    .bottom_header nav .LeClub.subnav-open .fa-caret-down {
+        transform: rotate(180deg);
+    }
+
+    .bottom_header .subnav-content {
+        /* Override desktop styles for mobile accordion */
+        position: relative;
+        opacity: 1;
+        background: none;
+        box-shadow: none;
+        backdrop-filter: none;
+        border: none;
+        margin-top: 0;
+        padding: 0;
+        /* Hide by default and prepare for transition */
+        /* max-height: 0; */
+        height: 0px;
+        overflow: hidden;
+        /* transition: max-height 0.4s cubic-bezier(.33, .22, .5, 1.35); */
+        /* transition: max-height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); */
+        transition: height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        /* transition: height 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6); */
+                /* transition: max-height 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); */
+
+
+    }
+
+    .bottom_header .LeClub.subnav-open .subnav-content {
+        /* Show on click */
+        /* max-height: none; */
+        /* Check height with auto and then set exact number for best result and animation */
+        /* height: 236.67px; */
+        height: 300px;
+        /* Adjust if you have more items */
+    }
+
+    .bottom_header .LeClub.subnav-open .subnav-content a {
+        animation: subnavLinkAnimationIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        opacity: 0;
+    }
+
+    .bottom_header .LeClub.subnav-open .subnav-content a:nth-of-type(1) {
+        animation-delay: 0.1s;
+    }
+
+    .bottom_header .LeClub.subnav-open .subnav-content a:nth-of-type(2) {
+        animation-delay: 0.2s;
+    }
+
+    .bottom_header .LeClub.subnav-open .subnav-content a:nth-of-type(3) {
+        animation-delay: 0.3s;
+    }
+
+    .bottom_header .LeClub.subnav-open .subnav-content a:nth-of-type(4) {
+        animation-delay: 0.4s;
+    }
+
+    .bottom_header .LeClub.subnav-open .subnav-content a:nth-of-type(5) {
+        animation-delay: 0.5s;
+    }
+
+
+    /* This new animation is for the sub-menu. It fades and slides links up from *within* the container, avoiding the clipping issue. */
+    @keyframes subnavLinkAnimationIn {
+        from {
+            transform: translateY(-20px);
+            opacity: 0;
+            filter: blur(8px);
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+            filter: blur(0px);
+        }
+    }
+
+    .bottom_header .subnav-content a {
+        /* Override desktop styles for mobile */
+        font-size: 20px;
+        /* Slightly smaller than main links */
+        /* filter: none;
+        opacity: 1; */
+        /* Should be visible with parent */
+        color: var(--color2);
+        /* Different color to show it's a sub-item */
+        padding: 10px 0;
+        /* background-color: rgba(26, 49, 80, 0.1); */
+        /* Slight background to group them */
+    }
+
+    .bottom_header .subnav-content.show a {
+        /* This rule is for desktop, reset it for mobile */
+        margin: 0;
+        font-size: 20px;
+        filter: none;
+    }
+
+    /* --- End Subnav Mobile Styles --- */
 }
