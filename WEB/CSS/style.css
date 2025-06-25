@@ -893,8 +893,8 @@ div.unBlur {
         /* Show on click */
         /* max-height: none; */
         /* Check height with auto and then set exact number for best result and animation */
-        /* height: 236.67px; */
-        height: 300px;
+        height: 236.67px;
+        /* height: 300px; */
         /* Adjust if you have more items */
     }
 
