@@ -64,12 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#check').addEventListener('change', toggleMenu);
 
     document.querySelector('.LeClub').addEventListener('mouseover', event => {
-        if (window.innerWidth > 1100) {
+        if (window.innerWidth > 768) {
             document.querySelector('.subnav-content').classList.add('show');
         }
     });
     document.querySelector('.LeClub').addEventListener('mouseout', event => {
-        if (window.innerWidth > 1100) {
+        if (window.innerWidth > 768) {
             setTimeout(() => {
                 if (!document.querySelector('.LeClub').matches(':hover')) {
                     document.querySelector('.subnav-content').classList.remove('show')
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Mobile Subnav Click Logic ---
     document.querySelector('.LeClub > a').addEventListener('click', event => {
         // Only run on mobile view
-        if (window.innerWidth <= 1100) {
+        if (window.innerWidth <= 768) {
             event.preventDefault(); // Prevent link from navigating
             event.currentTarget.parentElement.classList.toggle('subnav-open');
         }

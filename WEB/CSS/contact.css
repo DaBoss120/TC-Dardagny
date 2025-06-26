@@ -13,3 +13,18 @@
     position: absolute;
     top: 30%;
 }
+@media screen and (max-width: 768px) {
+    .text-bubble-img-presentation:last-of-type{
+        width: 80vw;
+        padding: 28px 0px;
+        h1{
+            font-size: 32px;
+        }
+    }
+    .round-img-in-bubble{
+        width: 75%;
+    }
+    .text-bubble-img-presentation2 p{
+        text-align: center;
+    }
+}

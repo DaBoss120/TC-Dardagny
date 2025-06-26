@@ -60,3 +60,43 @@
 .personnes-comite:not(:hover) p {
     animation: unBlurBlur 0.5s forwards;
 }
+@media screen and (max-width: 1100px) {
+    h2{
+        text-align: center;
+    }
+    .equipe-comite {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .personnes-comite {
+        margin: 20px 0px;
+        padding-bottom: 50px;
+    }
+    .personnes-comite:first-of-type {
+        margin-top: 40px;
+    }
+    .personnes-comite:last-of-type {
+        margin-bottom: 40px;
+    }
+    .personnes-comite p{
+        visibility: visible;
+        opacity: 1;
+        filter: blur(0px);
+        
+    }
+    .personnes-comite:hover {
+        animation: none;
+        transform: scale(1);
+        p{
+            animation: none;
+        }
+        /* transform: scale(1);
+        padding-bottom: 50px;
+        box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.4); */
+        
+    }
+    .personnes-comite:not(:hover) p{
+        animation: none;
+    }
+}

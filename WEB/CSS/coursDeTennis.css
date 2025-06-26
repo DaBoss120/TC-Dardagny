@@ -12,6 +12,10 @@
     margin-bottom: 28px;
 }
 
+.back-img-presentation {
+    height: 70vh;
+}
+
 .titre-professeurs {
     display: flex;
     flex-direction: column;
@@ -120,7 +124,6 @@
 .cours-et-stages {
     background-image: url('../IMG/TennisFloorCourtWithLines.jpg');
     justify-content: space-between;
-    height: 70vh;
 }
 
 .cours-et-stages h1 {
@@ -131,4 +134,42 @@
 
 button p {
     color: #1a3150;
+}
+
+
+
+@media screen and (max-width: 768px) {
+
+
+    .big-back-img{
+        margin-bottom: 5rem;
+    }
+    .big-back-img:last-of-type {
+        margin-bottom: 0px;
+    }
+    .personnes-professeurs {
+        padding-bottom: 150px;
+    }
+
+    .diplomes-professeurs {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .personnes-professeurs:hover {
+        animation: none;
+        transform: scale(1);
+
+        .diplomes-professeurs p {
+            animation: none;
+            filter: blur(0px);
+        }
+    }
+
+    .personnes-professeurs:not(:hover) .diplomes-professeurs p {
+        animation: none;
+        filter: blur(0px);
+
+    }
+
 }

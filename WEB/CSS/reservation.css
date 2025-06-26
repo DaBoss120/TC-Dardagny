@@ -27,7 +27,6 @@
 .court-img div:first-of-type{
     padding: 10px 60px;
     top: 25%;
-    left: 48%;
     /* filter: blur(20px);
     -webkit-filter: blur(20px); */
 }
@@ -56,10 +55,23 @@ a{
     bottom: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 2;
+    z-index:0;
     /* width: 70%;
     height: 70%; */
 }
 .reservation-content {
     height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+.button1 {
+    width: 60vw;
+    
+    p{
+        font-size: 20px;
+    }
+}
+.court-img div{
+    left: 50%;
+}
 }
