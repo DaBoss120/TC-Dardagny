@@ -1,12 +1,11 @@
 .paiement-content {
-    background-image: url("../IMG/BallOnRacketUpClose.jpg"); /* Changed from /WEB/IMG/... */
+    background-image: url("../IMG/BallOnRacketUpClose.jpg");
+    /* Changed from /WEB/IMG/... */
     justify-content: space-between;
     /* flex-wrap: wrap; */
 }
 
-.text-bubble-img-presentation {
-
-}
+.text-bubble-img-presentation {}
 
 .text-bubble-img-presentation p {
     margin-bottom: 20px;
@@ -42,16 +41,20 @@
     max-height: 100%; */
         /* min-width: 500px; */
 }
+
 @media screen and (max-width: 768px) {
     .text-bubble-img-presentation img {
         width: 100%;
-        min-width: 300px;
+        min-width: 250px;
         /* max-width: 600px; */
     }
-    .text-bubble-img-presentation h1{
+
+    .text-bubble-img-presentation h1 {
         font-size: 2rem;
     }
+
     .text-bubble-img-presentation p {
-text-align: center;    }
-    
+        text-align: center;
+    }
+
 }
