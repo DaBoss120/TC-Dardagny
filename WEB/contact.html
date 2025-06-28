@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="CSS/contact.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="theme-color" content="#1a3150">
 </head>
 
 <body>
@@ -20,14 +21,16 @@
             </div>
             <div class="contactContent back-img-presentation">
                 <div class="text-bubble-img-presentation contact-text">
-                    <p>Pour toute information n'hésitez pas a nous contacter en cliquant sur la lettre ou en copiant l'e-mail</p>
+                    <p>Pour toute information n'hésitez pas a nous contacter en cliquant sur la lettre ou en copiant l'e-mail
+                    </p>
                 </div>
                 <div class="text-bubble-img-presentation bubble-hover">
                     <h1>Contactez-nous</h1>
 
                     <a href="mailto:%20info@tcdardagny.ch"><img class="bubble-hover round-img-in-bubble"
                             src="IMG/Email.png" alt="Email image" style="border-radius: 100%;"></a>
-                    <div class="text-bubble-img-presentation2 bubble-hover text-in-bubble" id="copyableText" onclick="CopyEmail()">
+                    <div class="text-bubble-img-presentation2 bubble-hover text-in-bubble" id="copyableText"
+                        onclick="CopyEmail()">
                         <p>info@tcdardagny.ch</p>
                     </div>
                 </div>
@@ -36,16 +39,16 @@
     </main>
     <script src="JS/script.js"></script>
     <script>
-        function CopyEmail(){
+        function CopyEmail() {
             navigator.clipboard.writeText("info@tcdardagny.ch");
 
             let text = document.querySelector("#copyableText p");
             text.innerHTML = "Copié !"
-            
+
             text.classList.add('textBlurButton');
             text.classList.remove('textBlurButtonUnhover');
 
-            setTimeout(() =>{
+            setTimeout(() => {
                 text.innerHTML = "info@tcdardagny.ch"
                 text.classList.remove('textBlurButton');
                 text.classList.add('textBlurButtonUnhover');
