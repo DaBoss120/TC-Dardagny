@@ -1,5 +1,5 @@
 .paiement-content {
-    background-image: url("/WEB/IMG/BallOnRacketUpClose.jpg");
+    background-image: url("../IMG/BallOnRacketUpClose.jpg"); /* Changed from /WEB/IMG/... */
     justify-content: space-between;
     /* flex-wrap: wrap; */
 }

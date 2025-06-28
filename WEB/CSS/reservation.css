@@ -39,7 +39,7 @@ a{
 
 .img-with-gadient {
     height: 110%;
-    background-image: url("/WEB/IMG/court2.png");
+    background-image: url("../IMG/court2.png"); /* Changed from /WEB/IMG/... */
     filter: blur(20px);
     -webkit-filter: blur(20px);
     background-position: center;

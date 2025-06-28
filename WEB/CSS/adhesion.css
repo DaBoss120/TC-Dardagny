@@ -1,6 +1,6 @@
 .devenirMembreContent {
     justify-content: space-between;
-    background-image: url("/WEB/IMG/YelowBallSpinningWithWater.jpg");
+    background-image: url("../IMG/YelowBallSpinningWithWater.jpg"); /* Changed from /WEB/IMG/... */
     /* justify-content: center; */
 }
 
