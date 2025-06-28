@@ -135,9 +135,10 @@
     width: 100%;
     aspect-ratio: 1 / 1;
     border-radius: 60px 60px 0 0;
-     mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-     filter:blur(8px);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    filter: blur(8px);
     z-index: 0;
+
 }
 
 
@@ -148,13 +149,14 @@
     top: 0;
     left: 0;
     width: 100%;
+    height: 50%;
     /* Height based on .agendaElement width */
-    height: 65vw;
+
     object-fit: cover;
-    object-position:0 30%;
-    /* aspect-ratio: 1 / 1; */
+    object-position: 0 30%;
+    aspect-ratio: 1 / 1;
     /* Use the variable again to create the clear top layer */
-     background-image: var(--image-url);
+    background-image: var(--image-url);
     background-size: cover;
     /* background-position: center;  */
 
@@ -163,7 +165,7 @@
     -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 95%);
     mask-image: linear-gradient(to bottom, black 60%, transparent 95%);
     z-index: 1;
-} 
+}
 
 
 
@@ -180,26 +182,28 @@
     color: var(--color1);
 }
 
-.agendaContent{
+.agendaContent {
     width: 100%;
     padding: 0px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content:center;
-        transform: translate(0px, -45px);
+    justify-content: center;
+    transform: translate(0px, -45px);
     z-index: 2;
 }
-.agendaText{
+
+.agendaText {
     width: 100%;
     padding: 0px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content:center;
+    justify-content: center;
     position: relative;
 
 }
+
 .agendaText>p {
     font-size: larger;
     font-weight: 600;
@@ -224,7 +228,12 @@
         max-width: 425px;
         min-width: 300px;
     }
-/* 
+
+    .agendaElement::after {
+        height: 65vw;
+    }
+
+    /* 
     .agendaElement img {
         width: 100%;
         height: auto;
@@ -234,9 +243,14 @@
     .agendaElement h1 {
         font-size: 24px;
     }
-    .button2{
-        min-width: none;
+
+    .button2 {
+
         width: 80%;
     }
-    
+
+    .button2 p {
+        text-align: center;
+    }
+
 }
