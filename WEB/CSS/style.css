@@ -106,6 +106,7 @@ body::before {
     /* Animate the fade-out */
     transition: opacity 0.5s ease-out;
 }
+
 body.loaded::before {
     /* backdrop-filter: blur(0px);
     background-color: transparent; */
@@ -330,6 +331,7 @@ header {
     position: relative;
     z-index: 10000;
 }
+
 .top_header {
     height: 57.14px;
     background-color: #1a3150;
@@ -402,6 +404,17 @@ header {
     margin: 0px 2vw;
 }
 
+.bottom_header nav ul li>a {
+    display: block;
+    transition: transform 0.3s ease;
+
+}
+
+.bottom_header nav ul li a:hover {
+    transform: translateY(-5px);
+}
+
+
 .bottom_header a {
     color: #385c8a;
     text-decoration: none;
@@ -452,13 +465,20 @@ header {
     /* filter: blur(12px); */
 }
 
+/* .subnav-content a{
+    display: block;
+} */
 .subnav-content.show a {
     margin: 8px;
     color: #385c8a;
     z-index: 1;
     font-size: 1rem;
+
+
+
     /* filter: blur(0px); */
 }
+
 
 .subnav-content.show a {
     animation: LeClubLinkAnimationIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
@@ -495,6 +515,45 @@ header {
         transform: translateY(0);
         opacity: 1;
         filter: blur(0px);
+    }
+
+}
+
+
+
+.subnav-content.show a:hover {
+    animation: LeClubLinkHoverAnimationIn 0.3s ease forwards;
+    opacity: 1;
+    /* animation: none;
+    opacity: 1;
+    transform: translateY(-5px) !important; */
+}
+
+.subnav-content.show a:not(:hover) {
+    opacity: 1;
+    animation: LeClubLinkHoverAnimationOut 0.3s ease forwards;
+}
+
+/* Handle the move up link on hover with keyframes de to the fact that keyframes
+ are already used for this element and normal animations don't work as intended*/
+@keyframes LeClubLinkHoverAnimationIn {
+    from {
+        transform: translateY(0px);
+    }
+
+    to {
+        transform: translateY(-5px);
+
+    }
+}
+
+@keyframes LeClubLinkHoverAnimationOut {
+    from {
+        transform: translateY(-5px);
+    }
+
+    to {
+        transform: translateY(0px);
     }
 
 }

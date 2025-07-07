@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('header').innerHTML = `
     <div class="top_header">
-        <a href="index.html"><img src="IMG/TCD_Logo_Square.png" alt="TCD_Logo_Square" class="TCD_Logo_Square"></a>
+        <a href="index.html"><img src=" ${baseUrl + "/WEB/" == this.window.location.href ? "IMG/TCD_Logo_Square.png" : "../IMG/TCD_Logo_Square.png" }" alt="TCD_Logo_Square" class="TCD_Logo_Square"></a>
     </div>
     <div class="bottom_header">
         <a href="/WEB/"><img src="${baseUrl + "/WEB/" == this.window.location.href ? "IMG/TCD_Logo.png" : "../IMG/TCD_Logo.png" }" alt="TCD_Logo" class="TCD_Logo" srcset=""></a>
