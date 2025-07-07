@@ -20,6 +20,7 @@ html * {
 html,
 body {
     height: 100%;
+    background-color: white;
 }
 
 :root {
@@ -32,6 +33,7 @@ body {
 /* Global styles */
 main {
     height: 100%;
+    transition: opacity 0.5s, filter 0.5s;
 }
 
 body.no-scroll {
@@ -83,6 +85,33 @@ li {
 
 .titre h2 {
     margin-bottom: 15px;
+}
+
+/* New Page Load Transition */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    /* background-color: rgba(255, 255, 255, 0.463); */
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    /* Start fully visible */
+    opacity: 1;
+    /* Block clicks while visible */
+    pointer-events: auto;
+    /* Animate the fade-out */
+    transition: opacity 0.5s ease-out;
+}
+body.loaded::before {
+    /* backdrop-filter: blur(0px);
+    background-color: transparent; */
+    opacity: 0;
+    /* Allow clicks to pass through once it's invisible */
+    pointer-events: none;
 }
 
 /* Button styles */
@@ -297,6 +326,10 @@ li {
 
 
 /* Header styles */
+header {
+    position: relative;
+    z-index: 10000;
+}
 .top_header {
     height: 57.14px;
     background-color: #1a3150;

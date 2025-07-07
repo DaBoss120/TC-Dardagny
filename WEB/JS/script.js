@@ -15,6 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
     //     </ul>
     // </nav>
     // <input type="text" placeholder="Search"></input>
+
+    // --- Page Load Transition ---
+    setTimeout(() => {
+        document.body.classList.add('loaded');
+        this.document.querySelector('main').style.opacity = '1';
+    }, 10);
+
+    // --- End of Page Load Transition Fix ---
     let hamburger = document.createElement('label');
     hamburger.classList.add('bar');
     hamburger.setAttribute('for', 'check');
@@ -60,6 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 </ul>
             </nav>
         </div>`
+
+
+
     document.querySelector('.top_header').appendChild(hamburger);
     document.querySelector('#check').addEventListener('change', toggleMenu);
 
@@ -142,6 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
             //     button.style.removeProperty('--mouse-x');
             //     button.style.removeProperty('--mouse-y');
             // });
+            // Add a fade in animation for the main content
+
         });
     });
 });

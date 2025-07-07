@@ -13,7 +13,7 @@
 }
 
 .back-img-presentation {
-    height: 70vh;
+    height: 100vh;
 }
 
 .titre-professeurs {
@@ -24,7 +24,6 @@
 }
 
 .equipe-professeurs {
-    height: 80vh;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -136,17 +135,17 @@ button p {
     color: #1a3150;
 }
 
-
-
-@media screen and (max-width: 768px) {
-
-
     .big-back-img{
         margin-bottom: 5rem;
     }
     .big-back-img:last-of-type {
         margin-bottom: 0px;
     }
+
+@media screen and (max-width: 768px) {
+
+
+
     .personnes-professeurs {
         padding-bottom: 150px;
     }
