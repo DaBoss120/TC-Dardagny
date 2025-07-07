@@ -32,42 +32,41 @@ document.addEventListener('DOMContentLoaded', () => {
     <span class="middle"></span>
     <span class="bottom"></span>`;
     // hamburger.addEventListener('click', toggleMenu);
+    const baseUrl = window.location.origin;
+
     document.querySelector('header').innerHTML = `
     <div class="top_header">
         <a href="index.html"><img src="IMG/TCD_Logo_Square.png" alt="TCD_Logo_Square" class="TCD_Logo_Square"></a>
-   
-</label>
-        </div>
-        <div class="bottom_header">
-            <a href="index.html"><img src="IMG/TCD_Logo.png" alt="TCD_Logo" class="TCD_Logo" srcset=""></a>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="index.html">HOME</a>
-                    </li>
-                    <li class="LeClub">
-                        <a href="#">LE CLUB <i class="fa fa-caret-down"></i></a>
-                        <div class="subnav-content">
-                            <a href="comite.html">COMITE</a>
-                            <a href="coursDeTennis.html">COURS DE TENNIS</a>
-                            <a href="adhesion.html">ADHESION</a>
-                            <a href="paiement.html">PAIEMENT</a>
-                            <a href="reglementEtStatuts.html">REGLEMENT ET STATUTS</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="agenda.html">AGENDA</a>
-                    </li>
-                    <li>
-                        <a href="reservation.html">RÉSERVATION</a>
-                    </li>
-
-                    <li>
-                        <a href="contact.html">CONTACT</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>`
+    </div>
+    <div class="bottom_header">
+        <a href="/WEB/"><img src="${baseUrl + "/WEB/" == this.window.location.href ? "IMG/TCD_Logo.png" : "../IMG/TCD_Logo.png" }" alt="TCD_Logo" class="TCD_Logo" srcset=""></a>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/WEB/">HOME</a>
+                </li>
+                <li class="LeClub">
+                    <a href="#">LE CLUB <i class="fa fa-caret-down"></i></a>
+                    <div class="subnav-content">
+                        <a href="/WEB/comite/">COMITE</a>
+                        <a href="/WEB/cours de tennis/">COURS DE TENNIS</a>
+                        <a href="/WEB/adhesion/">ADHESION</a>
+                        <a href="/WEB/paiement/">PAIEMENT</a>
+                        <a href="/WEB/reglement et status/">REGLEMENT ET STATUTS</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="/WEB/agenda/">AGENDA</a>
+                </li>
+                <li>
+                    <a href="/WEB/reservation/">RÉSERVATION</a>
+                </li>
+                <li>
+                    <a href="/WEB/contact/">CONTACT</a>
+                </li>
+            </ul>
+        </nav>
+    </div>`;
 
 
 

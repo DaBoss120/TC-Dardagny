@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TC Dardagny - Tennis club de Dardagny - Suisse</title>
-    <link rel="stylesheet" href="CSS/style.css">
-    <link rel="stylesheet" href="CSS/contact.css">
+    <title>Contact - TC Dardagny</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/contact.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="theme-color" content="#1a3150">
 </head>
@@ -28,7 +28,7 @@
                     <h1>Contactez-nous</h1>
 
                     <a href="mailto:%20info@tcdardagny.ch"><img class="bubble-hover round-img-in-bubble"
-                            src="IMG/Email.png" alt="Email image" style="border-radius: 100%;"></a>
+                            src="../IMG/Email.png" alt="Email image" style="border-radius: 100%;"></a>
                     <div class="text-bubble-img-presentation2 bubble-hover text-in-bubble" id="copyableText"
                         onclick="CopyEmail()">
                         <p>info@tcdardagny.ch</p>
@@ -37,24 +37,7 @@
             </div>
         </div>
     </main>
-    <script src="JS/script.js"></script>
-    <script>
-        function CopyEmail() {
-            navigator.clipboard.writeText("info@tcdardagny.ch");
-
-            let text = document.querySelector("#copyableText p");
-            text.innerHTML = "Copié !"
-
-            text.classList.add('textBlurButton');
-            text.classList.remove('textBlurButtonUnhover');
-
-            setTimeout(() => {
-                text.innerHTML = "info@tcdardagny.ch"
-                text.classList.remove('textBlurButton');
-                text.classList.add('textBlurButtonUnhover');
-            }, 3000)
-        }
-    </script>
+    <script src="../JS/script.js"></script>
 </body>
 
 </html>
