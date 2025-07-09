@@ -419,6 +419,9 @@ header {
     text-align: center;
     display: inline-block;
     transition: transform 0.3s ease;
+    /* min-width: 47.51px ; */
+    /* Force elements to stay on the same row */
+    white-space: nowrap;
 }
 
 .bottom_header nav ul li a span {
@@ -451,7 +454,7 @@ header {
         color: var(--color3);
         /* Lighter tint at peak size */
         filter: blur(1px);
-        text-shadow: 2px 4px 4px currentColor;
+        text-shadow: 1px 2px 2px currentColor;
     }
 
     100% {
@@ -501,7 +504,7 @@ header {
     opacity: 100%;
     height: auto;
     z-index: 1;
-
+    /* pointer-events: all; */
 }
 
 .subnav-content a {
@@ -511,6 +514,9 @@ header {
     z-index: 0;
     font-size: 2px;
     opacity: 0;
+    /* Prevent interaction when element is hidden */
+    pointer-events: none;
+
     /* filter: blur(12px); */
 }
 
@@ -522,7 +528,7 @@ header {
     color: #385c8a;
     z-index: 1;
     font-size: 1rem;
-
+    pointer-events: all;
 
 
     /* filter: blur(0px); */
@@ -1056,6 +1062,7 @@ div.unBlur {
         /* transition: max-height 0.4s cubic-bezier(.33, .22, .5, 1.35); */
         /* transition: max-height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); */
         transition: height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
         /* transition: height 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6); */
         /* transition: max-height 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); */
 
@@ -1074,6 +1081,7 @@ div.unBlur {
     .bottom_header .LeClub.subnav-open .subnav-content a {
         animation: subnavLinkAnimationIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         opacity: 0;
+        pointer-events: all;
     }
 
     .bottom_header .LeClub.subnav-open .subnav-content a:nth-of-type(1) {
@@ -1127,7 +1135,8 @@ div.unBlur {
             transform: translateY(-60px);
             opacity: 0;
             filter: blur(8px);
-           /* .bottom_header .subnav-content {
+            padding: 0px;
+            /* .bottom_header .subnav-content {
                 overflow: hidden;
             } */
         }

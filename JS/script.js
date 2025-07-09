@@ -23,6 +23,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 10);
 
     // --- End of Page Load Transition Fix ---
+    createNavigation();
+
+
+
+    if (window.innerWidth <= 768) {
+        // Recreate the navigation on mobile view to prevent dektop animation on link
+        createNavigation();
+    }
+    else {
+        // Reapply the text wave animation if the window is wider than 768px
+        textWaveAnimation();
+    }
+
+    // --- Button Hover Effect ---
+    buttonHoverEffect();
+
+    if (document.querySelector('.carousel')) {
+        carouselDotEffect();
+    }
+
+});
+window.addEventListener('resize', () => {
+    if (window.innerWidth <= 768) {
+        // Recreate the navigation on mobile view to prevent dektop animation on link
+        createNavigation();
+    }
+    else {
+        // Reapply the text wave animation if the window is wider than 768px
+        textWaveAnimation();
+    }
+});
+function createNavigation() {
     let hamburger = document.createElement('label');
     hamburger.classList.add('bar');
     hamburger.setAttribute('for', 'check');
@@ -34,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // hamburger.addEventListener('click', toggleMenu);
     const baseUrl = window.location.origin;
 
-    const isOnHomePage = baseUrl == this.window.location.href || baseUrl + '/' == this.window.location.href;
+    const isOnHomePage = baseUrl == window.location.href || baseUrl + '/' == window.location.href;
     document.querySelector('header').innerHTML = `
     <div class="top_header">
         <a href="/TC-Dardagny"><img src=" ${isOnHomePage ? "IMG/TCD_Logo_Square.png" : "../IMG/TCD_Logo_Square.png"}" alt="TCD_Logo_Square" class="TCD_Logo_Square"></a>
@@ -68,13 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
             </ul>
         </nav>
     </div>`;
-
-
-
     document.querySelector('.top_header').appendChild(hamburger);
     document.querySelector('#check').addEventListener('change', toggleMenu);
 
-    document.querySelector('.LeClub').addEventListener('mouseover', event => {
+    document.querySelector('.LeClub a').addEventListener('mouseover', event => {
         if (window.innerWidth > 768) {
             document.querySelector('.subnav-content').classList.add('show');
         }
@@ -88,6 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1000);
         }
     });
+
     // --- Mobile Subnav Click Logic ---
     document.querySelector('.LeClub > a').addEventListener('click', event => {
         // Only run on mobile view
@@ -107,19 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Text Wave Animation on Hover ---
-    if (window.innerWidth > 768) textWaveAnimation();
-
-
-    // --- Button Hover Effect ---
-    buttonHoverEffect();
-
-    if (document.querySelector('.carousel')) {
-        carouselDotEffect();
-    }
-
-});
+}
 function textWaveAnimation() {
+    // if (window.innerWidth <= 768) return; // Disable text wave animation on mobile
     // Select all main navigation links
     const navLinks = document.querySelectorAll('.bottom_header nav > ul > li > a, .subnav-content > a');
 
