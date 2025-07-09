@@ -37,10 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const isOnHomePage = baseUrl == this.window.location.href || baseUrl + '/' == this.window.location.href;
     document.querySelector('header').innerHTML = `
     <div class="top_header">
-        <a href="/"><img src=" ${isOnHomePage ? "IMG/TCD_Logo_Square.png" : "../IMG/TCD_Logo_Square.png"}" alt="TCD_Logo_Square" class="TCD_Logo_Square"></a>
+        <a href="/TC-Dardagny"><img src=" ${isOnHomePage ? "IMG/TCD_Logo_Square.png" : "../IMG/TCD_Logo_Square.png"}" alt="TCD_Logo_Square" class="TCD_Logo_Square"></a>
     </div>
     <div class="bottom_header">
-        <a href="/"><img src="${isOnHomePage ? "IMG/TCD_Logo.png" : "../IMG/TCD_Logo.png"}" alt="TCD_Logo" class="TCD_Logo" srcset=""></a>
+        <a href="/TC-Dardagny"><img src="${isOnHomePage ? "IMG/TCD_Logo.png" : "../IMG/TCD_Logo.png"}" alt="TCD_Logo" class="TCD_Logo" srcset=""></a>
         <nav>
             <ul>
                 <li>
@@ -49,21 +49,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 <li class="LeClub">
                     <a href="#">LE CLUB <i class="fa fa-caret-down"></i></a>
                     <div class="subnav-content">
-                        <a href="/comite/">COMITE</a>
-                        <a href="/cours de tennis/">COURS DE TENNIS</a>
-                        <a href="/adhesion/">ADHESION</a>
-                        <a href="/paiement/">PAIEMENT</a>
-                        <a href="/reglement et status/">REGLEMENT ET STATUTS</a>
+                        <a href="/TC-Dardagny/comite/">COMITE</a>
+                        <a href="/TC-Dardagny/cours de tennis/">COURS DE TENNIS</a>
+                        <a href="/TC-Dardagny/adhesion/">ADHESION</a>
+                        <a href="/TC-Dardagny/paiement/">PAIEMENT</a>
+                        <a href="/TC-Dardagny/reglement et status/">REGLEMENT ET STATUTS</a>
                     </div>
                 </li>
                 <li>
-                    <a href="/agenda/">AGENDA</a>
+                    <a href="/TC-Dardagny/agenda/">AGENDA</a>
                 </li>
                 <li>
-                    <a href="/reservation/">RÉSERVATION</a>
+                    <a href="/TC-Dardagny/reservation/">RÉSERVATION</a>
                 </li>
                 <li>
-                    <a href="/contact/">CONTACT</a>
+                    <a href="/TC-Dardagny/contact/">CONTACT</a>
                 </li>
             </ul>
         </nav>
