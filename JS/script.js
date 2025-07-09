@@ -66,7 +66,7 @@ function createNavigation() {
     // hamburger.addEventListener('click', toggleMenu);
     const baseUrl = window.location.origin;
 
-    const isOnHomePage = baseUrl == window.location.href || baseUrl + '/' == window.location.href;
+    const isOnHomePage = baseUrl == window.location.href || baseUrl + '/TC-Dardagny/' == window.location.href;
     document.querySelector('header').innerHTML = `
     <div class="top_header">
         <a href="/TC-Dardagny"><img src=" ${isOnHomePage ? "IMG/TCD_Logo_Square.png" : "../IMG/TCD_Logo_Square.png"}" alt="TCD_Logo_Square" class="TCD_Logo_Square"></a>
@@ -76,7 +76,7 @@ function createNavigation() {
         <nav>
             <ul>
                 <li>
-                    <a href="/">HOME</a>
+                    <a href="/TC-Dardagny">HOME</a>
                 </li>
                 <li class="LeClub">
                     <a href="#">LE CLUB <i class="fa fa-caret-down"></i></a>
