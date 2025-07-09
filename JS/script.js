@@ -34,35 +34,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // hamburger.addEventListener('click', toggleMenu);
     const baseUrl = window.location.origin;
 
+    const isOnHomePage = baseUrl == this.window.location.href || baseUrl + '/' == this.window.location.href;
     document.querySelector('header').innerHTML = `
     <div class="top_header">
-        <a href="index.html"><img src=" ${baseUrl + "/WEB/" == this.window.location.href ? "IMG/TCD_Logo_Square.png" : "../IMG/TCD_Logo_Square.png" }" alt="TCD_Logo_Square" class="TCD_Logo_Square"></a>
+        <a href="/"><img src=" ${isOnHomePage ? "IMG/TCD_Logo_Square.png" : "../IMG/TCD_Logo_Square.png" }" alt="TCD_Logo_Square" class="TCD_Logo_Square"></a>
     </div>
     <div class="bottom_header">
-        <a href="/WEB/"><img src="${baseUrl + "/WEB/" == this.window.location.href ? "IMG/TCD_Logo.png" : "../IMG/TCD_Logo.png" }" alt="TCD_Logo" class="TCD_Logo" srcset=""></a>
+        <a href="/"><img src="${isOnHomePage ? "IMG/TCD_Logo.png" : "../IMG/TCD_Logo.png" }" alt="TCD_Logo" class="TCD_Logo" srcset=""></a>
         <nav>
             <ul>
                 <li>
-                    <a href="/WEB/">HOME</a>
+                    <a href="/">HOME</a>
                 </li>
                 <li class="LeClub">
                     <a href="#">LE CLUB <i class="fa fa-caret-down"></i></a>
                     <div class="subnav-content">
-                        <a href="/WEB/comite/">COMITE</a>
-                        <a href="/WEB/cours de tennis/">COURS DE TENNIS</a>
-                        <a href="/WEB/adhesion/">ADHESION</a>
-                        <a href="/WEB/paiement/">PAIEMENT</a>
-                        <a href="/WEB/reglement et status/">REGLEMENT ET STATUTS</a>
+                        <a href="/comite/">COMITE</a>
+                        <a href="/cours de tennis/">COURS DE TENNIS</a>
+                        <a href="/adhesion/">ADHESION</a>
+                        <a href="/paiement/">PAIEMENT</a>
+                        <a href="/reglement et status/">REGLEMENT ET STATUTS</a>
                     </div>
                 </li>
                 <li>
-                    <a href="/WEB/agenda/">AGENDA</a>
+                    <a href="/agenda/">AGENDA</a>
                 </li>
                 <li>
-                    <a href="/WEB/reservation/">RÉSERVATION</a>
+                    <a href="/reservation/">RÉSERVATION</a>
                 </li>
                 <li>
-                    <a href="/WEB/contact/">CONTACT</a>
+                    <a href="/contact/">CONTACT</a>
                 </li>
             </ul>
         </nav>
