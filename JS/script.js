@@ -37,10 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const isOnHomePage = baseUrl == this.window.location.href || baseUrl + '/' == this.window.location.href;
     document.querySelector('header').innerHTML = `
     <div class="top_header">
-        <a href="/"><img src=" ${isOnHomePage ? "IMG/TCD_Logo_Square.png" : "../IMG/TCD_Logo_Square.png" }" alt="TCD_Logo_Square" class="TCD_Logo_Square"></a>
+        <a href="/"><img src=" ${isOnHomePage ? "IMG/TCD_Logo_Square.png" : "../IMG/TCD_Logo_Square.png"}" alt="TCD_Logo_Square" class="TCD_Logo_Square"></a>
     </div>
     <div class="bottom_header">
-        <a href="/"><img src="${isOnHomePage ? "IMG/TCD_Logo.png" : "../IMG/TCD_Logo.png" }" alt="TCD_Logo" class="TCD_Logo" srcset=""></a>
+        <a href="/"><img src="${isOnHomePage ? "IMG/TCD_Logo.png" : "../IMG/TCD_Logo.png"}" alt="TCD_Logo" class="TCD_Logo" srcset=""></a>
         <nav>
             <ul>
                 <li>
@@ -94,8 +94,96 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.innerWidth <= 768) {
             event.preventDefault(); // Prevent link from navigating
             event.currentTarget.parentElement.classList.toggle('subnav-open');
+            if (document.querySelector('.subnav-open')) {
+                document.querySelector('.subnav-content').style.overflow = 'hidden';
+            }
+            else {
+                document.querySelector('.subnav-content').style.overflow = 'visible';
+                setTimeout(() => {
+                    document.querySelector('.subnav-content').style.overflow = 'hidden';
+
+                }, 500);
+            }
         }
     });
+
+    // --- Text Wave Animation on Hover ---
+    if (window.innerWidth > 768) textWaveAnimation();
+
+
+    // --- Button Hover Effect ---
+    buttonHoverEffect();
+
+    if (document.querySelector('.carousel')) {
+        carouselDotEffect();
+    }
+
+});
+function textWaveAnimation() {
+    // Select all main navigation links
+    const navLinks = document.querySelectorAll('.bottom_header nav > ul > li > a, .subnav-content > a');
+
+    navLinks.forEach(link => {
+        const icon = link.querySelector('i'); // Check for an icon (like the caret)
+        let textContent = '';
+
+        // Isolate the text from the icon to avoid breaking it
+        const textNode = Array.from(link.childNodes).find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+        if (textNode) {
+            textContent = textNode.textContent.trim();
+            link.removeChild(textNode); // Remove the original text
+        }
+
+        // Wrap each letter in a span and add it back to the link
+        const letters = textContent.split('').map((char, i) => {
+            // Set an animation-delay for each letter to create the wave effect
+            // Make sure to handle spaces correctly : don't wrap spaces in spans
+            return char == " " ? " " : `<span style="animation-delay: ${i * 0.025}s;">${char}</span>`;
+        }).join('');
+
+        link.insertAdjacentHTML('afterbegin', letters);
+
+        // If there was an icon, add it back at the end
+        if (icon) {
+            link.appendChild(document.createTextNode(' '));
+            link.appendChild(icon);
+        }
+
+        link.addEventListener('mouseenter', () => {
+            link.classList.add('is-hovered');
+        });
+
+        link.addEventListener('mouseleave', () => {
+            const spans = link.querySelectorAll('span');
+            spans.forEach(span => {
+                // Capture the current computed styles at the moment of leaving
+                const computedStyle = window.getComputedStyle(span);
+                const matrix = new DOMMatrix(computedStyle.transform);
+                const scale = matrix.a; // In a 2D scale, 'a' holds the scaleX value
+                const color = computedStyle.color;
+
+                // Set these styles directly to override the animation's end state
+                span.style.transform = `scale(${scale})`;
+                span.style.color = color;
+                span.style.transition = 'none'; // Temporarily disable transition
+            });
+
+            // Remove the class that triggers the animation
+            link.classList.remove('is-hovered');
+
+            // Force a browser reflow to apply the inline styles immediately
+            void link.offsetWidth;
+
+            // Re-enable transitions and reset styles to smoothly animate back
+            spans.forEach(span => {
+                span.style.transition = 'transform 0.3s ease-out, color 0.3s ease-out';
+                span.style.transform = 'scale(1)';
+                span.style.color = ''; // Resets to the default CSS color
+            });
+        });
+    });
+}
+function buttonHoverEffect() {
     const buttons = document.querySelectorAll('.button1, .button2');
     const originalButtonDimensions = new Map();
 
@@ -157,8 +245,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
         });
     });
-});
+}
+function carouselDotEffect() {
+    const dotsContainer = document.querySelector('.dots');
+    const dots = document.querySelectorAll('.dot');
+    const maxScale = 1.8; // The biggest a dot can get
+    const effectRadius = 100; // How far the "wave" extends in pixels
 
+    dotsContainer.addEventListener('mousemove', (e) => {
+        const containerRect = dotsContainer.getBoundingClientRect();
+        const mouseX = e.clientX - containerRect.left;
+
+        dots.forEach(dot => {
+            const dotRect = dot.getBoundingClientRect();
+            // Calculate the horizontal center of the dot relative to the container
+            const dotCenterX = (dotRect.left - containerRect.left) + (dotRect.width / 2);
+
+            // Calculate the distance between the mouse and the dot's center
+            const distance = Math.abs(mouseX - dotCenterX);
+
+            // If the mouse is outside the effect radius, the scale is 1 (normal size)
+            if (distance > effectRadius) {
+                dot.style.transform = 'scale(1)';
+            } else {
+                // Use a smooth curve to calculate the scale based on distance
+                // (1 - distance / radius) creates a linear falloff. Squaring it makes the falloff curved and smoother.
+                const falloff = Math.pow(1 - (distance / effectRadius), 2);
+                const scale = 1 + (maxScale - 1) * falloff;
+                dot.style.transform = `scale(${scale})`;
+                dot.style.transform += `translateY(${(1 - scale) * 5}px)`; // Adjust vertical position based on scale
+            }
+        });
+    });
+
+    // Add a mouseleave event to reset the dots when the cursor leaves the container
+    dotsContainer.addEventListener('mouseleave', () => {
+        dots.forEach(dot => {
+            // Smoothly transition back to normal size
+            dot.style.transform = 'scale(1)';
+        });
+    });
+}
 function toggleMenu() {
     // const hamburger = document.querySelector(".hamburger");
     // menu.style.display == 'block' ? menu.style.display = "none" : menu.style.display = 'block';

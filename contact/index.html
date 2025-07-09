@@ -38,6 +38,23 @@
         </div>
     </main>
     <script src="../JS/script.js"></script>
+    <script>
+        function CopyEmail() {
+            navigator.clipboard.writeText("info@tcdardagny.ch");
+
+            let text = document.querySelector("#copyableText p");
+            text.innerHTML = "Copié !"
+
+            text.classList.add('textBlurButton');
+            text.classList.remove('textBlurButtonUnhover');
+
+            setTimeout(() => {
+                text.innerHTML = "info@tcdardagny.ch"
+                text.classList.remove('textBlurButton');
+                text.classList.add('textBlurButtonUnhover');
+            }, 3000)
+        }
+    </script>
 </body>
 
 </html>

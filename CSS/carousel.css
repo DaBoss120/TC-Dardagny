@@ -198,24 +198,29 @@
     margin: 0 2px;
     /* background-color: #bbb; */
     background: rgba(255, 255, 255, 0.25);
-    border-radius: 90px;
+    border-radius: 100%;
     box-shadow: 0 0px 6px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 50%;
     display: inline-block;
-    transition:
-        /*background-color*/
-        0.2s ease;
+    transition: 0.2s ease, transform 0.1s linear;
+}
+
+.dots:hover {
+    /* width: 104px;
+    height: 40px; */
+    .dot{
+        margin: 4px 6px;
+    }
 }
 
 .active,
 .dot:hover {
     /* background-color: #717171; */
     background: rgba(255, 255, 255, 0.25);
-    border-radius: 90px;
+    border-radius: 100%;
     box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.25);
-    transform: scale(1.1);
 }

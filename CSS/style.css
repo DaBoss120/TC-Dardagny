@@ -404,7 +404,7 @@ header {
     margin: 0px 2vw;
 }
 
-.bottom_header nav ul li>a {
+/* .bottom_header nav ul li>a {
     display: block;
     transition: transform 0.3s ease;
 
@@ -412,8 +412,57 @@ header {
 
 .bottom_header nav ul li a:hover {
     transform: translateY(-5px);
+} */
+/* --- Text Wave Animation Styles --- */
+.bottom_header nav ul li>a {
+    /* Prepare the link for scaling and ensure spans are positioned correctly */
+    text-align: center;
+    display: inline-block;
+    transition: transform 0.3s ease;
 }
 
+.bottom_header nav ul li a span {
+    /* Prepare each letter for animation */
+    display: inline-block;
+    position: relative;
+}
+
+.bottom_header nav ul li a.is-hovered {
+    /* On hover, scale the entire link up slightly */
+    transform: scale(1.1);
+}
+
+.bottom_header nav ul li a.is-hovered span {
+    /* Trigger the wave animation on the letters */
+    animation: textWave 0.25s ease-in-out forwards;
+}
+
+@keyframes textWave {
+    0% {
+        transform: scale(1);
+        color: var(--color2);
+        filter: blur(0px);
+        text-shadow: none;
+
+    }
+
+    50% {
+        transform: scale(1.5);
+        color: var(--color3);
+        /* Lighter tint at peak size */
+        filter: blur(1px);
+        text-shadow: 2px 4px 4px currentColor;
+    }
+
+    100% {
+        transform: scale(1);
+        color: var(--color2);
+        filter: blur(0px);
+        text-shadow: none;
+    }
+}
+
+/* --- End of Text Wave Animation --- */
 
 .bottom_header a {
     color: #385c8a;
@@ -520,22 +569,20 @@ header {
 }
 
 
-
+/*
 .subnav-content.show a:hover {
     animation: LeClubLinkHoverAnimationIn 0.3s ease forwards;
     opacity: 1;
-    /* animation: none;
-    opacity: 1;
-    transform: translateY(-5px) !important; */
 }
 
 .subnav-content.show a:not(:hover) {
     opacity: 1;
     animation: LeClubLinkHoverAnimationOut 0.3s ease forwards;
-}
+} */
 
 /* Handle the move up link on hover with keyframes de to the fact that keyframes
  are already used for this element and normal animations don't work as intended*/
+/*
 @keyframes LeClubLinkHoverAnimationIn {
     from {
         transform: translateY(0px);
@@ -556,7 +603,7 @@ header {
         transform: translateY(0px);
     }
 
-}
+} */
 
 .events {
     display: flex;
@@ -1059,10 +1106,40 @@ div.unBlur {
         }
 
         to {
-            transform: translateY(0);
+            transform: translateY(0px);
             opacity: 1;
             filter: blur(0px);
         }
+    }
+
+    @keyframes subnavLinkAnimationOut {
+        from {
+
+            transform: translateY(0);
+            opacity: 1;
+            filter: blur(0px);
+            /* .bottom_header .subnav-content {
+                overflow: visible;
+            } */
+        }
+
+        to {
+            transform: translateY(-60px);
+            opacity: 0;
+            filter: blur(8px);
+           /* .bottom_header .subnav-content {
+                overflow: hidden;
+            } */
+        }
+
+    }
+
+    .bottom_header .LeClub:not(.subnav-open) .subnav-content {
+        transition: height 0.5s ease;
+    }
+
+    .bottom_header .LeClub:not(.subnav-open) .subnav-content a {
+        animation: subnavLinkAnimationOut 0.4s ease forwards;
     }
 
     .bottom_header .subnav-content a {
