@@ -3,7 +3,7 @@
 }
 
 .reglement-et-statuts-contnent {
-    background-image: url("../IMG/PLAY.jpg"); /* Changed from /WEB/IMG/... */
+    background-image: url("../IMG/PLAY.webp"); /* Changed from /WEB/IMG/... */
     justify-content: space-around;
     background-size: cover;
     background-repeat: no-repeat;

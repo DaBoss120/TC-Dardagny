@@ -28,7 +28,7 @@
     justify-content: space-around;
     align-items: center;
     /* height: 80vh; */
-    background-image: url("../IMG/YellowTennisBallOnConcrete.jpg");
+    background-image: url("../IMG/YellowTennisBallOnConcrete.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -121,7 +121,7 @@
 
 
 .cours-et-stages {
-    background-image: url('../IMG/TennisFloorCourtWithLines.jpg');
+    background-image: url('../IMG/TennisFloorCourtWithLines.webp');
     justify-content: space-between;
 }
 
