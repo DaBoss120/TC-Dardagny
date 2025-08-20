@@ -155,10 +155,11 @@ function textWaveAnimation() {
         }
 
         // Wrap each letter in a span and add it back to the link
+        const delayPerLetter = textContent.length > 1 ? 0.15 / (textContent.length - 1) : 0.15;
         const letters = textContent.split('').map((char, i) => {
             // Set an animation-delay for each letter to create the wave effect
             // Make sure to handle spaces correctly : don't wrap spaces in spans
-            return char == " " ? " " : `<span style="animation-delay: ${i * 0.025}s;">${char}</span>`;
+            return char == " " ? " " : `<span style="animation-delay: ${i * delayPerLetter}s;">${char}</span>`;
         }).join('');
 
         link.insertAdjacentHTML('afterbegin', letters);
