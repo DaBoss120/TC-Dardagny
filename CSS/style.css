@@ -404,15 +404,7 @@ header {
     margin: 0px 2vw;
 }
 
-/* .bottom_header nav ul li>a {
-    display: block;
-    transition: transform 0.3s ease;
 
-}
-
-.bottom_header nav ul li a:hover {
-    transform: translateY(-5px);
-} */
 /* --- Text Wave Animation Styles --- */
 .bottom_header nav ul li>a {
     /* Prepare the link for scaling and ensure spans are positioned correctly */
@@ -465,7 +457,7 @@ header {
     }
 }
 
-/* --- End of Text Wave Animation --- */
+/* --- Header style and animations --- */
 
 .bottom_header a {
     color: #385c8a;
@@ -658,7 +650,7 @@ header {
 }
 
 
-
+/* General page styling */
 .big-back-img {
     height: 100%;
 }
