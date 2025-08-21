@@ -145,7 +145,12 @@ button p {
 @media screen and (max-width: 768px) {
 
 
-
+    .equipe-professeurs {
+        background-image: url("../IMG/YellowTennisBallOnConcrete-Mobile.webp");
+    }
+    .cours-et-stages {
+        background-image: url('../IMG/TennisFloorCourtWithLines-Mobile.webp');
+    }
     .personnes-professeurs {
         padding-bottom: 150px;
     }

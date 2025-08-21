@@ -16,3 +16,9 @@ a{
 button p{
     color: var(--color1);
 }
+@media screen and (max-width: 768px) {
+    .reglement-et-statuts-contnent {
+        background-image: url("../IMG/PLAY-Mobile.webp");
+    }
+    
+}

@@ -41,6 +41,9 @@
 }
 
 @media screen and (max-width: 768px) {
+    .paiement-content {     
+        background-image: url("../IMG/BallOnRacketUpClose-Mobile.webp");
+    }
     .text-bubble-img-presentation img {
         width: 100%;
         min-width: 250px;
