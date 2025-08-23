@@ -36,12 +36,18 @@
 
 .prev,
 .next {
+    display :flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     position: absolute;
     top: 50%;
+    /* left: 0%; */
     width: auto;
     /* margin-top: -22px; */
-    padding: 16px;
+    /* padding: 16px; */
+    width:41.58px;
+    height: 56.6667px;
     color: white;
     font-weight: bold;
     font-size: 18px;
@@ -49,6 +55,7 @@
     border-radius: 0 3px 3px 0;
     user-select: none;
     transform: translate(0%, -50%);
+
 
 }
 
@@ -63,6 +70,58 @@
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
+            font-size: .9rem;
+        text-indent: -1;
+
+}
+.prev:hover{
+    animation: leftArrowAnim 0.6s ease;
+}
+.next:hover{
+    animation: rightArrowAnim 0.6s ease;
+}
+
+@keyframes leftArrowAnim {
+    0% {}
+
+    25% {
+        text-indent: 10px;
+        font-size: .9rem;
+    }
+
+    50% {
+                
+font-size: 30px;
+    }
+
+    75% {
+        text-indent: -5px;
+        /* font-size: 1rem;  */
+    }
+
+    100% {
+
+    }
+
+}
+@keyframes rightArrowAnim {
+    0% {}
+
+    25% {
+        text-indent: -10px;
+        font-size: .9rem;
+    }
+
+    50% {
+        font-size: 30px;
+    }
+    75% {
+        text-indent: 5px;
+        /* font-size: 1rem;  */
+    }
+    100% {
+
+    }   
 }
 
 /* Caption text */
@@ -173,7 +232,12 @@
         font-size: 13.56px;
     }
 }
-
+@media screen and(max-width: 768px){
+.prev:hover, .next:hover{
+    animation:none;
+}
+    
+}
 .dots {
     display: flex;
     align-items: center;
@@ -209,9 +273,10 @@
 }
 
 .dots:hover {
+
     /* width: 104px;
     height: 40px; */
-    .dot{
+    .dot {
         margin: 4px 6px;
     }
 }

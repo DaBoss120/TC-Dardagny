@@ -1,0 +1,106 @@
+.agenda {
+    
+    /* margin: auto; */
+    min-height: 100%;
+    min-width: fit-content;
+    /* padding: 0px 32px; */
+    padding: 150px;
+    /* background-color: rgb(129, 198, 129); */
+    /* background-image: linear-gradient( , blue); */
+    /* background: linear-gradient(270deg, #385c8a, #d55c00);
+    background-size: 400% 400%;
+
+    -webkit-animation: AnimationName 31s ease infinite;
+    -moz-animation: AnimationName 31s ease infinite;
+    -o-animation: AnimationName 31s ease infinite;
+    animation: AnimationName 31s ease infinite; */
+    background: linear-gradient(270deg, #385c8a, #d55c00, #edc359);
+    background-size: 600% 600%;
+
+    -webkit-animation: AnimationName 29s ease infinite;
+    -moz-animation: AnimationName 29s ease infinite;
+    -o-animation: AnimationName 29s ease infinite;
+    animation: AnimationName 29s ease infinite;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0px 100px 30px -50px rgb(255, 255, 255);
+}
+
+/* @-webkit-keyframes AnimationName {
+    0%{background-position:14% 0%}
+    50%{background-position:87% 100%}
+    100%{background-position:14% 0%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:14% 0%}
+    50%{background-position:87% 100%}
+    100%{background-position:14% 0%}
+}
+@-o-keyframes AnimationName {
+    0%{background-position:14% 0%}
+    50%{background-position:87% 100%}
+    100%{background-position:14% 0%}
+}
+@keyframes AnimationName {
+    0%{background-position:14% 0%}
+    50%{background-position:87% 100%}
+    100%{background-position:14% 0%}
+} */
+@-webkit-keyframes AnimationName {
+    0% {
+        background-position: 7% 0%
+    }
+
+    50% {
+        background-position: 94% 100%
+    }
+
+    100% {
+        background-position: 7% 0%
+    }
+}
+
+@-moz-keyframes AnimationName {
+    0% {
+        background-position: 7% 0%
+    }
+
+    50% {
+        background-position: 94% 100%
+    }
+
+    100% {
+        background-position: 7% 0%
+    }
+}
+
+@-o-keyframes AnimationName {
+    0% {
+        background-position: 7% 0%
+    }
+
+    50% {
+        background-position: 94% 100%
+    }
+
+    100% {
+        background-position: 7% 0%
+    }
+}
+
+@keyframes AnimationName {
+    0% {
+        background-position: 7% 0%
+    }
+
+    50% {
+        background-position: 94% 100%
+    }
+
+    100% {
+        background-position: 7% 0%
+    }
+}

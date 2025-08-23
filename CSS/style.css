@@ -21,6 +21,8 @@ html,
 body {
     height: 100%;
     background-color: white;
+    /* Prevent horizontal scrolling caused by elements using 100vw or positioned off-screen */
+    /* overflow-x: hidden; */
 }
 
 :root {
@@ -812,7 +814,7 @@ div.unBlur {
     }
 
     .text-bubble-img-presentation:last-of-type {
-        width: auto;
+        /* width: auto; */
     }
 
     .big-back-img {

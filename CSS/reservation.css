@@ -1,3 +1,15 @@
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    overflow: hidden;
+    background-color: transparent;
+}
+body{
+    background-color: transparent;
+}
 .court-img {
     filter: blur(0px);
     -webkit-filter: blur(0px);
@@ -42,8 +54,27 @@ a {
     text-decoration: none;
 }
 
+/* .background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1; /* Ensure it stays behind other content */
+
 .img-with-gadient {
-    height: 110%;
+    /* height: 100vh;
+    width: 102vw; */
+    width: 105vw;
+    height: 105vh;
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+     /* Center the oversized element to hide edges evenly */
+
+
     background-image: url("../IMG/court2.webp");
     /* Changed from /WEB/IMG/... */
     filter: blur(20px);
@@ -54,7 +85,7 @@ a {
     margin-top: 16px;
 }
 
-.img-with-gadient-content{
+.img-with-gadient-content {
     /* background-image: url("../IMG/court2.png"); */
     /* Changed from /WEB/IMG/... */
     display: flex;
@@ -64,20 +95,22 @@ a {
     width: 100%;
     margin: auto;
     /* Top + bottom at 50% = better centered in y axis */
-    top: 50%;
+    /* top: 50%;
     bottom: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
     z-index: 0;
     /* width: 70%;
     height: 70%; */
 }
-.img-with-gadient-content div{
+
+.img-with-gadient-content div {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
 }
+
 .reservation-content {
     height: 100%;
 }
@@ -104,15 +137,18 @@ a {
         height: 80vw;
         max-height: 400px;
     }
+
     .img-with-gadient-content div {
         flex-direction: column;
         align-items: center;
     }
-    .img-with-gadient-content div div{
+
+    .img-with-gadient-content div div {
         margin: 10px 0;
     }
+
     .img-with-gadient-content {
-       top: 40%;
+        top: 40%;
         flex-direction: column;
         align-items: center;
     }
