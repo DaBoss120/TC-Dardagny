@@ -473,9 +473,6 @@ header {
 
 .subnav-content {
     transition: all 0.3s;
-}
-
-.bottom_header .subnav-content {
     opacity: 0%;
     /* display: none; */
     display: flex;
