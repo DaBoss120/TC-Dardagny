@@ -49,13 +49,19 @@
     box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
     /* background-image: linear-gradient(green, blue); */
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 60px;
-    position: relative;
     /* Required for positioning the ::after pseudo-element */
-    overflow: hidden;
+    position: relative;
     /* Ensures the effect is clipped by the border-radius */
+    overflow: hidden;
+
+    /* Appearing effects */
+    filter: blur(20px);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: transform 0.3s cubic-bezier(.11,.06,.55,1),filter 0.4s, opacity 0.5s;
 }
 
 
