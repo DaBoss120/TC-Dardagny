@@ -350,47 +350,81 @@ function carouselDotEffect() {
     });
 }
 function toggleMenu() {
-    // const hamburger = document.querySelector(".hamburger");
-    // menu.style.display == 'block' ? menu.style.display = "none" : menu.style.display = 'block';
-
     const menu = document.querySelector('.bottom_header nav');
-    // If the menu is currently shown, hide it with animation
+    const links = menu.querySelectorAll('.bottom_header nav ul li a');
+
     if (menu.classList.contains('show')) {
+        // --- Menu is closing ---
+        menu.classList.add('closing'); // Add closing class to trigger link animations
         menu.classList.remove('show');
-        menu.classList.add('closing');
-        // Close the subnav if it's open
+        document.body.classList.remove('no-scroll');
         document.querySelector('.LeClub').classList.remove('subnav-open');
-        // When the close animation ends, clean up
-        menu.addEventListener('animationend', function handler(event) {
-            if (event.target === menu) {
-                if (event.animationName === 'menuBackgroundSlideUp') {
-                    menu.classList.remove('closing');
-                    // Wait for all animations to end
-                    setTimeout(() => {
-                        menu.removeEventListener('animationend', handler);
-                        document.body.classList.remove('no-scroll');
-                    }, 200);
-                }
+
+        // // After the main transition ends, remove the closing class
+        // menu.addEventListener('transitionend', () => {
+        //     menu.classList.remove('closing');
+        // }, { once: true }); // Use { once: true } to auto-remove the listener
+        // Listen for the transition to end, but only act when 'height' is done.
+        const afterClose = (event) => {
+            // Ensure we only act on the transition of the menu itself, and only for the 'height' property.
+            if (event.target === menu && event.propertyName === 'height') {
+                menu.classList.remove('closing');
+                links.forEach(link => {
+                    link.style.animation = '';
+                });
+                // Clean up the event listener to prevent it from running again.
+                menu.removeEventListener('transitionend', afterClose);
             }
-        });
+        };
+        menu.addEventListener('transitionend', afterClose);
 
-    }
-    // If the menu is currently hidden, show it with animation
-    else {
+    } else {
+        // --- Menu is opening ---
         menu.classList.add('show');
-        menu.style.display = 'flex';
-
         window.scrollTo({ top: 0, behavior: 'smooth' });
-
-        setTimeout(() => {
-            document.body.classList.add('no-scroll');
-        }, 200);
+        document.body.classList.add('no-scroll');
     }
-    // if (menu.style.display === 'block') {
-    //     menu.style.display = 'none';
-    // } else {
-    //     menu.style.display = 'block';
+    // // const hamburger = document.querySelector(".hamburger");
+    // // menu.style.display == 'block' ? menu.style.display = "none" : menu.style.display = 'block';
+
+    // const menu = document.querySelector('.bottom_header nav');
+    // // If the menu is currently shown, hide it with animation
+    // if (menu.classList.contains('show')) {
+    //     menu.classList.remove('show');
+    //     menu.classList.add('closing');
+    //     // Close the subnav if it's open
+    //     document.querySelector('.LeClub').classList.remove('subnav-open');
+    //     // When the close animation ends, clean up
+    //     menu.addEventListener('animationend', function handler(event) {
+    //         if (event.target === menu) {
+    //             if (event.animationName === 'menuBackgroundSlideUp') {
+    //                 menu.classList.remove('closing');
+    //                 // Wait for all animations to end
+    //                 setTimeout(() => {
+    //                     menu.removeEventListener('animationend', handler);
+    //                     document.body.classList.remove('no-scroll');
+    //                 }, 200);
+    //             }
+    //         }
+    //     });
+
     // }
+    // // If the menu is currently hidden, show it with animation
+    // else {
+    //     menu.classList.add('show');
+    //     menu.style.display = 'flex';
+
+    //     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    //     setTimeout(() => {
+    //         document.body.classList.add('no-scroll');
+    //     }, 200);
+    // }
+    // // if (menu.style.display === 'block') {
+    // //     menu.style.display = 'none';
+    // // } else {
+    // //     menu.style.display = 'block';
+    // // }
 };
 
 // document.querySelectorAll('.personnes-comite').forEach(element => {

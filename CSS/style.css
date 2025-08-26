@@ -860,7 +860,8 @@ div.unBlur {
     }
 
     .bottom_header nav {
-        display: none;
+        /* display: none; */
+        display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
@@ -878,18 +879,37 @@ div.unBlur {
         -webkit-backdrop-filter: blur(8px);
         z-index: 1;
         overflow: hidden;
-        transition: none;
-        opacity: 0.5;
+        /* transition: none; */
+
+        /* Initial hidden state */
+        height: 0;
+        opacity: 0.2;
+        visibility: hidden;
+        /* Hide from screen readers and interactions */
+
+
+        /* Replace animations with transitions for smooth interruption */
+        transition: height 0.5s ease-out, opacity 0.4s ease-in, visibility 0s linear 0.4s;
+
         /* Add a mask to create a fade-out effect at the bottom */
         -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
         mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
     }
 
     .bottom_header nav.show {
-        display: flex;
-        animation: menuBackgroundSlideDown 0.5s ease-out forwards, backgroundFadeIn 0.5s linear forwards;
+        /* display: flex; */
+        opacity: 1;
+        /* Set target properties for the open state */
+        height: 115vh;
+        /* Use 115vh for a full screen menu */
+        /* animation: menuBackgroundSlideDown 0.5s ease-out forwards, backgroundFadeIn 0.5s linear forwards; */
+        visibility: visible;
+        /* Make it visible */
+        transition: height 0.4s ease-out, opacity 0.3s ease-in;
+        /* Transition for opening */
     }
 
+    /* Not using keyframes for interrupt animations */
     @keyframes menuBackgroundSlideDown {
 
         from {
@@ -912,7 +932,7 @@ div.unBlur {
 
     }
 
-    .bottom_header nav.closing {
+    /* .bottom_header nav.closing {
         animation: menuBackgroundSlideUp 0.4s ease-in forwards;
     }
 
@@ -927,7 +947,7 @@ div.unBlur {
             height: 0;
             opacity: 0.5;
         }
-    }
+    } */
 
     .bottom_header nav ul {
         display: flex;
@@ -948,8 +968,12 @@ div.unBlur {
     }
 
     .bottom_header nav ul li a {
+        /* Define the "out" state (hidden) as the default */
+        opacity: 0;
+        transform: translateY(-40px);
+        filter: blur(8px);
 
-        opacity: 1;
+        /* opacity: 1; */
         width: 75%;
         text-align: center;
         margin: auto;
@@ -958,38 +982,52 @@ div.unBlur {
         background: none;
         color: var(--color1);
         padding: 15px 0;
+
+        /* This transition will now handle both opening and closing smoothly */
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+            opacity 0.2s ease,
+            /* also works : opacity 0.4 cubic-bezier(0.34, 1.56, 0.64, 1) */
+            filter 0.3s ease;
     }
 
     .bottom_header nav.show ul li a {
-        animation: linkAnimationIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        opacity: 0;
+        /* Define the target "in" state (visible) */
+        transform: translateY(0);
+        opacity: 1;
+        filter: blur(0px);
+        /*      animation: linkAnimationIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; */
     }
 
 
 
 
     .bottom_header nav.show ul li:nth-of-type(1) a {
-        animation-delay: 0.2s;
+        /* animation-delay: 0.2s; */
+        transition-delay: 0.2s
     }
 
     .bottom_header nav.show ul li:nth-of-type(2) a {
-        animation-delay: 0.3s;
+        /* animation-delay: 0.3s; */
+        transition-delay: 0.3s
     }
 
     .bottom_header nav.show ul li:nth-of-type(3) a {
-        animation-delay: 0.4s;
+        /* animation-delay: 0.4s; */
+        transition-delay: 0.4s
     }
 
     .bottom_header nav.show ul li:nth-of-type(4) a {
-        animation-delay: 0.5s;
+        /* animation-delay: 0.5s; */
+        transition-delay: 0.5s
     }
 
     .bottom_header nav.show ul li:nth-of-type(5) a {
-        animation-delay: 0.6s;
+        /* animation-delay: 0.6s; */
+        transition-delay: 0.6s
     }
 
     .bottom_header nav.closing ul li a {
-        animation: linkAnimationOut 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        /* animation: linkAnimationOut 0.4s ease forwards; */
 
     }
 
@@ -1064,38 +1102,80 @@ div.unBlur {
     }
 
     .bottom_header .LeClub.subnav-open .subnav-content {
-        /* Show on click */
-        /* max-height: none; */
         /* Check height with auto and then set exact number for best result and animation */
         height: 236.67px;
-        /* height: 300px; */
         /* Adjust if you have more items */
     }
 
+    .bottom_header .subnav-content a {
+        /* Override desktop styles for mobile */
+        font-size: 20px;
+        color: var(--color2);
+        padding: 10px 0;
+
+        pointer-events: none;
+        /* Prevent interaction when hidden */
+
+        /* This transition will now handle both opening and closing smoothly */
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+            opacity 0.2s ease,
+            /* also works : opacity 0.4 cubic-bezier(0.34, 1.56, 0.64, 1) */
+            filter 0.3s ease;
+        /* The delay is 0s by default, so the closing animation is immediate */
+    }
+
     .bottom_header .LeClub.subnav-open .subnav-content a {
-        animation: subnavLinkAnimationIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        opacity: 0;
+        /* animation: subnavLinkAnimationIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; */
+        /* opacity: 0; */
+        /* Define the out state */
+        transform: translateY(0);
+        opacity: 1;
+        filter: blur(0px);
         pointer-events: all;
+
+        /* transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+            opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+            filter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); */
+    }
+
+    .bottom_header .LeClub:not(.subnav-open) .subnav-content {
+        transition: height 0.5s ease;
+    }
+
+    .bottom_header .LeClub:not(.subnav-open) .subnav-content a {
+        /* animation: subnavLinkAnimationOut 0.4s ease forwards; */
+        /* Define target invisible state (before showing) */
+        transform: translateY(-20px);
+        opacity: 0;
+        filter: blur(8px);
+        padding: 0px;
+        transition-delay: 0s;
+
     }
 
     .bottom_header .LeClub.subnav-open .subnav-content a:nth-of-type(1) {
-        animation-delay: 0.1s;
+        /* animation-delay: 0.1s; */
+        transition-delay: 0.1s;
     }
 
     .bottom_header .LeClub.subnav-open .subnav-content a:nth-of-type(2) {
-        animation-delay: 0.2s;
+        /* animation-delay: 0.2s; */
+        transition-delay: 0.2s;
     }
 
     .bottom_header .LeClub.subnav-open .subnav-content a:nth-of-type(3) {
-        animation-delay: 0.3s;
+        /* animation-delay: 0.3s; */
+        transition-delay: 0.3s;
     }
 
     .bottom_header .LeClub.subnav-open .subnav-content a:nth-of-type(4) {
-        animation-delay: 0.4s;
+        /* animation-delay: 0.4s; */
+        transition-delay: 0.4s;
     }
 
     .bottom_header .LeClub.subnav-open .subnav-content a:nth-of-type(5) {
-        animation-delay: 0.5s;
+        /* animation-delay: 0.5s; */
+        transition-delay: 0.5s;
     }
 
 
@@ -1137,13 +1217,7 @@ div.unBlur {
 
     }
 
-    .bottom_header .LeClub:not(.subnav-open) .subnav-content {
-        transition: height 0.5s ease;
-    }
 
-    .bottom_header .LeClub:not(.subnav-open) .subnav-content a {
-        animation: subnavLinkAnimationOut 0.4s ease forwards;
-    }
 
     .bottom_header .subnav-content a {
         /* Override desktop styles for mobile */
