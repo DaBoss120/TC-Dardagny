@@ -4,22 +4,53 @@
     flex-direction: column;
     align-items: center;
 }
-
 .contact-text p {
     color: white;
 }
 
 .contactContent div:nth-of-type(2) {
     position: absolute;
-    top: 30%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(50vw, 60vh);
+    height: auto;
+    min-width: 450px;
+}
+@media screen and (max-height:  768px) {
+    
+    .contactContent div:nth-of-type(2){
+        position:relative;
+        transform: translate(0%, 0%);
+        left: 0%;
+        min-width: 350px;
+        .bubble-hover{
+            margin: 10px;
+        }
+        h1{
+            font-size: 28px;
+        }
+    }   
+    
 }
 @media screen and (max-width: 768px) {
-    .text-bubble-img-presentation:last-of-type{
+
+    .contactContent div:nth-of-type(2){
+        position:relative;
+        transform: translate(0%, 0%);
+        /* top: 50%; */
+        left: 0%;
         width: 80vw;
+
+        min-width: 0px;
         padding: 28px 0px;
         h1{
             font-size: 32px;
         }
+    }
+    .back-img-presentation{
+        height: auto;
+     
     }
     .round-img-in-bubble{
         width: 75%;
