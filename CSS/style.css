@@ -424,13 +424,14 @@ header {
     position: relative;
 }
 
-.bottom_header nav ul li a.is-hovered {
+.bottom_header nav ul li a:hover {
     /* On hover, scale the entire link up slightly */
     transform: scale(1.1);
 }
 
-.bottom_header nav ul li a.is-hovered span {
+.bottom_header nav ul li a[data-is-hovered="true"] span {
     /* Trigger the wave animation on the letters */
+    /* Edit seconds to make the effect slower of faster */
     animation: textWave 0.25s ease-in-out forwards;
 }
 
@@ -445,8 +446,8 @@ header {
 
     50% {
         transform: scale(1.5);
-        color: var(--color3);
         /* Lighter tint at peak size */
+        color: var(--color3);
         filter: blur(1px);
         text-shadow: 1px 2px 2px currentColor;
     }

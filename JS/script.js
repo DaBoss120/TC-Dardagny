@@ -139,70 +139,112 @@ function createNavigation() {
 
 }
 function textWaveAnimation() {
-    // if (window.innerWidth <= 768) return; // Disable text wave animation on mobile
-    // Select all main navigation links
     const navLinks = document.querySelectorAll('.bottom_header nav > ul > li > a, .subnav-content > a');
 
     navLinks.forEach(link => {
-        const icon = link.querySelector('i'); // Check for an icon (like the caret)
-        let textContent = '';
+        // A flag to prevent re-wrapping letters if the function runs multiple times
+        if (link.dataset.waveAnimated) return;
+        link.dataset.waveAnimated = 'true';
 
-        // Isolate the text from the icon to avoid breaking it
+        const icon = link.querySelector('i');
+        let textContent = '';
         const textNode = Array.from(link.childNodes).find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+
         if (textNode) {
             textContent = textNode.textContent.trim();
-            link.removeChild(textNode); // Remove the original text
+            link.removeChild(textNode);
         }
 
-        // Wrap each letter in a span and add it back to the link
-        const delayPerLetter = textContent.length > 1 ? 0.15 / (textContent.length - 1) : 0.15;
+        const totalAnimationTime = 250; // Corresponds to animation duration in CSS
+        const delayPerLetter = textContent.length > 1 ? (totalAnimationTime * 0.5) / (textContent.length - 1) : 0;
+
         const letters = textContent.split('').map((char, i) => {
-            // Set an animation-delay for each letter to create the wave effect
-            // Make sure to handle spaces correctly : don't wrap spaces in spans
-            return char == " " ? " " : `<span style="animation-delay: ${i * delayPerLetter}s;">${char}</span>`;
+            return char === " " ? " " : `<span style="animation-delay: ${i * delayPerLetter}ms;">${char}</span>`;
         }).join('');
 
         link.insertAdjacentHTML('afterbegin', letters);
 
-        // If there was an icon, add it back at the end
         if (icon) {
             link.appendChild(document.createTextNode(' '));
             link.appendChild(icon);
         }
 
+        let leaveTimeout;
         link.addEventListener('mouseenter', () => {
-            link.classList.add('is-hovered');
+            clearTimeout(leaveTimeout);
+            link.dataset.isHovered = 'true';
         });
 
         link.addEventListener('mouseleave', () => {
-            const spans = link.querySelectorAll('span');
-            spans.forEach(span => {
-                // Capture the current computed styles at the moment of leaving
-                const computedStyle = window.getComputedStyle(span);
-                const matrix = new DOMMatrix(computedStyle.transform);
-                const scale = matrix.a; // In a 2D scale, 'a' holds the scaleX value
-                const color = computedStyle.color;
-
-                // Set these styles directly to override the animation's end state
-                span.style.transform = `scale(${scale})`;
-                span.style.color = color;
-                span.style.transition = 'none'; // Temporarily disable transition
-            });
-
-            // Remove the class that triggers the animation
-            link.classList.remove('is-hovered');
-
-            // Force a browser reflow to apply the inline styles immediately
-            void link.offsetWidth;
-
-            // Re-enable transitions and reset styles to smoothly animate back
-            spans.forEach(span => {
-                span.style.transition = 'transform 0.3s ease-out, color 0.3s ease-out';
-                span.style.transform = 'scale(1)';
-                span.style.color = ''; // Resets to the default CSS color
-            });
+            leaveTimeout = setTimeout(() => {
+                delete link.dataset.isHovered;
+            }, totalAnimationTime);
         });
     });
+    // // if (window.innerWidth <= 768) return; // Disable text wave animation on mobile
+    // // Select all main navigation links
+    // const navLinks = document.querySelectorAll('.bottom_header nav > ul > li > a, .subnav-content > a');
+
+    // navLinks.forEach(link => {
+    //     const icon = link.querySelector('i'); // Check for an icon (like the caret)
+    //     let textContent = '';
+
+    //     // Isolate the text from the icon to avoid breaking it
+    //     const textNode = Array.from(link.childNodes).find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+    //     if (textNode) {
+    //         textContent = textNode.textContent.trim();
+    //         link.removeChild(textNode); // Remove the original text
+    //     }
+
+    //     // Wrap each letter in a span and add it back to the link
+    //     const delayPerLetter = textContent.length > 1 ? 0.15 / (textContent.length - 1) : 0.15;
+    //     const letters = textContent.split('').map((char, i) => {
+    //         // Set an animation-delay for each letter to create the wave effect
+    //         // Make sure to handle spaces correctly : don't wrap spaces in spans
+    //         return char == " " ? " " : `<span style="animation-delay: ${i * delayPerLetter}s;">${char}</span>`;
+    //     }).join('');
+
+    //     link.insertAdjacentHTML('afterbegin', letters);
+
+    //     // If there was an icon, add it back at the end
+    //     if (icon) {
+    //         link.appendChild(document.createTextNode(' '));
+    //         link.appendChild(icon);
+    //     }
+
+    //     link.addEventListener('mouseenter', () => {
+    //         link.classList.add('is-hovered');
+    //     });
+
+    //     link.addEventListener('mouseleave', () => {
+    //         const spans = link.querySelectorAll('span');
+    //         spans.forEach(span => {
+    //             // Capture the current computed styles at the moment of leaving
+    //             const computedStyle = window.getComputedStyle(span);
+    //             const matrix = new DOMMatrix(computedStyle.transform);
+    //             const scale = matrix.a; // In a 2D scale, 'a' holds the scaleX value
+    //             const color = computedStyle.color;
+
+    //             // Set these styles directly to override the animation's end state
+    //             span.style.transform = `scale(${scale})`;
+    //             span.style.color = color;
+    //             span.style.transition = 'none'; // Temporarily disable transition
+    //         });
+
+    //         // Remove the class that triggers the animation
+    //         link.classList.remove('is-hovered');
+
+    //         // Force a browser reflow to apply the inline styles immediately
+    //         void link.offsetWidth;
+
+    //         // Re-enable transitions and reset styles to smoothly animate back
+    //         spans.forEach(span => {
+    //             span.style.transition = 'transform 0.3s ease-out, color 0.3s ease-out';
+    //             span.style.transform = 'scale(1)';
+    //             span.style.color = ''; // Resets to the default CSS color
+    //         });
+    //     });
+    // });
 }
 function buttonHoverEffect() {
     const buttons = document.querySelectorAll('.button1, .button2');
