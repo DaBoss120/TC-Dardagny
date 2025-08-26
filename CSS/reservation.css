@@ -12,12 +12,15 @@ main {
     padding-top: 100px;
     background-color: transparent;
 }
-body{
+
+body {
     background-color: transparent;
 }
-h1{
+
+h1 {
     z-index: 2;
 }
+
 .court-img {
     filter: blur(0px);
     -webkit-filter: blur(0px);
@@ -80,7 +83,7 @@ a {
     width: 105vw;
     height: 105vh;
 
-     /* Center the oversized eleme
+    /* Center the oversized eleme
      nt to hide edges evenly */
 
 
@@ -102,7 +105,7 @@ a {
     align-items: center;
     justify-content: center;
     position: absolute;
-    transform: translateY(5%);
+    transform: translateY(10%);
     /* Same height size as main */
     height: auto;
     min-height: 600px;
@@ -136,11 +139,15 @@ a {
 
     .court-img img,
     .map-container iframe {
-        width: 80vw;
+        /* position: relative;
+        transform: translate(-50%, -50%);
+        left: 40%;
+        top: 70%; */
+        width: 40vh;
         /* max-height: 800px; */
-
+        min-width: 0px;
         max-width: 400px;
-        height: 80vw;
+        height: 40vh;
         max-height: 400px;
     }
 
@@ -153,12 +160,20 @@ a {
         margin: 10px 0;
     }
 
-    .img-with-gadient-content {
-        top: 20%;
-        flex-direction: column;
-        align-items: center;
-        transform: translateY(0px);
-        height: 100%;
-    }
+    .background-container {
+        height: 115%;
 
+        .img-with-gadient {
+            height: 115vh;
+            width: 110vw;
+        }
+
+        .img-with-gadient-content {
+            flex-direction: column;
+            align-items: center;
+            transform: translateY(10vh);
+            height: 110%;
+        }
+
+    }
 }
