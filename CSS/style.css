@@ -296,27 +296,27 @@ body.loaded::before {
     top: var(--mouse-y, 50%);
     width: 0;
     height: 0;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.11) 20%, rgba(255, 255, 255, 0) 70%);
     border-radius: 50%;
     transform: translate(-50%, -50%)
-        /* scale(0) */
+        scale(1.5)
     ;
-    transition: width 0.4s ease-out, height 0.4s ease-out, transform 0.4s ease-out, opacity 0.4s ease-out;
+    transition: width 0.1s ease-out, height 0.1s ease-out, transform 0.1s ease-out, opacity 0.1s ease-out, top 50ms ease-out, left 50ms ease-out;
     opacity: 0;
-    pointer-events: none;
     /* So it doesn't interfere with button events */
-    z-index: 0;
+    pointer-events: none;
     /* Ensure it's behind the button text */
+    z-index: 0;
 }
 
 /* Show and expand the light effect on hover */
 .button1:hover::before,
 .button2:hover::before {
-    width: 150px;
+    width: 350px;
     /* Adjust size of the light effect as needed */
-    height: 150px;
+    height: 350px;
     /* Adjust size of the light effect as needed */
-    /* transform: translate(-50%, -50%) scale(1); */
+    transform: translate(-50%, -50%) scale(1);
     opacity: 1;
 }
 
@@ -788,6 +788,21 @@ div.unBlur {
 
 .bar {
     display: none;
+}
+/* Reveal on scroll effect (in agenda) */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(150px);
+    filter: blur(20px);
+    transition: transform 0.5s cubic-bezier(0.29, 1.29, 0.64, 1)
+        /* cubic-bezier(.11,.06,.55,1)*/
+        , filter 0.35s linear, opacity 0.4s linear;
+}
+
+.reveal-on-scroll.revealed {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
 }
 
 @media screen and (max-width: 768px) {
