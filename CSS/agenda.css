@@ -1,6 +1,6 @@
 .agenda {
     min-height: 100%;
-    padding: 150px 60px;
+    padding: 150px 0px;
     background: #0f0c29;
     /* Fallback for browsers that don't support gradients */
     background:
@@ -16,7 +16,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     /* Non blurry look of the background transition */
     /* mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 100%); */
     box-shadow: inset 0px 100px 40px -50px rgb(255, 255, 255);
@@ -42,9 +42,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: clamp(260px, 28vw, 450px);
-    max-width: 450px;
-    min-width: 260px;
+    width: clamp(300px, 30vw, 425px);
     height: max-content;
     margin: 32px 16px 0px 16px;
     /* padding: 36px; */
@@ -161,6 +159,15 @@
     width:calc(100% - 40px);
 }
 
+@media screen and (min-width: 769px) and (max-width: 1050px) {
+    .agendaElement {
+        width: clamp(300px, 43vw, 400px);
+    }
+    .agendaText>p{
+        font-size: 1rem;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .agenda {
         padding: 50px 0px;
@@ -188,7 +195,9 @@
     .agendaElement button p{
         font-size: 18px;
     }
-
+    .agendaText>p {
+        font-size: 16px;
+    }
 
     .button2 p {
         text-align: center;

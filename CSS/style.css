@@ -298,9 +298,7 @@ body.loaded::before {
     height: 0;
     background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.11) 20%, rgba(255, 255, 255, 0) 70%);
     border-radius: 50%;
-    transform: translate(-50%, -50%)
-        scale(1.5)
-    ;
+    transform: translate(-50%, -50%) scale(1.5);
     transition: width 0.1s ease-out, height 0.1s ease-out, transform 0.1s ease-out, opacity 0.1s ease-out, top 50ms ease-out, left 50ms ease-out;
     opacity: 0;
     /* So it doesn't interfere with button events */
