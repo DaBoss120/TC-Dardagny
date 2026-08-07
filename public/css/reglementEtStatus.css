@@ -1,0 +1,24 @@
+.reglement-text p {
+    color: white;
+}
+
+.reglement-et-statuts-contnent {
+    background-image: url("../img/PLAY.webp"); /* Changed from /WEB/IMG/... */
+    justify-content: space-around;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+}
+a{
+    text-decoration: none;
+}
+button p{
+    color: var(--color1);
+}
+@media screen and (max-width: 768px) {
+    .reglement-et-statuts-contnent {
+        background-image: url("../img/PLAY-Mobile.webp");
+    }
+    
+}

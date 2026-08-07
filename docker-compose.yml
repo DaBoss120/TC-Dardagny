@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - "8000:80" # Maps port 8000 on your PC to port 80 in the container
+    volumes:
+      # Mounts your current project folder to Apache's root.
+      # Any change you make in your editor instantly reflects in the browser!
+      - ./:/var/www/html/

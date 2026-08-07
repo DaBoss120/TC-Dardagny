@@ -1,0 +1,58 @@
+.devenirMembreContent {
+    justify-content: space-between;
+    background-image: url("../img/YelowBallSpinningWithWater.webp");
+    /* Changed from /WEB/IMG/... */
+    /* justify-content: center; */
+}
+
+.text-bubble-img-presentation {
+    margin-top: 28px;
+    width: 80%;
+
+}
+
+.text-bubble-img-presentation:last-of-type {
+    width: auto;
+}
+
+.text-bubble-img-presentation p {
+    color: white;
+}
+
+div.adhesion-bouton {
+    margin-bottom: 50px;
+    /* justify-self: center; */
+}
+
+.devenirMembreContent div:nth-of-type(3) {
+    margin-bottom: 28px;
+
+}
+
+.devenirMembreContent div:nth-of-type(3) p {
+    color: white;
+}
+
+button p {
+    color: white;
+}
+
+@media screen and (max-width: 768px) {
+
+    .devenirMembreContent {
+        background-image: url("../img/YelowBallSpinningWithWater-Mobile.webp");
+    }
+
+    button p {
+        text-shadow: 0px 0px 12px rgba(0, 0, 0, 0.726);
+    }
+
+    .text-bubble-img-presentation p {
+        color: white;
+    }
+
+    div.adhesion-bouton {
+        margin-bottom: 50px;
+    }
+
+}

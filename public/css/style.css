@@ -1,0 +1,1280 @@
+@import url('hamburger.css');
+
+@font-face {
+    font-family: Open-sans;
+    src: url(../fonts/Open-Sans.woff2);
+}
+
+@font-face {
+    font-family: Rammetto-One;
+    src: url(../fonts/RammettoOne-Regular.ttf);
+}
+
+html * {
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+    font-family: Open-sans;
+}
+
+html,
+body {
+    height: 100%;
+    background-color: white;
+    /* Prevent horizontal scrolling caused by elements using 100vw or positioned off-screen */
+    /* overflow-x: hidden; */
+}
+
+:root {
+    --color1: #1a3150;
+    --color2: #385c8a;
+    --color3: #b8d0dd;
+    --color4: #d55c00;
+}
+
+/* Global styles */
+main {
+    height: 100%;
+    transition: opacity 0.5s, filter 0.5s;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+*:focus {
+    outline: none;
+}
+
+p {
+    color: #1a3150;
+}
+
+h1 {
+    font-family: Rammetto-One;
+    color: #1a3150;
+}
+
+h2 {
+    color: #1a3150;
+
+}
+
+h3 {
+    color: #1a3150;
+}
+
+h4 {
+    color: #1a3150;
+}
+
+ul {
+    color: #1a3150;
+}
+
+li {
+    list-style: none;
+}
+
+.titre {
+    text-align: center;
+    margin: 0 24px;
+}
+
+.titre h1 {
+    margin-bottom: 16px;
+}
+
+.titre h2 {
+    margin-bottom: 15px;
+}
+
+/* New Page Load Transition */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    /* background-color: rgba(255, 255, 255, 0.463); */
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    /* Start fully visible */
+    opacity: 1;
+    /* Block clicks while visible */
+    pointer-events: auto;
+    /* Animate the fade-out */
+    transition: opacity 0.5s ease-out;
+}
+
+body.loaded::before {
+    /* backdrop-filter: blur(0px);
+    background-color: transparent; */
+    opacity: 0;
+    /* Allow clicks to pass through once it's invisible */
+    pointer-events: none;
+}
+
+/* Button styles */
+.button1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    transition: all 0.3s;
+    width: 350px;
+    font-size: 24px;
+    font-weight: 600;
+
+    padding: 12px;
+    margin: 12px;
+    border-radius: 12px;
+}
+
+.button1:hover {
+    transform: scale(1.15);
+    cursor: pointer;
+    box-shadow: 0 0px 30px rgba(0, 0, 0, 0.30);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    p {
+        animation: textBlurBtn .6s cubic-bezier(.12, 0, .18, 1);
+        animation-timing-function: ease;
+    }
+}
+
+.button1:not(:hover) {
+    p {
+        animation: textBlurBtnUnhover .6s cubic-bezier(.12, 0, .18, 1);
+    }
+}
+
+.button1 button p {
+    color: white;
+}
+
+.button2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.10);
+    box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    transition: all 0s;
+    width: 320px;
+    font-size: 24px;
+    font-weight: 600;
+
+    padding: 12px;
+    margin: 12px;
+    border-radius: 12px;
+
+
+
+}
+
+.button2 p {
+    color: white;
+}
+
+.button2:hover {
+    transform: scale(1.15);
+    cursor: pointer;
+    box-shadow: 0 0px 30px rgba(0, 0, 0, 0.30);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    p {
+        animation: textBlurBtn .6s cubic-bezier(.12, 0, .18, 1);
+        animation-timing-function: ease;
+    }
+}
+
+.button2:not(:hover) {
+    p {
+        animation: textBlurBtnUnhover .6s cubic-bezier(.12, 0, .18, 1);
+    }
+}
+
+.textBlurButton {
+    animation: textBlurBtn .6s cubic-bezier(.12, 0, .18, 1);
+    animation-timing-function: ease;
+}
+
+.textBlurButtonUnhover {
+    animation: textBlurBtnUnhover .6s cubic-bezier(.12, 0, .18, 1);
+}
+
+@keyframes textBlurBtn {
+    25% {
+        letter-spacing: 1px;
+
+    }
+
+    50% {
+        /* filter: blur(8px); */
+
+    }
+
+    75% {
+        /* filter: blur(0px); */
+    }
+
+    100% {
+        letter-spacing: 0px;
+        filter: blur(0px);
+    }
+}
+
+@keyframes textBlurBtnUnhover {
+
+    /* from{
+        filter: blur(8px);
+        letter-spacing: 1px;
+    }
+    to{
+        letter-spacing: 0px;
+        filter: blur(0px);
+    } */
+    25% {
+        letter-spacing: -1px;
+
+    }
+
+    50% {
+        /* filter: blur(8px); */
+
+    }
+
+    75% {
+        /* filter: blur(0px); */
+    }
+
+    100% {
+        letter-spacing: 0px;
+        filter: blur(0px);
+    }
+}
+
+/* Button hover light effect */
+/* Add relative positioning and overflow hidden to button containers */
+.button1,
+.button2 {
+    position: relative;
+    overflow: hidden;
+    /* Ensure other transitions still work as intended */
+    transition: all 0.3s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)
+        /* cubic-bezier(.33, .22, .5, 1.35)*/
+        , box-shadow 0.3s, backdrop-filter 0.3s;
+
+}
+
+/* Light effect pseudo-element */
+.button1::before,
+.button2::before {
+    content: '';
+    position: absolute;
+    /* Position will be set by JS via CSS custom properties */
+    left: var(--mouse-x, 50%);
+    top: var(--mouse-y, 50%);
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.11) 20%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(1.5);
+    transition: width 0.1s ease-out, height 0.1s ease-out, transform 0.1s ease-out, opacity 0.1s ease-out, top 50ms ease-out, left 50ms ease-out;
+    opacity: 0;
+    /* So it doesn't interfere with button events */
+    pointer-events: none;
+    /* Ensure it's behind the button text */
+    z-index: 0;
+}
+
+/* Show and expand the light effect on hover */
+.button1:hover::before,
+.button2:hover::before {
+    width: 350px;
+    /* Adjust size of the light effect as needed */
+    height: 350px;
+    /* Adjust size of the light effect as needed */
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+/* Ensure button text stays above the light effect */
+.button1 p,
+.button2 p {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* Header styles */
+header {
+    position: relative;
+    z-index: 10000;
+}
+
+.top_header {
+    height: 57.14px;
+    background-color: #1a3150;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    color: #b8d0dd;
+}
+
+.top_header ul {
+    display: flex;
+    flex-direction: row;
+}
+
+.top_header li {
+    list-style: none;
+}
+
+.top_header a {
+    color: #b8d0dd;
+    text-decoration: none;
+    margin-right: 3vw;
+
+}
+
+.top_header input {
+    background-color: #385c8a;
+    border: #1a3150;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px 2px #385c8a;
+    padding: 5px;
+    margin-right: 10vw;
+    transition: all 0.3s;
+    color: white;
+    font-size: 1rem;
+}
+
+.top_header input:focus {
+    transform: scale(1.1);
+    box-shadow: 0px 0px 20px 2px #16283f;
+}
+
+.top_header input::placeholder {
+    color: #a0b6c1b9;
+    font-size: 1rem;
+}
+
+.top_header input:focus::placeholder {
+    transition: all 0.3s;
+    color: #ffffff;
+}
+
+
+.bottom_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: 3rem 0px;
+}
+
+.bottom_header ul {
+    display: flex;
+    flex-direction: row;
+}
+
+.bottom_header li {
+    list-style: none;
+    margin: 0px 2vw;
+}
+
+
+/* --- Text Wave Animation Styles --- */
+.bottom_header nav ul li>a {
+    /* Prepare the link for scaling and ensure spans are positioned correctly */
+    text-align: center;
+    display: inline-block;
+    transition: transform 0.3s ease;
+    /* min-width: 47.51px ; */
+    /* Force elements to stay on the same row */
+    white-space: nowrap;
+}
+
+.bottom_header nav ul li a span {
+    /* Prepare each letter for animation */
+    display: inline-block;
+    position: relative;
+}
+
+.bottom_header nav ul li a:hover {
+    /* On hover, scale the entire link up slightly */
+    transform: scale(1.1);
+}
+
+.bottom_header nav ul li a[data-is-hovered="true"] span {
+    /* Trigger the wave animation on the letters */
+    /* Edit seconds to make the effect slower of faster */
+    animation: textWave 0.25s ease-in-out forwards;
+}
+
+@keyframes textWave {
+    0% {
+        transform: scale(1);
+        color: var(--color2);
+        filter: blur(0px);
+        text-shadow: none;
+
+    }
+
+    50% {
+        transform: scale(1.5);
+        /* Lighter tint at peak size */
+        color: var(--color3);
+        filter: blur(1px);
+        text-shadow: 1px 2px 2px currentColor;
+    }
+
+    100% {
+        transform: scale(1);
+        color: var(--color2);
+        filter: blur(0px);
+        text-shadow: none;
+    }
+}
+
+/* --- Header style and animations --- */
+
+.bottom_header a {
+    color: #385c8a;
+    text-decoration: none;
+}
+
+.LeClub {
+    transition: all 0.3s;
+    z-index: 1;
+}
+
+.subnav-content {
+    transition: all 0.3s;
+    opacity: 0%;
+    /* display: none; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1a3150;
+    background: rgba(255, 255, 255, 0.50);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    margin-top: 5px;
+    padding: 0 5px;
+    position: absolute;
+    z-index: 0;
+}
+
+.subnav-content.show {
+    opacity: 100%;
+    height: auto;
+    z-index: 1;
+    /* pointer-events: all; */
+}
+
+.subnav-content a {
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    margin: 0px;
+    z-index: 0;
+    font-size: 2px;
+    opacity: 0;
+    /* Prevent interaction when element is hidden */
+    pointer-events: none;
+
+    /* filter: blur(12px); */
+}
+
+/* .subnav-content a{
+    display: block;
+} */
+.subnav-content.show a {
+    margin: 8px;
+    color: #385c8a;
+    z-index: 1;
+    font-size: 1rem;
+    pointer-events: all;
+
+
+    /* filter: blur(0px); */
+}
+
+
+.subnav-content.show a {
+    animation: LeClubLinkAnimationIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.subnav-content.show a:nth-of-type(1) {
+    animation-delay: 0.1s
+}
+
+.subnav-content.show a:nth-of-type(2) {
+    animation-delay: 0.2s;
+}
+
+.subnav-content.show a:nth-of-type(3) {
+    animation-delay: 0.3s;
+}
+
+.subnav-content.show a:nth-of-type(4) {
+    animation-delay: 0.4s;
+}
+
+.subnav-content.show a:nth-of-type(5) {
+    animation-delay: 0.5s;
+}
+
+@keyframes LeClubLinkAnimationIn {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+        filter: blur(8px);
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+        filter: blur(0px);
+    }
+
+}
+
+
+/*
+.subnav-content.show a:hover {
+    animation: LeClubLinkHoverAnimationIn 0.3s ease forwards;
+    opacity: 1;
+}
+
+.subnav-content.show a:not(:hover) {
+    opacity: 1;
+    animation: LeClubLinkHoverAnimationOut 0.3s ease forwards;
+} */
+
+/* Handle the move up link on hover with keyframes de to the fact that keyframes
+ are already used for this element and normal animations don't work as intended*/
+/*
+@keyframes LeClubLinkHoverAnimationIn {
+    from {
+        transform: translateY(0px);
+    }
+
+    to {
+        transform: translateY(-5px);
+
+    }
+}
+
+@keyframes LeClubLinkHoverAnimationOut {
+    from {
+        transform: translateY(-5px);
+    }
+
+    to {
+        transform: translateY(0px);
+    }
+
+} */
+
+.events {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    color: #1a3150;
+    margin-bottom: 100px;
+
+}
+
+.events div h1 {
+    font-size: 3rem;
+    font-family: Rammetto-One;
+
+}
+
+.events>div {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 35vw;
+    min-width: 444px;
+    margin: 0px 2vw;
+    max-width: 650px;
+}
+
+.events .textEvent {
+    min-height: 500px;
+}
+
+.events .textEvent>* {
+    margin: 15px 0px;
+}
+
+.events p {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.events img {
+    width: 35vw;
+    min-width: 444px;
+    max-width: 650px;
+    margin-bottom: 50px;
+}
+
+
+/* General page styling */
+.big-back-img {
+    height: 100%;
+}
+
+#copyableText:hover {
+    cursor: pointer;
+}
+
+.back-img-presentation {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100%;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+
+div.showPar {
+    display: block;
+    position: absolute;
+    left: 50%;
+    bottom: 0%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s;
+    color: #1a3150;
+    filter: blur(12px);
+    opacity: 0;
+}
+
+div.unBlur {
+    transition: all 0.3s;
+    filter: blur(0px);
+    opacity: 1;
+}
+
+
+
+
+.img-presentation {
+    margin-top: 0px;
+}
+
+
+/* Text bubble styles */
+.text-bubble-img-presentation {
+
+    font-weight: 600;
+    text-align: center;
+    padding: 20px;
+    font-size: 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    margin: 28px;
+}
+
+.text-bubble-img-presentation2 {
+    font-weight: 600;
+    text-align: center;
+    padding: 20px;
+    font-size: 20px;
+    border-radius: 90px;
+    background: rgba(255, 255, 255, 0.10);
+    box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    margin: 28px;
+}
+
+.bubble-hover {
+    transition: all 0.5s cubic-bezier(.12, 0, .18, 1);
+}
+
+.bubble-hover:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+}
+
+.round-img-in-bubble {
+    border-radius: 100%;
+    width: min(30vw, 40vh);
+    max-width: 300px;
+    min-width: 200px;
+    margin: 20px;
+    background: rgba(255, 255, 255, 0.10);
+    box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+@keyframes blurUnBlur {
+    from {
+        opacity: 0;
+        line-height: 34px;
+        filter: blur(12px);
+    }
+
+    to {
+        opacity: 1;
+        line-height: 23px;
+        filter: blur(0px);
+    }
+
+}
+
+@keyframes unBlurBlur {
+    from {
+        opacity: 1;
+        line-height: 23px;
+        filter: blur(0px);
+    }
+
+    to {
+        opacity: 0;
+        line-height: 34px;
+        filter: blur(12px);
+    }
+}
+
+.TCD_Logo_Square {
+    display: none;
+}
+
+.bar {
+    display: none;
+}
+/* Reveal on scroll effect (in agenda) */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(150px);
+    filter: blur(20px);
+    transition: transform 0.5s cubic-bezier(0.29, 1.29, 0.64, 1)
+        /* cubic-bezier(.11,.06,.55,1)*/
+        , filter 0.35s linear, opacity 0.4s linear;
+}
+
+.reveal-on-scroll.revealed {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+@media screen and (max-width: 768px) {
+    * {
+        /* Prevent default browser usual effect when clicking on a link */
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    p {
+        text-align: justify;
+    }
+
+    h2 {
+        text-align: justify;
+    }
+
+    .button1 {
+        width: 80vw;
+        max-width: 350px;
+    }
+
+    .text-bubble-img-presentation {
+        width: 80vw;
+    }
+
+    .text-bubble-img-presentation:last-of-type {
+        /* width: auto; */
+    }
+
+    .big-back-img {
+        height: auto;
+    }
+
+    .back-img-presentation {
+        height: 100vh;
+    }
+
+    .bubble-hover:hover {
+        transform: none;
+    }
+
+    .top_header {
+        justify-content: space-between;
+        padding: 0px 20px;
+        z-index: 2;
+        position: relative;
+    }
+
+    .TCD_Logo_Square {
+        display: block;
+        width: 50px;
+        border-radius: 5px;
+    }
+
+    .TCD_Logo {
+        display: none;
+    }
+
+    .bar {
+        display: block;
+        position: relative;
+        z-index: 3;
+        width: 50px;
+        cursor: pointer;
+    }
+
+    .bottom_header {
+        align-items: center;
+
+    }
+
+    .bottom_header nav {
+        /* display: none; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        /* transform: translate(-50%, -50%); */
+        /* top: 50%;
+        left: 50%; */
+        top: 0;
+        left: 0;
+        height: 0;
+        width: 100vw;
+        background: rgba(255, 255, 255, 0.60);
+        box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 1;
+        overflow: hidden;
+        /* transition: none; */
+
+        /* Initial hidden state */
+        height: 0;
+        opacity: 0.2;
+        visibility: hidden;
+        /* Hide from screen readers and interactions */
+
+
+        /* Replace animations with transitions for smooth interruption */
+        transition: height 0.5s ease-out, opacity 0.4s ease-in, visibility 0s linear 0.4s;
+
+        /* Add a mask to create a fade-out effect at the bottom */
+        -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+        mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    }
+
+    .bottom_header nav.show {
+        /* display: flex; */
+        opacity: 1;
+        /* Set target properties for the open state */
+        height: 115vh;
+        /* Use 115vh for a full screen menu */
+        /* animation: menuBackgroundSlideDown 0.5s ease-out forwards, backgroundFadeIn 0.5s linear forwards; */
+        visibility: visible;
+        /* Make it visible */
+        transition: height 0.4s ease-out, opacity 0.3s ease-in;
+        /* Transition for opening */
+    }
+
+    /* Not using keyframes for interrupt animations */
+    @keyframes menuBackgroundSlideDown {
+
+        from {
+            height: 0;
+        }
+
+        to {
+            height: 115vh;
+        }
+    }
+
+    @keyframes backgroundFadeIn {
+        from {
+            opacity: 0.5;
+        }
+
+        to {
+            opacity: 1;
+        }
+
+    }
+
+    /* .bottom_header nav.closing {
+        animation: menuBackgroundSlideUp 0.4s ease-in forwards;
+    }
+
+    @keyframes menuBackgroundSlideUp {
+
+        from {
+            height: 115vh;
+            opacity: 1;
+        }
+
+        to {
+            height: 0;
+            opacity: 0.5;
+        }
+    } */
+
+    .bottom_header nav ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        height: 100%;
+        width: 100%;
+        margin: auto;
+        padding-top: 15vh;
+    }
+
+    .bottom_header nav ul li {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+    }
+
+    .bottom_header nav ul li a {
+        /* Define the "out" state (hidden) as the default */
+        opacity: 0;
+        transform: translateY(-40px);
+        filter: blur(8px);
+
+        /* opacity: 1; */
+        width: 75%;
+        text-align: center;
+        margin: auto;
+        font-size: 25px;
+        font-weight: 700;
+        background: none;
+        color: var(--color1);
+        padding: 15px 0;
+
+        /* This transition will now handle both opening and closing smoothly */
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+            opacity 0.2s ease,
+            /* also works : opacity 0.4 cubic-bezier(0.34, 1.56, 0.64, 1) */
+            filter 0.3s ease;
+    }
+
+    .bottom_header nav.show ul li a {
+        /* Define the target "in" state (visible) */
+        transform: translateY(0);
+        opacity: 1;
+        filter: blur(0px);
+        /*      animation: linkAnimationIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; */
+    }
+
+
+
+
+    .bottom_header nav.show ul li:nth-of-type(1) a {
+        /* animation-delay: 0.2s; */
+        transition-delay: 0.2s
+    }
+
+    .bottom_header nav.show ul li:nth-of-type(2) a {
+        /* animation-delay: 0.3s; */
+        transition-delay: 0.3s
+    }
+
+    .bottom_header nav.show ul li:nth-of-type(3) a {
+        /* animation-delay: 0.4s; */
+        transition-delay: 0.4s
+    }
+
+    .bottom_header nav.show ul li:nth-of-type(4) a {
+        /* animation-delay: 0.5s; */
+        transition-delay: 0.5s
+    }
+
+    .bottom_header nav.show ul li:nth-of-type(5) a {
+        /* animation-delay: 0.6s; */
+        transition-delay: 0.6s
+    }
+
+    .bottom_header nav.closing ul li a {
+        /* animation: linkAnimationOut 0.4s ease forwards; */
+
+    }
+
+    @keyframes linkAnimationIn {
+        from {
+            transform: translateY(-40px);
+            opacity: 0;
+            filter: blur(8px);
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+            filter: blur(0px);
+        }
+    }
+
+    @keyframes linkAnimationOut {
+        from {
+            transform: translateY(0);
+            opacity: 1;
+            filter: blur(0px);
+        }
+
+        to {
+            transform: translateY(-40px);
+            opacity: 0;
+            filter: blur(8px);
+        }
+
+    }
+
+    /* --- Subnav Mobile Styles --- */
+    .bottom_header nav .LeClub>a {
+        display: flex;
+        /* To align caret icon */
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .bottom_header nav .LeClub .fa-caret-down {
+        transition: transform 0.3s ease;
+    }
+
+    .bottom_header nav .LeClub.subnav-open .fa-caret-down {
+        transform: rotate(180deg);
+    }
+
+    .bottom_header .subnav-content {
+        /* Override desktop styles for mobile accordion */
+        position: relative;
+        opacity: 1;
+        background: none;
+        box-shadow: none;
+        backdrop-filter: none;
+        border: none;
+        margin-top: 0;
+        padding: 0;
+        /* Hide by default and prepare for transition */
+        /* max-height: 0; */
+        height: 0px;
+        overflow: hidden;
+        /* transition: max-height 0.4s cubic-bezier(.33, .22, .5, 1.35); */
+        /* transition: max-height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); */
+        transition: height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        /* transition: height 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6); */
+        /* transition: max-height 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); */
+
+
+    }
+
+    .bottom_header .LeClub.subnav-open .subnav-content {
+        /* Check height with auto and then set exact number for best result and animation */
+        height: 236.67px;
+        /* Adjust if you have more items */
+    }
+
+    .bottom_header .subnav-content a {
+        /* Override desktop styles for mobile */
+        font-size: 20px;
+        color: var(--color2);
+        padding: 10px 0;
+
+        pointer-events: none;
+        /* Prevent interaction when hidden */
+
+        /* This transition will now handle both opening and closing smoothly */
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+            opacity 0.2s ease,
+            /* also works : opacity 0.4 cubic-bezier(0.34, 1.56, 0.64, 1) */
+            filter 0.3s ease;
+        /* The delay is 0s by default, so the closing animation is immediate */
+    }
+
+    .bottom_header .LeClub.subnav-open .subnav-content a {
+        /* animation: subnavLinkAnimationIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; */
+        /* opacity: 0; */
+        /* Define the out state */
+        transform: translateY(0);
+        opacity: 1;
+        filter: blur(0px);
+        pointer-events: all;
+
+        /* transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+            opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+            filter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); */
+    }
+
+    .bottom_header .LeClub:not(.subnav-open) .subnav-content {
+        transition: height 0.5s ease;
+    }
+
+    .bottom_header .LeClub:not(.subnav-open) .subnav-content a {
+        /* animation: subnavLinkAnimationOut 0.4s ease forwards; */
+        /* Define target invisible state (before showing) */
+        transform: translateY(-20px);
+        opacity: 0;
+        filter: blur(8px);
+        padding: 0px;
+        transition-delay: 0s;
+
+    }
+
+    .bottom_header .LeClub.subnav-open .subnav-content a:nth-of-type(1) {
+        /* animation-delay: 0.1s; */
+        transition-delay: 0.1s;
+    }
+
+    .bottom_header .LeClub.subnav-open .subnav-content a:nth-of-type(2) {
+        /* animation-delay: 0.2s; */
+        transition-delay: 0.2s;
+    }
+
+    .bottom_header .LeClub.subnav-open .subnav-content a:nth-of-type(3) {
+        /* animation-delay: 0.3s; */
+        transition-delay: 0.3s;
+    }
+
+    .bottom_header .LeClub.subnav-open .subnav-content a:nth-of-type(4) {
+        /* animation-delay: 0.4s; */
+        transition-delay: 0.4s;
+    }
+
+    .bottom_header .LeClub.subnav-open .subnav-content a:nth-of-type(5) {
+        /* animation-delay: 0.5s; */
+        transition-delay: 0.5s;
+    }
+
+
+    /* This new animation is for the sub-menu. It fades and slides links up from *within* the container, avoiding the clipping issue. */
+    @keyframes subnavLinkAnimationIn {
+        from {
+            transform: translateY(-20px);
+            opacity: 0;
+            filter: blur(8px);
+        }
+
+        to {
+            transform: translateY(0px);
+            opacity: 1;
+            filter: blur(0px);
+        }
+    }
+
+    @keyframes subnavLinkAnimationOut {
+        from {
+
+            transform: translateY(0);
+            opacity: 1;
+            filter: blur(0px);
+            /* .bottom_header .subnav-content {
+                overflow: visible;
+            } */
+        }
+
+        to {
+            transform: translateY(-60px);
+            opacity: 0;
+            filter: blur(8px);
+            padding: 0px;
+            /* .bottom_header .subnav-content {
+                overflow: hidden;
+            } */
+        }
+
+    }
+
+
+
+    .bottom_header .subnav-content a {
+        /* Override desktop styles for mobile */
+        font-size: 20px;
+        /* Slightly smaller than main links */
+        /* filter: none;
+        opacity: 1; */
+        /* Should be visible with parent */
+        color: var(--color2);
+        /* Different color to show it's a sub-item */
+        padding: 10px 0;
+        /* background-color: rgba(26, 49, 80, 0.1); */
+        /* Slight background to group them */
+    }
+
+    .bottom_header .subnav-content.show a {
+        /* This rule is for desktop, reset it for mobile */
+        margin: 0;
+        font-size: 20px;
+        filter: none;
+    }
+
+    /* --- End Subnav Mobile Styles --- */
+    .events {
+        margin: auto;
+        width: 80vw;
+        min-width: 100px;
+
+
+    }
+
+    .events div h1 {
+        font-size: 2rem;
+    }
+
+    .events>div {
+        width: 100%;
+        min-width: 100px;
+    }
+
+    .events img {
+        width: 100%;
+        max-width: 650px;
+        min-width: 200px;
+    }
+
+}

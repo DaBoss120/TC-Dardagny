@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# If it's not a real file (like .css, .js, .webp) or a real directory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Send everything else to index.php, passing the whole path as a variable 'url'
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
