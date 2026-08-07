@@ -14,6 +14,7 @@ $routes = [
     'agenda'                => __DIR__ . '/../src/pages/agenda.php',
     'reservation'           => __DIR__ . '/../src/pages/reservation.php',
     'contact'               => __DIR__ . '/../src/pages/contact.php',
+    'credits'               => __DIR__ . '/../src/pages/credits.php',
 ];
 
 if (array_key_exists($path, $routes)) {

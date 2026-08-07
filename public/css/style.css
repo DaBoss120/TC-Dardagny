@@ -76,6 +76,11 @@ li {
     list-style: none;
 }
 
+.main-title{
+    font-size: 5rem;
+    width: auto;
+}
+
 .titre {
     text-align: center;
     margin: 0 24px;
@@ -86,7 +91,7 @@ li {
 }
 
 .titre h2 {
-    margin-bottom: 15px;
+    margin-bottom: 32px;
 }
 
 /* New Page Load Transition */
@@ -212,6 +217,13 @@ body.loaded::before {
         animation: textBlurBtnUnhover .6s cubic-bezier(.12, 0, .18, 1);
     }
 }
+
+.button1.btn-bg-blue, .button2.btn-bg-blue {
+    background: var(--color1);
+   p{ color: white;}
+}
+
+/* .button1.btn-bg-blue:hover, .button2.btn-bg-blue:hover { */
 
 .textBlurButton {
     animation: textBlurBtn .6s cubic-bezier(.12, 0, .18, 1);
@@ -787,6 +799,102 @@ div.unBlur {
 .bar {
     display: none;
 }
+/* Site footer with the site map. */
+.site-footer {
+    background-color: var(--color1);
+    color: var(--color3);
+    font-size: 0.9rem;
+    padding: 48px 24px 0;
+}
+
+.site-footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    margin-bottom: 12px
+}
+
+.site-footer p {
+    color: var(--color3);
+    margin: 0;
+}
+
+.footer-brand {
+    flex: 1 1 240px;
+    max-width: 300px;
+}
+
+.footer-logo {
+    width: 64px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.footer-column h2 {
+    color: #fff;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+}
+
+.footer-column li {
+    margin-bottom: 9px;
+}
+
+.site-footer a {
+    color: var(--color3);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, color 0.3s;
+}
+
+.site-footer a:hover {
+    color: #fff;
+    border-bottom-color: #fff;
+}
+
+.footer-legal {
+    /* max-width: 1100px; */
+    /* width: 50%; */
+    margin: 40px auto 0;
+    padding: 20px 0;
+    border-top: 1px solid rgba(184, 208, 221, 0.25);
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+@media screen and (max-width: 768px) {
+    .site-footer {
+        padding: 32px 20px 0;
+    }
+
+    .site-footer-inner {
+        gap: 28px;
+    }
+
+    .footer-nav {
+        gap: 28px 40px;
+    }
+
+    /* Left-aligned in the footer: these are link lists, and the global mobile
+       `p { text-align: justify }` would otherwise stretch the tagline. */
+    .site-footer p {
+        text-align: left;
+    }
+}
+
 /* Reveal on scroll effect (in agenda) */
 .reveal-on-scroll {
     opacity: 0;

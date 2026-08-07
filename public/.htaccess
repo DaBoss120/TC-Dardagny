@@ -1,3 +1,17 @@
+# three.js is ~675 KB raw but around 170 KB gzipped, so compression matters a
+# lot more now that the hero ships a 3D library. Guarded in case the host does
+# not have mod_deflate enabled.
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/plain
+    AddOutputFilterByType DEFLATE application/javascript text/javascript
+    AddOutputFilterByType DEFLATE application/json image/svg+xml
+    # .glb is already compressed internally; leave it alone.
+</IfModule>
+
+<IfModule mod_mime.c>
+    AddType model/gltf-binary .glb
+</IfModule>
+
 RewriteEngine On
 
 # If it's not a real file (like .css, .js, .webp) or a real directory

@@ -1,0 +1,1178 @@
+/* ==========================================================================
+   Enter animation — two angled fences that slide apart to reveal the hero
+   ==========================================================================
+
+   The three states live as classes on <html>, driven by js/enterAnimation.js:
+
+     .enter-anim       the intro is in play — fences shut, page scroll locked
+     .enter-anim-open  fences are sliding away
+     .enter-anim-done  fences are gone, taken out of the render tree
+
+   Nothing here hides anything unless .enter-anim is present, so a visitor
+   without JavaScript simply gets the page with no intro.
+   -------------------------------------------------------------------------- */
+
+:root {
+    /* Horizontal distance between the top and the bottom of the seam.
+       Larger value = more slanted fences. */
+    --fence-slant: clamp(40px, 8vw, 150px);
+    /* Where the seam sits at mid-height (50% = dead centre of the viewport) */
+    --fence-seam: 50%;
+    /* How far each fence reaches past the seam, so the two overlap instead of
+       meeting exactly. Their clip paths share the same coordinates, and the
+       antialiasing along those two diagonal edges does not add up to full
+       coverage — which let a hairline of the white page show through down the
+       middle. A couple of pixels of overlap puts one fence's solid area under
+       the other's soft edge. */
+    --fence-overlap: 1.5px;
+    /* Keep in sync with OPEN_DURATION in js/enterAnimation.js */
+    --fence-open-duration: 1.4s;
+}
+
+.left-fence,
+.right-fence {
+    position: fixed;
+    inset: 0;
+    /* Above the header (z-index 10000) so the nav is covered too */
+    z-index: 10001;
+    pointer-events: none;
+    /* Open — i.e. off screen — is the default. See the comment above. */
+    transition: transform var(--fence-open-duration) cubic-bezier(0.65, 0, 0.25, 1);
+}
+
+/* Both fences are full-viewport boxes, so the two clip paths share one
+   coordinate space and the diagonal seam between them lines up exactly. */
+.left-fence {
+    /* background: linear-gradient(100deg, var(--color1) 0%, var(--color2) 100%); */
+
+    background: var(--color1);
+    clip-path: polygon(0 0,
+            calc(var(--fence-seam) + var(--fence-slant) / 2 + var(--fence-overlap)) 0,
+            calc(var(--fence-seam) - var(--fence-slant) / 2 + var(--fence-overlap)) 100%,
+            0 100%);
+    transform: translateX(-101%);
+}
+
+.right-fence {
+    background: var(--color1);
+    clip-path: polygon(calc(var(--fence-seam) + var(--fence-slant) / 2 - var(--fence-overlap)) 0,
+            100% 0,
+            100% 100%,
+            calc(var(--fence-seam) - var(--fence-slant) / 2 - var(--fence-overlap)) 100%);
+    transform: translateX(101%);
+}
+
+/* The shadow is held back until the fences actually move. While they are shut
+   it would fall across the seam and draw the very line the overlap above is
+   there to hide; once they part it belongs, giving the panels their edge.
+   drop-shadow follows the clipped shape, unlike box-shadow. */
+html.enter-anim.enter-anim-open .left-fence {
+    filter: drop-shadow(6px 0 24px rgba(0, 0, 0, 0.45));
+}
+
+html.enter-anim.enter-anim-open .right-fence {
+    filter: drop-shadow(-6px 0 24px rgba(0, 0, 0, 0.45));
+}
+
+/* --- Closed --------------------------------------------------------------- */
+html.enter-anim:not(.enter-anim-open) .left-fence,
+html.enter-anim:not(.enter-anim-open) .right-fence {
+    transform: none;
+    /* Swallow clicks aimed at the page underneath while it is hidden */
+    pointer-events: auto;
+    will-change: transform;
+}
+
+/* Lock scrolling in CSS rather than JS so there is no window where the page
+   is covered but still scrollable. */
+html.enter-anim:not(.enter-anim-open) body {
+    overflow: hidden;
+}
+
+/* --- Finished ------------------------------------------------------------- */
+html.enter-anim-done .left-fence,
+html.enter-anim-done .right-fence {
+    display: none;
+}
+
+/* --- The lock ------------------------------------------------------------
+   The club logo sits on the closed fences and blows out as they part: it
+   scales up, blurs and fades, which is what sells the "unlocked" moment.
+
+   Rendered only while the intro runs. The base rule is `display: none`, so on
+   a load with no intro the markup costs nothing and never flashes. */
+.fence-logo {
+    display: none;
+}
+
+html.enter-anim .fence-logo {
+    display: grid;
+    place-items: center;
+    position: fixed;
+    inset: 0;
+    /* Above the fences, which are at 10001. */
+    z-index: 10002;
+    pointer-events: none;
+}
+
+html.enter-anim .fence-logo img {
+    width: clamp(96px, 20vw, 220px);
+    height: auto;
+    /* Percentage so the corners keep their proportion at any size. The source
+       has no alpha channel, so this is what trims off its white square. */
+    border-radius: 12%;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+
+html.enter-anim:not(.enter-anim-open) .fence-logo img {
+    animation: fenceLogoIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+html.enter-anim.enter-anim-open .fence-logo img {
+    /* Accelerating curve: it holds a moment, then goes. `forwards` keeps it
+       gone until .enter-anim-done removes the element entirely. */
+    animation: fenceLogoOut 0.5s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+}
+
+html.enter-anim-done .fence-logo {
+    display: none;
+}
+
+@keyframes fenceLogoIn {
+    from {
+        opacity: 0;
+        scale: 0.82;
+        filter: blur(10px);
+    }
+
+    to {
+        opacity: 1;
+        scale: 1;
+        filter: blur(0);
+    }
+}
+
+@keyframes fenceLogoOut {
+    from {
+        opacity: 1;
+        scale: 1;
+        filter: blur(0);
+    }
+
+    to {
+        opacity: 0;
+        scale: 2.5;
+        filter: blur(22px);
+    }
+}
+
+/* ==========================================================================
+   Hero content revealed once the fences are out of the way
+   ========================================================================== */
+/* 
+.main-title {
+    translate: 10vw 2vh;
+    transition: translate 1s ease;
+} */
+
+/* The intro slides the two headings in from opposite sides. The offsets are in
+   vw, not %: a percentage in `translate` resolves against the element's OWN
+   width, so `100%` only moved the subtitle by its own ~490px of text instead of
+   off the side of the screen. `.hero` clips the overflow.
+
+   Resting position is `none` — where the two sit is decided by .hero-text
+   below, not by these rules. */
+html.enter-anim .main-title {
+    translate: -100vw;
+    transition: translate 1.3s cubic-bezier(0.29, 1.16, 0.54, 1);
+}
+
+html.enter-anim .sub-title {
+    translate: 100vw;
+    transition: translate 1.3s cubic-bezier(0.29, 1.16, 0.54, 1);
+}
+
+html.enter-anim .main-title.end-pos,
+html.enter-anim .sub-title.end-pos {
+    translate: none;
+}
+
+/* ==========================================================================
+   Header entrance
+   ==========================================================================
+
+   Every selector here is scoped to html.enter-anim, and that class only ever
+   lands on the home page — the shared header is untouched everywhere else.
+
+   The header sits at z-index 10000, below the fences at 10001, so it is hidden
+   behind them while they are shut. The items animate in once .enter-anim-open
+   appears; `backwards` fill is what keeps each one invisible through its own
+   stagger delay rather than flashing before its turn.
+   -------------------------------------------------------------------------- */
+
+:root {
+    /* When the first header item starts, measured from the fences opening. */
+    --header-in-start: 0.75s;
+    /* Gap between each following item. */
+    --header-in-step: 0.15s;
+    --header-in-duration: 0.7s;
+    --header-in-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes headerItemIn {
+    from {
+        opacity: 0;
+        filter:blur(8px);
+        translate: 0 -24px;
+    }
+
+    to {
+        opacity: 1;
+        filter: blur(0px);
+        translate: none;
+    }
+}
+
+html.enter-anim:not(.enter-anim-open) .top_header>a,
+html.enter-anim:not(.enter-anim-open) .top_header .bar,
+html.enter-anim:not(.enter-anim-open) .bottom_header>a,
+html.enter-anim:not(.enter-anim-open) .bottom_header nav>ul>li {
+    opacity: 0;
+}
+
+/* The logo leads. */
+html.enter-anim.enter-anim-open .top_header>a,
+html.enter-anim.enter-anim-open .bottom_header>a {
+    animation: headerItemIn var(--header-in-duration) var(--header-in-ease) var(--header-in-start) backwards;
+}
+
+/* Then the nav, one item at a time. */
+html.enter-anim.enter-anim-open .bottom_header nav>ul>li,
+html.enter-anim.enter-anim-open .top_header .bar {
+    animation: headerItemIn var(--header-in-duration) var(--header-in-ease) backwards;
+    animation-delay: calc(var(--header-in-start) + var(--header-in-step));
+}
+
+html.enter-anim.enter-anim-open .bottom_header nav>ul>li:nth-child(2) {
+    animation-delay: calc(var(--header-in-start) + 2 * var(--header-in-step));
+}
+
+html.enter-anim.enter-anim-open .bottom_header nav>ul>li:nth-child(3) {
+    animation-delay: calc(var(--header-in-start) + 3 * var(--header-in-step));
+}
+
+html.enter-anim.enter-anim-open .bottom_header nav>ul>li:nth-child(4) {
+    animation-delay: calc(var(--header-in-start) + 4 * var(--header-in-step));
+}
+
+html.enter-anim.enter-anim-open .bottom_header nav>ul>li:nth-child(5) {
+    animation-delay: calc(var(--header-in-start) + 5 * var(--header-in-step));
+}
+
+/* ==========================================================================
+   Hero bands wipe in from the left
+   ==========================================================================
+
+   `clip-path: inset()` on the container rather than anything on the bands
+   themselves: they already carry their own clip-path for the diagonal, and a
+   transform would have skewed that angle mid-animation instead of revealing it.
+   Clipping the parent leaves each band's geometry alone and simply uncovers it.
+
+   The same wipe is reused further down the page by js/wipeOnScroll.js — see
+   `.wipe-on-scroll` below — so both share these two numbers.
+   -------------------------------------------------------------------------- */
+
+:root {
+    --band-wipe-duration: 1.1s;
+    --band-wipe-ease: cubic-bezier(0.65, 0, 0.25, 1);
+}
+
+@keyframes heroBandsWipe {
+    from {
+        clip-path: inset(0 100% 0 0);
+    }
+
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+html.enter-anim:not(.enter-anim-open) .hero-bands {
+    clip-path: inset(0 100% 0 0);
+}
+
+html.enter-anim.enter-anim-open .hero-bands {
+    animation: heroBandsWipe var(--band-wipe-duration) var(--band-wipe-ease) 0.35s backwards;
+}
+
+/* --- The same wipe, driven by scroll --------------------------------------
+   js/wipeOnScroll.js adds `wipe-armed` itself and then toggles `wipe-in` as the
+   element enters and leaves the viewport. The hidden state is behind the armed
+   class on purpose: with no JavaScript nothing is armed and the decoration just
+   shows, rather than staying invisible for good.
+
+   A transition rather than the keyframes above, because this one has to be able
+   to run backwards — leaving the viewport removes `wipe-in` and the bands wipe
+   back out, ready to replay on the way down again. */
+.wipe-on-scroll.wipe-armed {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path var(--band-wipe-duration) var(--band-wipe-ease);
+}
+
+.wipe-on-scroll.wipe-armed.wipe-in {
+    clip-path: inset(0 0 0 0);
+}
+
+/* Generic hook for hero content: put `enter-reveal` on an element inside
+   <main> and it fades up in document order once the fences open.
+
+   This deliberately animates `translate` and NOT `transform`. Several elements
+   (the buttons, the decor tilts) own their `transform`/`rotate`, and this rule
+   is more specific than theirs — using `transform` here silently killed the
+   button hover scale. `translate` is a separate property, so the two compose.
+
+   enterAnimation.js strips both classes once the reveal is finished, which
+   also hands the element's `transition` back to its own stylesheet rules. */
+html.enter-anim .enter-reveal {
+    opacity: 0;
+    translate: 0 40px;
+    filter: blur(12px);
+    transition: opacity 0.6s ease,
+        translate 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+        filter 0.5s ease;
+}
+
+html.enter-anim .enter-reveal.enter-revealed {
+    opacity: 1;
+    translate: none;
+    filter: none;
+}
+
+/* The button sits ON the big 3D ball, so it is positioned in hero fractions —
+   the same coordinate system heroBalls.js uses — rather than left in flow.
+   That keeps the two locked together at any viewport size instead of drifting
+   apart as the text above it reflows.
+
+   Keep left/top in sync with the big ball's `u`/`v` in js/heroBalls.js. */
+.hero-buttons {
+    position: absolute;
+    left: 45%;
+    top: 58%;
+    translate: -50% -50%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Over the ball rather than over the page, the button needs more backing to
+   keep its label legible against the yellow. It is also narrowed from the
+   global 350px: at full width it overhung the ball on both sides and read as
+   a bar across it rather than a button sitting on it. */
+.hero-buttons .button1 {
+    width: 250px;
+    background: rgba(255, 255, 255, 0.62);
+    border-color: rgba(255, 255, 255, 0.55);
+}
+
+/* ==========================================================================
+   Hero decoration
+   ==========================================================================
+
+   A non-interactive layer of scattered props behind the hero text. Each item
+   is placed with four custom properties so positions stay tweakable in one
+   place without touching the markup:
+
+     --x / --y   top-left corner, in % of the hero box
+     --size      width, in any CSS length
+     --rot       tilt
+
+   The source images already carry proper alpha channels, so they sit on the
+   colour bands without any blend-mode trickery.
+   -------------------------------------------------------------------------- */
+
+/* style.css sets `main { height: 100% }`. With content below the hero, main has
+   to grow instead, so the full-viewport sizing moves onto .hero itself.
+
+   The hero fills the screen minus the header. --header-height is measured and
+   set by js/enterAnimation.js; the fallback covers the moment before it runs.
+   svh rather than vh so mobile browser chrome collapsing does not resize it. */
+body>main {
+    height: auto;
+}
+
+.hero {
+    position: relative;
+    min-height: calc(100vh - var(--header-height, 208px));
+    min-height: calc(100svh - var(--header-height, 208px));
+    /* `clip` rather than `hidden`: hidden would make this a scroll container,
+       which changes how position:sticky behaves for anything inside it later.
+       Contains the off-screen title/subtitle start positions, and trims the
+       hero content as the chevron sweeps it away. */
+    overflow-x: hidden;
+    overflow: clip;
+}
+
+/* Everything in the hero lives in here so the whole lot can be shifted as one
+   for the scroll parallax. Absolute rather than in flow, so .hero's height
+   comes purely from its min-height and does not react to the shift. */
+.hero-inner {
+    position: absolute;
+    inset: 0;
+    transform: translateY(var(--hero-shift, 0px));
+    opacity: var(--hero-fade, 1);
+}
+
+/* ==========================================================================
+   Hero colour bands
+   ==========================================================================
+
+   Wide diagonal sweeps behind everything, cut at the same angle as the fences
+   so the intro's geometry carries on into the page.
+
+   They stay light — a tint of --color3 / --color2 rather than solid navy —
+   because the button and its dark label sit on top of the main band, and a
+   dark fill there would be unreadable.
+   -------------------------------------------------------------------------- */
+
+.hero-bands {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero-band {
+    position: absolute;
+    inset: 0;
+}
+
+.hero-band--main {
+    background: linear-gradient(115deg,
+            rgba(184, 208, 221, 0.95) 0%,
+            rgba(184, 208, 221, 0.62) 55%,
+            rgba(184, 208, 221, 0.34) 100%);
+    clip-path: polygon(0 50%, 100% 8%, 100% 62%, 0 104%);
+}
+
+/* Narrow, more saturated stripe hugging the top edge of the main band. It is
+   what actually gives the sweep a readable edge rather than a soft wash. */
+.hero-band--accent {
+    background: linear-gradient(115deg,
+            rgba(56, 92, 138, 0.42) 0%,
+            rgba(56, 92, 138, 0.12) 100%);
+    clip-path: polygon(0 44%, 100% 2%, 100% 8%, 0 50%);
+}
+
+/* A thin warm line to break up the blues, echoing the button accent colour. */
+.hero-band--spark {
+    background: linear-gradient(115deg,
+            rgba(213, 92, 0, 0.55) 0%,
+            rgba(213, 92, 0, 0.10) 100%);
+    clip-path: polygon(0 106%, 100% 64%, 100% 67%, 0 109%);
+}
+
+/* Keep the real content above the decoration. `.hero-buttons` is excluded on
+   purpose — it sets its own `position: absolute`, and listing it here would
+   overwrite that with `relative`.
+
+   `width: fit-content` matters: as full-width blocks these were 1440px wide,
+   and the 10vw / 37vw translate then pushed their right edge 533px past the
+   viewport, giving the whole document a horizontal scrollbar. Shrinking the
+   box to the text leaves the text where it is and removes the overflow. */
+/* The title and subtitle share this box, and it is the box that gets placed —
+   previously each heading was positioned independently against the viewport
+   (10vw and 37vw). Because the title's font-size is fixed, its width barely
+   changes while those vw offsets do, so the gap between the two drifted as the
+   window resized. Now the subtitle is centred under the title and the pair move
+   together, so the relationship holds at every width.
+
+   `width: fit-content` shrinks the box to the title, which also keeps the
+   headings from spanning the viewport — as full-width blocks their translate
+   used to push a horizontal scrollbar onto the page. */
+.hero-text {
+    position: relative;
+    /* Layering inside .hero: bands 0, decoration 1, real content 2. */
+    z-index: 2;
+    width: fit-content;
+    max-width: 100%;
+    margin-left: 10vw;
+    padding-top: 2vh;
+}
+
+.sub-title {
+    /* Block-level auto width fills .hero-text, which is as wide as the title,
+       so this centres the subtitle under it. */
+    text-align: center;
+    margin-top: 14px;
+}
+
+.hero-decor {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    /* Never steal a click from the content it sits behind */
+    pointer-events: none;
+    z-index: 1;
+}
+
+.decor {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: var(--size);
+    height: auto;
+    rotate: var(--rot, 0deg);
+    opacity: var(--opacity, 1);
+    /* steps(1) is the whole point: the rotation jumps between poses instead of
+       easing through them, so the props twitch like stop-motion frames rather
+       than sliding. Durations differ per prop below so they never sync up. */
+    animation: decorStopMotion 2.4s steps(1, end) infinite;
+}
+
+@keyframes decorStopMotion {
+    0% {
+        rotate: calc(var(--rot, 0deg) - 1.5deg);
+    }
+
+    20% {
+        rotate: calc(var(--rot, 0deg) + 1deg);
+    }
+
+    40% {
+        rotate: calc(var(--rot, 0deg) + 2.5deg);
+    }
+
+    60% {
+        rotate: calc(var(--rot, 0deg) + 0.5deg);
+    }
+
+    80% {
+        rotate: calc(var(--rot, 0deg) - 2deg);
+    }
+}
+
+/* --- Placement ------------------------------------------------------------
+   The big ball and the button form a focal cluster left of centre, roughly
+   x 18–62%, y 42–75%. Everything here orbits that cluster and keeps out of the
+   title band across the top: racket to its right, grapes below-left, and the
+   single grapes filling the corners the heavy props leave empty. */
+
+.decor--racket {
+    --x: 76%;
+    --y: 46%;
+    --size: clamp(150px, 18vw, 280px);
+    --rot: -15deg;
+    animation-duration: 2.1s;
+}
+
+.decor--grapes {
+    --x: 1%;
+    --y: 76%;
+    --size: clamp(130px, 15vw, 230px);
+    --rot: 6deg;
+    animation-duration: 3.1s;
+    animation-delay: -0.8s;
+}
+
+.decor--grape-a {
+    --x: 3%;
+    --y: 30%;
+    --size: clamp(38px, 4.2vw, 66px);
+    --rot: -20deg;
+    --opacity: 0.9;
+    animation-duration: 1.7s;
+    animation-delay: -0.4s;
+}
+
+.decor--grape-b {
+    --x: 66%;
+    --y: 86%;
+    --size: clamp(48px, 5.5vw, 88px);
+    --rot: 25deg;
+    animation-duration: 2.7s;
+    animation-delay: -1.3s;
+}
+
+.decor--grape-c {
+    --x: 92%;
+    --y: 9%;
+    --size: clamp(38px, 4vw, 64px);
+    --rot: 14deg;
+    --opacity: 0.85;
+    animation-duration: 1.9s;
+    animation-delay: -0.9s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .decor {
+        animation: none;
+    }
+}
+
+/* The 3D tennis balls. Three stacked canvases spanning the hero, one per depth
+   layer; heroBalls.js assigns each ball to a layer from its `z` and places it.
+   The blur here is what makes the distant balls read as out of focus — see the
+   header comment in heroBalls.js for why it is done in CSS. */
+.hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.hero-canvas--mid {
+    filter: blur(2px);
+}
+
+.hero-canvas--far {
+    filter: blur(4.5px);
+}
+
+/* ==========================================================================
+   Cours collectifs — the upcoming course announcements below the hero
+   ========================================================================== */
+
+/* ==========================================================================
+   Chevron sweep — the transition out of the hero
+   ==========================================================================
+
+   The courses panel is pulled up over the hero and its top edge is cut into a
+   '^'. js/heroScroll.js holds the hero content back as the page scrolls, so
+   the chevron climbs across a hero that has barely moved: the section reads as
+   an elegant wipe rather than the hero simply scrolling away.
+
+   Both the panel and the blue band use the same two numbers, so the band sits
+   exactly on the panel's edge.
+   -------------------------------------------------------------------------- */
+
+:root {
+    /* How deep the notch cuts once the chevron is fully formed. */
+    --chevron-depth: clamp(50px, 8vw, 110px);
+    --chevron-thickness: clamp(10px, 1.4vw, 18px);
+    /* How flat the chevron currently is, set by js/heroScroll.js.
+       1 = the apex is level with the notch's two ends, so the edge is a flat
+       line sitting exactly on the hero's bottom: nothing shows and the hero is
+       a clean full screen. 0 = folded to full depth.
+
+       A unitless ratio rather than a pixel apex on purpose. Custom properties
+       are not resolved to values, so reading --chevron-depth back from JS
+       returns the literal text "clamp(50px, 8vw, 110px)" — unparseable. Let
+       CSS do the arithmetic and JS only supplies the number. */
+    --chevron-flatness: 1;
+    --chevron-apex: calc(var(--chevron-depth) * var(--chevron-flatness));
+}
+
+/* No scroll updates arrive, so give the chevron its finished shape outright
+   rather than leaving it permanently flat. */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --chevron-flatness: 0;
+    }
+}
+
+/* The overlap is a fixed --chevron-depth so the panel never moves; only the
+   apex inside the clip path animates. Animating the margin instead would drag
+   all the content below it up and down as you scrolled. */
+.courses-wrap {
+    position: relative;
+    z-index: 3;
+    margin-top: calc(var(--chevron-depth) * -1);
+}
+
+.chevron-sweep {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(var(--chevron-depth) + var(--chevron-thickness));
+    background: var(--color1);
+    /* A '^' of even thickness: down the outside edge, back along the inside. */
+    clip-path: polygon(0 var(--chevron-depth),
+            50% var(--chevron-apex),
+            100% var(--chevron-depth),
+            100% calc(var(--chevron-depth) + var(--chevron-thickness)),
+            50% calc(var(--chevron-apex) + var(--chevron-thickness)),
+            0 calc(var(--chevron-depth) + var(--chevron-thickness)));
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* The white panel behind everything below the hero. It owns the background
+   (which is what hides the hero as the chevron sweeps up), the chevron clip,
+   and the band decoration — so the bands run continuously behind both the
+   courses and the club info instead of stopping at a section boundary. */
+.page-panel {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    /* Same '^' as the band above, so the two edges coincide exactly. */
+    clip-path: polygon(0 var(--chevron-depth),
+            50% var(--chevron-apex),
+            100% var(--chevron-depth),
+            100% 100%,
+            0 100%);
+    padding-top: var(--chevron-depth);
+}
+
+/* ==========================================================================
+   Page bands — the hero's diagonals carried on down the page
+   ==========================================================================
+
+   Long bars rotated by a fixed angle rather than clip-path polygons cut in
+   percentages. The panel's height changes with its content, and a percentage
+   based polygon would change slope as it did; a rotation holds the same angle
+   as the hero at any height.
+   -------------------------------------------------------------------------- */
+
+.page-bands {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    /* clip-path on the panel already trims these, but this keeps the rotated
+       bars from widening the panel's own overflow area. */
+    overflow: hidden;
+}
+
+/* Each bar is set by five properties:
+
+     --band-x      horizontal centre, as a % of the panel
+     --band-y      vertical position of its top edge before rotation
+     --band-h      thickness
+     --band-w      length, as a % of the panel's width
+     --band-angle  rotation; -11.4deg matches the hero
+
+   The bar is rotated about its own centre, so `left` backs off by half its
+   length for --band-x to land where it says.
+
+   --band-w matters most for the steep bars: once rotated, their length is what
+   they reach vertically, and a length set relative to the panel's WIDTH has to
+   be generous to cross a panel that is several times taller than it is wide.
+   That gap is much bigger on a phone, hence the override further down.
+
+   The gradient is always 90deg — along the bar's own long axis — so it fades
+   end to end whatever the angle. */
+.page-band {
+    position: absolute;
+    width: var(--band-w, 150%);
+    left: calc(var(--band-x, 50%) - var(--band-w, 150%) / 2);
+    top: var(--band-y);
+    height: var(--band-h, 60px);
+    rotate: var(--band-angle, -11.4deg);
+    background: linear-gradient(90deg, var(--band-from), var(--band-to));
+}
+
+.page-band--1 {
+    --band-y: 4%;
+    --band-h: 90px;
+    --band-from: rgba(184, 208, 221, 0.55);
+    --band-to: rgba(184, 208, 221, 0.16);
+}
+
+.page-band--2 {
+    --band-y: 11%;
+    --band-h: 16px;
+    --band-from: rgba(56, 92, 138, 0.3);
+    --band-to: rgba(56, 92, 138, 0.07);
+}
+
+.page-band--3 {
+    --band-y: 46%;
+    --band-h: 130px;
+    --band-from: rgba(184, 208, 221, 0.12);
+    --band-to: rgba(184, 208, 221, 0.5);
+}
+
+.page-band--4 {
+    --band-y: 82%;
+    --band-h: 70px;
+    --band-from: rgba(184, 208, 221, 0.4);
+    --band-to: rgba(184, 208, 221, 0.1);
+}
+
+/* --- The odd ones out ---------------------------------------------------
+   Everything above runs parallel, which is what made the set feel samey.
+   These two cut across it: one near-vertical down the left margin, one on the
+   opposite diagonal. Kept thin and pale so they read as texture, not stripes
+   competing with the content. */
+
+.page-band--vertical {
+    --band-x: 12%;
+    --band-y: 45%;
+    --band-h: 24px;
+    --band-w: 220%;
+    --band-angle: 82deg;
+    --band-from: rgba(56, 92, 138, 0.22);
+    --band-to: rgba(56, 92, 138, 0.02);
+}
+
+.page-band--vertical-right {
+    --band-x: 91%;
+    --band-y: 55%;
+    --band-h: 12px;
+    --band-w: 220%;
+    --band-angle: -78deg;
+    --band-from: rgba(184, 208, 221, 0.65);
+    --band-to: rgba(184, 208, 221, 0.05);
+}
+
+.page-band--cross {
+    --band-x: 50%;
+    --band-y: 64%;
+    --band-h: 13px;
+    --band-angle: 19deg;
+    --band-from: rgba(213, 92, 0, 0.05);
+    --band-to: rgba(213, 92, 0, 0.32);
+}
+
+.courses {
+    position: relative;
+    z-index: 1;
+    padding: 40px 24px 80px;
+}
+
+.course-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 32px;
+    max-width: 1100px;
+    margin: 40px auto 0;
+}
+
+.course-card {
+    display: flex;
+    flex-direction: column;
+    /* Two per row on desktop, one per row once there is no longer space. */
+    flex: 1 1 420px;
+    max-width: 520px;
+    padding: 28px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.course-illustration {
+    /* The source artwork sits on white, same as the hero decoration. */
+    mix-blend-mode: multiply;
+    align-self: center;
+    width: auto;
+    height: 200px;
+    max-width: 100%;
+    object-fit: contain;
+    margin-bottom: 16px;
+}
+
+.course-body {
+    display: flex;
+    flex-direction: column;
+    /* Lets the button sit on the baseline of the taller card, so the two
+       cards' buttons line up even when their text differs in length. */
+    flex: 1;
+}
+
+.course-card h3 {
+    font-family: Rammetto-One;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.course-season {
+    text-align: center;
+    font-weight: 700;
+    color: var(--color2);
+    margin-top: 4px;
+}
+
+.course-details {
+    margin: 20px 0 0;
+}
+
+.course-details li {
+    position: relative;
+    color: var(--color1);
+    line-height: 1.6;
+    padding: 6px 0 6px 22px;
+}
+
+.course-details li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 15px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--color4);
+}
+
+.course-deadline {
+    margin-top: 16px;
+    font-weight: 700;
+    color: var(--color4);
+    text-align: center;
+}
+
+.course-link {
+    /* .button1 is 350px wide by default, which overflows a card on narrow
+       screens. `margin-top: auto` pins it to the bottom of the card. */
+    width: 100%;
+    max-width: 320px;
+    /* margin: auto auto 0; */
+    /* padding-top: 20px; */
+    text-decoration: none;
+}
+
+.course-link p {
+    color: var(--color1);
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   Au club — the permanent entries carried over from the agenda page
+   ==========================================================================
+
+   Laid out side-on rather than as another stack of top-image cards, so it does
+   not read as a second helping of the courses section. The photo fills the full
+   height of the card and dissolves into the text: it blurs and fades out to the
+   right rather than stopping at a hard edge.
+   -------------------------------------------------------------------------- */
+
+.info {
+    position: relative;
+    z-index: 1;
+    padding: 60px 24px 80px;
+}
+
+.info-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+    max-width: 1100px;
+    margin: 40px auto 0;
+}
+
+.info-card {
+    position: relative;
+    display: flex;
+    flex: 1 1 440px;
+    max-width: 520px;
+    min-height: 220px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.10);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* --- The dissolving photo -------------------------------------------------
+   Absolutely positioned so it fills the card's full height and the text can
+   start over its tail. Three stacked copies of the same image, each blurrier
+   than the last and each masked to begin further right, give a blur that grows
+   across the image — CSS has no gradient blur, and stacking is far cheaper
+   here than the equivalent backdrop-filter layers (which Safari renders
+   inconsistently when nested). The photos are 200px squares, so the extra
+   copies cost almost nothing.
+
+   The wrapper's own mask fades the whole thing out before the text gets dense.
+   --image-url is set per card in the markup. */
+.info-media {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 62%;
+    -webkit-mask-image: linear-gradient(to right, #000 30%, transparent 92%);
+    mask-image: linear-gradient(to right, #000 30%, transparent 92%);
+}
+
+.info-media img,
+.info-media::before,
+.info-media::after {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.info-media::before,
+.info-media::after {
+    content: '';
+    background-image: var(--image-url);
+    background-size: cover;
+    background-position: center;
+}
+
+.info-media::before {
+    filter: blur(5px);
+    -webkit-mask-image: linear-gradient(to right, transparent 30%, #000 60%);
+    mask-image: linear-gradient(to right, transparent 30%, #000 60%);
+}
+
+.info-media::after {
+    filter: blur(14px);
+    -webkit-mask-image: linear-gradient(to right, transparent 52%, #000 85%);
+    mask-image: linear-gradient(to right, transparent 52%, #000 85%);
+}
+
+.info-body {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    /* Starts inside the photo's fade so the two overlap rather than sit side
+       by side; by here the image is nearly gone. */
+    padding: 24px 24px 24px 46%;
+}
+
+.info-card h3 {
+    font-family: Rammetto-One;
+    font-size: 1.2rem;
+}
+
+.info-link {
+    width: auto;
+    min-width: 0;
+    /* margin: 12px 0 0; */
+    padding: 10px 20px;
+    font-size: 1rem;
+    text-decoration: none;
+    margin-top: auto;
+}
+
+.info-link p {
+    font-weight: 700;
+}
+
+@media screen and (max-width: 768px) {
+
+    /* The panel is far taller than it is wide on a phone, so the steep bars
+       need much more length to reach top to bottom. */
+    .page-band--vertical,
+    .page-band--vertical-right {
+        --band-w: 750%;
+    }
+
+    .courses {
+        padding: 24px 16px 60px;
+    }
+
+    .course-card {
+        padding: 20px;
+    }
+
+    .course-illustration {
+        height: 150px;
+    }
+
+    .info {
+        padding: 40px 16px 60px;
+    }
+
+    /* Stack: side-on leaves the text about 150px wide on a phone, so the photo
+       goes across the top and dissolves downward instead of rightward. */
+    .info-card {
+        flex-direction: column;
+        text-align: center;
+        min-height: 0;
+    }
+
+    .info-media {
+        position: relative;
+        width: 100%;
+        height: 170px;
+        -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent 96%);
+        mask-image: linear-gradient(to bottom, #000 35%, transparent 96%);
+    }
+
+    .info-media::before {
+        -webkit-mask-image: linear-gradient(to bottom, transparent 35%, #000 70%);
+        mask-image: linear-gradient(to bottom, transparent 35%, #000 70%);
+    }
+
+    .info-media::after {
+        -webkit-mask-image: linear-gradient(to bottom, transparent 58%, #000 90%);
+        mask-image: linear-gradient(to bottom, transparent 58%, #000 90%);
+    }
+
+    .info-body {
+        align-items: center;
+        /* Pulled up under the photo's fade, same overlap as the desktop layout
+           has horizontally. */
+        padding: 0 20px 24px;
+        margin-top: -32px;
+    }
+
+    /* The global mobile `p { text-align: justify }` stretches these short
+       lines badly once they are centred. */
+    .info-card p {
+        text-align: center;
+    }
+
+    /* The hero text was desktop-only: a fixed 5rem title plus the 10vw / 37vw
+       offsets pushed it off the side of a phone. Centre it and let it scale.
+
+       Descendant selectors, not `.hero > .main-title`: the extra `.hero` is
+       only there to outweigh the plain `.main-title` rule in style.css, and a
+       child combinator silently stops matching every time the hero markup
+       gains a wrapper — which it has done twice already. */
+    .hero .main-title {
+        font-size: clamp(2rem, 11vw, 3.2rem);
+        text-align: center;
+    }
+
+    .hero .sub-title {
+        font-size: 1rem;
+    }
+
+    /* Centre the pair instead of indenting them from the left. */
+    .hero-text {
+        margin-inline: auto;
+        padding-inline: 5vw;
+    }
+
+
+    /* Keep in sync with the big ball's portrait `u`/`v` in heroBalls.js. */
+    .hero-buttons {
+        left: 50%;
+        top: 62%;
+    }
+
+    .hero-buttons .button1 {
+        width: 200px;
+    }
+
+    /* All three single grapes go: at this width they crowd the balls rather
+       than filling gaps. The bunch and the racket carry the theme on their own. */
+    .decor--grape-a,
+    .decor--grape-b,
+    .decor--grape-c {
+        display: none;
+    }
+
+    .decor--racket {
+        --x: 60%;
+        --y: 30%;
+        --size: 34vw;
+    }
+
+    .decor--grapes {
+        --x: -2%;
+        --y: 80%;
+        --size: 34vw;
+    }
+}

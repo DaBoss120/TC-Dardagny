@@ -281,7 +281,10 @@ font-size: 30px;
     }
 }
 
-.active,
+/* Scoped to .dot — an unqualified `.active` also matched the current page's
+   nav link (header.php marks it with class="active") and drew a box-shadow
+   around it. */
+.dot.active,
 .dot:hover {
     /* background-color: #717171; */
     background: rgba(255, 255, 255, 0.25);
