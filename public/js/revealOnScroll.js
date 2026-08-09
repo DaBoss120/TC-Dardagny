@@ -33,7 +33,7 @@ function groupByRow(elements) {
 function revealOnScroll() {
     const elements = document.querySelectorAll('.reveal-on-scroll');
     const windowHeight = window.innerHeight;
-    const revealPoint = 150;
+    const revealPoint = 0; // Point at which the element will reveal (original: 150)
 
     const rows = groupByRow(elements);
 

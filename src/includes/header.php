@@ -38,9 +38,9 @@ function nav_active($path) {
                         <a href="/reglement-et-statuts"<?php echo nav_active('/reglement-et-statuts'); ?>>REGLEMENT ET STATUTS</a>
                     </div>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="/agenda"<?php echo nav_active('/agenda'); ?>>AGENDA</a>
-                </li>
+                </li> -->
                 <li>
                     <a href="/reservation"<?php echo nav_active('/reservation'); ?>>RÉSERVATION</a>
                 </li>

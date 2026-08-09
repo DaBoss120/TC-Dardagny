@@ -27,7 +27,7 @@
                 <h2>Le site</h2>
                 <ul>
                     <li><a href="/">Accueil</a></li>
-                    <li><a href="/agenda">Agenda</a></li>
+                    <!-- <li><a href="/agenda">Agenda</a></li> -->
                     <li><a href="/reservation">R&eacute;servation</a></li>
                     <li><a href="/contact">Contact</a></li>
                 </ul>
