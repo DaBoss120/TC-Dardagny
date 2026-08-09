@@ -13,6 +13,10 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    /* The 28px it inherits from .text-bubble-img-presentation offsets an
+       absolutely positioned box, so the card was sitting 28px below and right
+       of the centre this rule is aiming for — enough to hang over the footer. */
+    margin: 0;
     width: min(50vw, 60vh);
     height: auto;
     min-width: 450px;
@@ -23,6 +27,9 @@
         position:relative;
         transform: translate(0%, 0%);
         left: 0%;
+        /* Back in flow here, so the spacing the desktop rule zeroed out is
+           wanted again. */
+        margin: 28px 0;
         min-width: 350px;
         .bubble-hover{
             margin: 10px;

@@ -20,10 +20,14 @@
         <div class="titre with-margin">
             <h1>Réservation</h1>
         </div>
+        <!-- The content now sits INSIDE the background container, so the
+             container takes its height from the content. It used to be a
+             sibling, absolutely positioned on top, which meant it added no
+             height at all — the container was sized by a 105vh blurred spacer
+             instead, and that spacer ran on over the footer. -->
         <div class="background-container">
-            <div class="img-with-gadient"></div>
-        </div>
-        <div class="img-with-gadient-content">
+            <div class="img-with-gadient" aria-hidden="true"></div>
+            <div class="img-with-gadient-content">
             <div>
                 <div class="court-img">
                     <img src="/img/court2.webp" alt="court image">
@@ -42,14 +46,13 @@
                     </iframe>
                 </div>
             </div>
-            <a href="https://ballejaune.com/club/tcdardagny">
-                <button class="button1">
-                    <p>Réserver</p>
-                </button>
-            </a>
+                <a href="https://ballejaune.com/club/tcdardagny">
+                    <button class="button1">
+                        <p>Réserver</p>
+                    </button>
+                </a>
+            </div>
         </div>
-
-
     </main>
     <?php $page_scripts = []; include __DIR__ . '/../includes/footer.php'; ?>
 </body>

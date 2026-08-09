@@ -6,9 +6,10 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 105vh;
-    /* overflow: hidden; */
-    /* Add a padding so the title is visible because of overflow hidden */
+    /* `height: 105vh` used to be here: a fixed box taller than the screen that
+       could not grow, so its content spilled out over the footer. The global
+       rule in style.css already gives main a full-screen minimum, and dropping
+       the fixed height lets it grow with the content. */
     padding-top: 100px;
     background-color: transparent;
 }
@@ -77,15 +78,21 @@ a {
     overflow: hidden;
     z-index: -1; /* Ensure it stays behind other content */
 
+/* Clips the blurred image and takes its height from the content inside it. */
+.background-container {
+    position: relative;
+    overflow: hidden;
+    /* main centres its children, which would shrink this to fit its content.
+       The blurred panel is meant to run the full width of the page. */
+    align-self: stretch;
+}
+
 .img-with-gadient {
-    /* height: 100vh;
-    width: 102vw; */
-    width: 105vw;
-    height: 105vh;
-
-    /* Center the oversized eleme
-     nt to hide edges evenly */
-
+    /* Out of flow and oversized by `inset`, so the overhang that hides the
+       blur's soft edges costs no layout. It used to be a 105vw x 105vh element
+       in normal flow, which is what pushed it down over the footer. */
+    position: absolute;
+    inset: -6%;
 
     background-image: url("../img/court2.webp");
     /* Changed from /WEB/IMG/... */
@@ -94,23 +101,21 @@ a {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    margin-top: 16px;
 }
 
 .img-with-gadient-content {
-    /* background-image: url("../img/court2.png"); */
-    /* Changed from /WEB/IMG/... */
+    /* In normal flow now, and stacked above the blurred image — being
+       absolutely positioned is what stopped it contributing any height. */
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    transform: translateY(10%);
-    /* Same height size as main */
     height: auto;
     min-height: 600px;
     width: 100%;
-    margin: auto;
+    padding: 48px 0;
 }
 
 .img-with-gadient-content div {
@@ -160,20 +165,11 @@ a {
         margin: 10px 0;
     }
 
-    .background-container {
-        height: 115%;
-
-        .img-with-gadient {
-            height: 115vh;
-            width: 110vw;
-        }
-
-        .img-with-gadient-content {
-            flex-direction: column;
-            align-items: center;
-            transform: translateY(10vh);
-            height: 110%;
-        }
-
+    /* The fixed heights here existed to prop up the old spacer layout. The
+       container is sized by its content now, so they are no longer needed. */
+    .background-container .img-with-gadient-content {
+        flex-direction: column;
+        align-items: center;
+        padding: 32px 0;
     }
 }

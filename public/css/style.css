@@ -24,7 +24,9 @@ body {
     /* Prevent horizontal scrolling caused by elements using 100vw or positioned off-screen */
     /* overflow-x: hidden; */
 }
-
+body{
+    min-height: 100vh;
+}
 :root {
     --color1: #1a3150;
     --color2: #385c8a;
@@ -34,7 +36,26 @@ body {
 
 /* Global styles */
 main {
-    height: 100%;
+    /* Was `height: 100%`, which pinned main to exactly one viewport tall. The
+       footer is laid out after main's BOX, not after its content — so on every
+       page whose content ran past one screen, the overflow painted straight
+       over the footer.
+
+       min-height keeps the full-screen look on short pages while letting main
+       grow when there is more to show. --header-height comes from script.js;
+       the fallback covers the moment before it runs.
+
+       No `height` here: body no longer establishes a flex/indefinite context
+       (it's a plain block now), so `html, body { height: 100% }` gives body a
+       definite 100vh — and a `height: 100%` on main would resolve against
+       that and pin main to one viewport again, same as the original bug. */
+    display: block;
+    /* overflow: auto; */
+    /* height: fit-content; */
+    /* Apparenly this fixes the footer being cut by the images. 
+    I don't see a differnence when it's not there but we will keep it for good measure */
+    min-height: calc(100vh - var(--header-height, 208px));
+    min-height: calc(100svh - var(--header-height, 208px));
     transition: opacity 0.5s, filter 0.5s;
 }
 
@@ -662,7 +683,14 @@ header {
 
 /* General page styling */
 .big-back-img {
-    height: 100%;
+    /* Same story as main: a fixed `height` pins this to one viewport and can't
+       grow, so a section with a title above a full-height panel overflows by
+       exactly the title's height — and that overflow doesn't push main or the
+       footer down with it. min-height fills the screen when there is room and
+       expands when there is not. */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 #copyableText:hover {
@@ -674,8 +702,16 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100%;
+    /* Takes whatever height is left inside .big-back-img rather than a
+       percentage of it — a percentage cannot resolve against a parent that is
+       sized by min-height, and would have collapsed to auto.
+
+       Grow, but never shrink: with flex-shrink at its default of 1 this was
+       squeezed to fit the parent's min-height and its content spilled out the
+       bottom over the footer. 0 makes the parent grow instead. */
+    flex: 1 0 auto;
     width: 100%;
+    min-height: 100vh;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -939,11 +975,11 @@ div.unBlur {
     }
 
     .big-back-img {
-        height: auto;
+        min-height: auto;
     }
 
     .back-img-presentation {
-        height: 100vh;
+        min-height: 100vh;
     }
 
     .bubble-hover:hover {

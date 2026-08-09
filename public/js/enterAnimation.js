@@ -28,29 +28,8 @@ const MAX_WAIT_FOR_LOAD = 2500;
 
 const root = document.documentElement;
 
-/**
- * The hero sizes itself as `100svh - var(--header-height)`. That value depends
- * on the logo, the font and the breakpoint, so it is measured rather than
- * hard-coded.
- *
- * It measures the hero's own offset from the top of the document, not the
- * header's height: the header's inner bar carries a 3rem margin that collapses
- * out of `header.offsetHeight`, so the header reads 160px while actually
- * occupying 208px. The hero's top edge is the number that matters.
- */
-function measureHeaderHeight() {
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
-
-    // Zero it first so the reading is not taken against the value it produced.
-    root.style.setProperty('--header-height', '0px');
-    const offset = hero.getBoundingClientRect().top + window.scrollY;
-    root.style.setProperty('--header-height', `${Math.round(offset)}px`);
-}
-
-measureHeaderHeight();
-window.addEventListener('resize', measureHeaderHeight);
-window.addEventListener('load', measureHeaderHeight);
+/* --header-height is measured and published by js/script.js, which runs on
+   every page — the hero is not the only thing that needs it. */
 
 function revealHeroContent() {
     // heroBalls.js runs as a module, so it may not have executed yet when the

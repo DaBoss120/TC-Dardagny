@@ -229,8 +229,8 @@
                             <h3>Service de cordage</h3>
                             <p><b>Vous avez un probl&egrave;me de cordage&nbsp;?</b></p>
                             <p>Beno&icirc;t propose de corder votre raquette.</p>
-                            <a class="button1 info-link" href="/contact">
-                                <p>Nous contacter</p>
+                            <a class="button1 info-link" href="/pdf/Service%20de%20cordage.pdf" target="_blank" rel="noopenerDeCordage">
+                                <p>Infos et tarifs</p>
                             </a>
                         </div>
                     </article>

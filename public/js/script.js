@@ -1,5 +1,31 @@
 "use strict";
 
+/**
+ * Publishes the header's real height as --header-height, for the CSS rules that
+ * size a section to "the screen, minus the header".
+ *
+ * It measures main's offset from the top of the document rather than the
+ * header's own height: the header's inner bar carries a 3rem margin that
+ * collapses out of `header.offsetHeight`, which reads 160px while the header
+ * actually occupies 208px. Where main starts is the number that matters.
+ *
+ * Runs immediately — this file is loaded at the end of <body>, so main exists —
+ * so the value is in place before the first paint settles.
+ */
+function measureHeaderHeight() {
+    const main = document.querySelector('main');
+    if (!main) return;
+
+    // Zero it first, or the reading is taken against the value it produced.
+    document.documentElement.style.setProperty('--header-height', '0px');
+    const offset = main.getBoundingClientRect().top + window.scrollY;
+    document.documentElement.style.setProperty('--header-height', `${Math.round(offset)}px`);
+}
+
+measureHeaderHeight();
+window.addEventListener('resize', measureHeaderHeight);
+window.addEventListener('load', measureHeaderHeight);
+
 // let slideIndex = 1;
 // showSlides(slideIndex)
 
