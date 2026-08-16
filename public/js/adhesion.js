@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Max lean, in degrees each way — the threshold that keeps the rotation
     // from ever looking like it's spinning rather than tilting.
-    const MAX_ROTATE = 3;
+    const MAX_ROTATE = 2;
     // Degrees of lean added per pixel of cursor travel between two
     // mousemove events. Horizontal travel dominates so it reads as
     // "leaning into" the direction of the drag; vertical only adds a

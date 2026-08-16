@@ -1461,7 +1461,7 @@ div.unBlur {
    ========================================================================== */
 
 /* Generic section padding wrapper — put a heading + a *-card-grid inside. */
-.courses {
+.main-section-primary {
     position: relative;
     z-index: 1;
     padding: 40px 24px 80px;
@@ -1469,7 +1469,7 @@ div.unBlur {
 
 /* Same, just a bit less top padding — meant to sit right under a .courses
    section (as on the home page), but works fine on its own. */
-.info {
+.main-section-secondary {
     position: relative;
     z-index: 1;
     padding: 60px 24px 80px;

@@ -138,7 +138,7 @@
                     <div class="page-band page-band--4"></div>
                 </div>
 
-                <section class="courses">
+                <section class="main-section-primary">
                     <div class="titre reveal-on-scroll">
                         <h2>Cours collectifs</h2>
                     </div>
@@ -203,7 +203,7 @@
                  two entries never go out of date, unlike the rest of that page.
                  --image-url feeds the blurred copies behind each photo; the
                  same trick the agenda page uses. -->
-                <section class="info">
+                <section class="main-section-secondary">
                     <div class="titre reveal-on-scroll">
                         <h2>Au club</h2>
                     </div>
@@ -250,7 +250,7 @@
                         </article>
                     </div>
                 </section>
-                <section class="future">
+                <section class="main-section-secondary">
                     <div class="titre reveal-on-scroll">
                         <h2>À venir</h2>
                     </div>
