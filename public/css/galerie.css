@@ -139,6 +139,11 @@
     border-radius: 12px;
     cursor: grab;
     touch-action: none;
+    /* Without this, WebKit shows its default translucent tap-highlight
+       overlay on the frame right as a touch drag ends — same fix as
+       .gallery-item above, just missed here since this element only
+       became tap/drag-interactive later. */
+    -webkit-tap-highlight-color: transparent;
     /* The width/height transition (needed for the crop to stay correct —
        see galerie.js) forces a layout reflow every frame, unlike a plain
        transform. This tells the browser the frame's box changes never

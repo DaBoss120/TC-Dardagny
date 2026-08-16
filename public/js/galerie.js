@@ -72,10 +72,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Drag-to-dismiss: how far down (px) counts as "let go of it".
     const DISMISS_THRESHOLD = 110;
-    // How long a spring-back's temporary backdrop opacity override sticks
-    // around before handing control back to the CSS class rule — just a
-    // safety buffer past the 0.3s opacity transition it's protecting.
+    // How long a spring-back's temporary backdrop override sticks around
+    // before handing control back to the CSS class rule — just a safety
+    // buffer past the 0.3s transition it's protecting.
     const BACKDROP_RESTORE_BUFFER = 420;
+
+    // Drag feedback dials the backdrop's blur radius and tint strength down
+    // together as the photo is dragged away, instead of fading its opacity.
+    // Opacity would fade the *whole* backdrop (tint and blur alike) as one
+    // flat layer, which reads as fake because a real pane of frosted glass
+    // doesn't become transparent as you pull something out from behind it —
+    // it just stops being frosted. Driving `backdrop-filter` and the tint's
+    // own alpha channel instead keeps the backdrop element itself always
+    // fully opaque, so what's actually changing is how much it blurs and
+    // tints what's behind it — a real-time blur easing off, not a
+    // transparency trick. Must match the base values in galerie.css's
+    // `.gallery-lightbox-backdrop` rule.
+    const BACKDROP_BLUR_MAX = 16;
+    const BACKDROP_TINT_RGB = '8, 15, 26';
+    const BACKDROP_TINT_ALPHA_MAX = 0.92;
 
     // closed -> opening -> open -> (dragging -> open/opening, or) closing -> closed
     let state = 'closed';
@@ -301,15 +316,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const sourceRect = currentSourceRect();
 
         lightbox.classList.remove('is-visible');
-        // A drag may have left an inline opacity/transition on the backdrop
-        // (and a spring-back's delayed cleanup still pending); hand control
-        // back to the CSS class transition for the fade-out.
+        // A drag may have left an inline transition (and a spring-back's
+        // delayed cleanup still pending) on the backdrop; hand control back
+        // to the CSS class transition for the opacity fade-out. The blur/
+        // tint values themselves are deliberately left as whatever the drag
+        // last set them to (or their CSS defaults, if there was no drag) —
+        // resetting them here would snap the backdrop to full strength for
+        // one frame right as the fade-out starts, flashing it back to full
+        // blur/tint before it fades. finishClose() clears them once the
+        // fade is actually done and nothing is visible to jump.
         if (backdropCleanupTimer) {
             clearTimeout(backdropCleanupTimer);
             backdropCleanupTimer = null;
         }
         backdrop.style.transition = '';
-        backdrop.style.opacity = '';
         // The grid tile stays hidden until finishClose() — it renders the
         // exact same crop as the frame at that point, so revealing it any
         // earlier means seeing both at once for the whole shrink animation.
@@ -337,6 +357,12 @@ document.addEventListener('DOMContentLoaded', () => {
         img.removeAttribute('src');
         abandonPendingPreload();
         frame.style.transition = 'none';
+        // Now that the fade-out is done and the lightbox is invisible, it's
+        // safe to drop any drag-time blur/tint override so the next open()
+        // starts clean at the CSS defaults.
+        backdrop.style.backdropFilter = '';
+        backdrop.style.webkitBackdropFilter = '';
+        backdrop.style.backgroundColor = '';
         if (activeButton) activeButton.classList.remove('is-source-active');
         document.body.classList.remove('no-scroll');
         activeButton = null;
@@ -439,7 +465,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const compensateY = (dragBox.height / 2) * (1 - scale);
 
         frame.style.transform = `translate(${dx + compensateX}px, ${dy + compensateY}px) scale(${scale})`;
-        backdrop.style.opacity = String(Math.max(0.15, 1 - Math.abs(dy) / 400));
+
+        const backdropStrength = Math.max(0.15, 1 - Math.abs(dy) / 400);
+        backdrop.style.backdropFilter = `blur(${BACKDROP_BLUR_MAX * backdropStrength}px)`;
+        backdrop.style.webkitBackdropFilter = backdrop.style.backdropFilter;
+        backdrop.style.backgroundColor = `rgba(${BACKDROP_TINT_RGB}, ${BACKDROP_TINT_ALPHA_MAX * backdropStrength})`;
     });
 
     const endDrag = (event) => {
@@ -463,8 +493,10 @@ document.addEventListener('DOMContentLoaded', () => {
         freezeCurrentBox();
         growToRest();
 
-        backdrop.style.transition = 'opacity 0.3s ease';
-        backdrop.style.opacity = '1';
+        backdrop.style.transition = 'backdrop-filter 0.3s ease, background-color 0.3s ease';
+        backdrop.style.backdropFilter = `blur(${BACKDROP_BLUR_MAX}px)`;
+        backdrop.style.webkitBackdropFilter = backdrop.style.backdropFilter;
+        backdrop.style.backgroundColor = `rgba(${BACKDROP_TINT_RGB}, ${BACKDROP_TINT_ALPHA_MAX})`;
         // If an earlier spring-back's cleanup is still pending (another
         // drag started before it fired), drop it — its delayed reset
         // would otherwise land on top of whatever this one, or a
@@ -473,7 +505,9 @@ document.addEventListener('DOMContentLoaded', () => {
         backdropCleanupTimer = setTimeout(() => {
             // Let the CSS class rule resume ownership once the snap-back settles.
             backdrop.style.transition = '';
-            backdrop.style.opacity = '';
+            backdrop.style.backdropFilter = '';
+            backdrop.style.webkitBackdropFilter = '';
+            backdrop.style.backgroundColor = '';
             backdropCleanupTimer = null;
         }, BACKDROP_RESTORE_BUFFER);
     };
