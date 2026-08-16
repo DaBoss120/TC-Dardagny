@@ -69,6 +69,16 @@ if (is_file($manifestPath)) {
             <button type="button" class="gallery-lightbox-close" aria-label="Fermer la photo">
                 <i class="fa fa-times" aria-hidden="true"></i>
             </button>
+            <?php // Pointer-device affordance only — on touch the gesture is the swipe itself,
+                  // so galerie.css hides these outside `(hover: hover) and (pointer: fine)`. ?>
+            <button type="button" class="gallery-lightbox-arrow is-prev" aria-label="Photo précédente">
+                <i class="fa fa-angle-left" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="gallery-lightbox-arrow is-next" aria-label="Photo suivante">
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </button>
+            <?php // galerie.js clones this frame twice, so previous/current/next each get
+                  // their own element and a swipe can slide one out while the next slides in. ?>
             <div class="gallery-lightbox-frame">
                 <img class="gallery-lightbox-img" src="" alt="" draggable="false">
             </div>

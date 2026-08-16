@@ -21,29 +21,50 @@
  * swaps in once it's finished loading in the background — since it crops
  * identically, that swap only changes sharpness, not shape.
  *
- * Dragging to dismiss is the one place `transform` is still used: it's a
- * per-pointermove, continuously-driven scale (not a one-shot eased
+ * Dragging is the one place `transform` is still used: it's a
+ * per-pointermove, continuously-driven motion (not a one-shot eased
  * transition to a fixed target), so it stays on the compositor-only,
- * reflow-free `transform` for smoothness. It only ever scales uniformly,
- * so it never distorts — the crop-matching only matters for the
+ * reflow-free `transform` for smoothness. A vertical drag only ever scales
+ * uniformly, so it never distorts — the crop-matching only matters for the
  * differently-shaped open/close transitions.
  *
- * Every dismissal path (X, backdrop click, Escape, swipe) works whether
- * the photo is fully open OR still mid-opening: `close()` just retargets
- * whatever CSS transition is already running (browsers handle that
- * gracefully), and a drag that starts before the open animation finishes
- * freezes the frame's current in-flight size as its own starting point
- * (`freezeCurrentBox`) so the same drag math applies either way.
+ * --- Swiping between photos -----------------------------------------------
+ * There are THREE frame elements, not one: previous, current and next.
+ * Every photo has its own aspect ratio and therefore its own rest box, so a
+ * swipe track can't be one strip of equal-width pages — instead each frame
+ * sits at its own centered rest box, and the neighbours are pushed a whole
+ * "page" (viewport width + a gutter) to either side. A horizontal drag
+ * translates all three by the same live delta, so the outgoing photo leaves
+ * and the incoming one arrives at its own correct size, tracking the finger
+ * the entire way (no waiting for release).
+ *
+ * Committing a swipe ROTATES THE ROLES rather than moving content between
+ * elements: the frame that just slid into view literally becomes the
+ * current frame, and the one that left is recycled into the far neighbour
+ * slot with a new photo. Copying `src` from one element to another at the
+ * end of the gesture would risk a decode flash on exactly the frame the eye
+ * is fixed on; rotating a pointer costs nothing and can't flash.
+ *
+ * Because `activeButton` follows the current index, every close path
+ * automatically shrinks back into the tile of whatever photo is on screen
+ * *now*, not the one that was originally clicked.
+ *
+ * Every dismissal path (X, backdrop click, Escape, swipe down) works
+ * whether the photo is fully open OR still mid-opening: `close()` just
+ * retargets whatever CSS transition is already running (browsers handle
+ * that gracefully), and a drag that starts before the open animation
+ * finishes freezes the frame's current in-flight size as its own starting
+ * point (`freezeCurrentBox`) so the same drag math applies either way.
  */
 document.addEventListener('DOMContentLoaded', () => {
     const items = Array.from(document.querySelectorAll('.gallery-item'));
     const lightbox = document.getElementById('gallery-lightbox');
     if (!items.length || !lightbox) return;
 
-    const frame = lightbox.querySelector('.gallery-lightbox-frame');
-    const img = lightbox.querySelector('.gallery-lightbox-img');
     const backdrop = lightbox.querySelector('.gallery-lightbox-backdrop');
     const closeButton = lightbox.querySelector('.gallery-lightbox-close');
+    const prevArrow = lightbox.querySelector('.gallery-lightbox-arrow.is-prev');
+    const nextArrow = lightbox.querySelector('.gallery-lightbox-arrow.is-next');
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const OPEN_DURATION = reducedMotion ? 1 : 480;
@@ -92,13 +113,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const BACKDROP_TINT_RGB = '8, 15, 26';
     const BACKDROP_TINT_ALPHA_MAX = 0.92;
 
-    // closed -> opening -> open -> (dragging -> open/opening, or) closing -> closed
+    // --- Swipe tuning ---
+    // Gap between two photos while a swipe is in flight, so they read as
+    // separate pages rather than one seam-less strip.
+    const SWIPE_GAP = 40;
+    const SWIPE_SETTLE_DURATION = reducedMotion ? 1 : 320;
+    const EASE_SWIPE = 'cubic-bezier(0.22, 1, 0.36, 1)';
+    // A gesture is committed either by distance OR by a flick — a fast,
+    // short swipe should advance just like a slow, long one.
+    const SWIPE_VELOCITY = 0.45; // px per ms
+    // How far a pointer has to travel before the gesture is locked to one
+    // axis. Below this, it's still ambiguous and nothing should move: a
+    // slightly diagonal swipe must not both slide sideways AND start
+    // shrinking to dismiss.
+    const AXIS_LOCK_THRESHOLD = 8;
+    // Pull against a swipe that has nowhere to go (first/last photo).
+    const EDGE_RESISTANCE = 0.28;
+
+    const swipeThreshold = () => Math.min(120, window.innerWidth * 0.25);
+
+    // closed -> opening -> open -> (dragging -> settling/open/opening, or) closing -> closed
     let state = 'closed';
     let activeButton = null;
-    let restBox = null; // {width, height, left, top} in viewport px — the open/rest box
+    let currentIndex = 0;
     let dragStart = null;
     let dragBox = null; // the frame's real box at the moment the current drag began
+    let dragAxis = null; // null (undecided) | 'x' (swipe) | 'y' (dismiss)
     let backdropCleanupTimer = null;
+    // Last two horizontal samples, enough for a flick-velocity estimate.
+    let swipeLast = null;
+    let swipePrev = null;
 
     const computeRestBox = (naturalWidth, naturalHeight) => {
         const vw = window.innerWidth;
@@ -118,12 +162,57 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
-    const setFrameBox = (box, radiusPx) => {
-        frame.style.width = `${box.width}px`;
-        frame.style.height = `${box.height}px`;
-        frame.style.left = `${box.left}px`;
-        frame.style.top = `${box.top}px`;
-        frame.style.borderRadius = `${radiusPx}px`;
+    // --- The three recycled frames ------------------------------------------
+    // The markup ships one frame; the other two are clones of it, so the
+    // count lives here rather than being duplicated in the template.
+    const SLIDE_COUNT = 3;
+    const templateFrame = lightbox.querySelector('.gallery-lightbox-frame');
+    const slides = [];
+    for (let i = 0; i < SLIDE_COUNT; i++) {
+        const frameEl = i === 0 ? templateFrame : templateFrame.cloneNode(true);
+        if (i !== 0) templateFrame.parentNode.insertBefore(frameEl, templateFrame);
+        slides.push({
+            frame: frameEl,
+            img: frameEl.querySelector('.gallery-lightbox-img'),
+            button: null,   // the grid tile this slide is currently showing
+            restBox: null,
+            preload: null,
+            offset: 0,      // -1 / 0 / +1 — which page slot it occupies
+        });
+    }
+
+    // Which array position currently holds the on-screen photo. Swiping
+    // advances this pointer instead of moving photos between elements.
+    let currentSlot = 0;
+    // How far the whole three-frame track is displaced from its resting
+    // arrangement, in px. Non-zero only mid-swipe.
+    let trackDelta = 0;
+    let pageWidth = window.innerWidth + SWIPE_GAP;
+
+    // `frame` always aliases the current slide's element. It's reassigned
+    // (not rebuilt) when a swipe commits, which is why every listener below
+    // is bound to each frame individually and guards on being the current
+    // one, rather than being bound to `frame` once.
+    let frame = slides[0].frame;
+
+    const slotForOffset = (offset) => slides[(currentSlot + offset + SLIDE_COUNT) % SLIDE_COUNT];
+    const setRoles = () => {
+        for (let offset = -1; offset <= 1; offset++) slotForOffset(offset).offset = offset;
+    };
+
+    const setSlideBox = (slide, box, radiusPx) => {
+        slide.frame.style.width = `${box.width}px`;
+        slide.frame.style.height = `${box.height}px`;
+        slide.frame.style.left = `${box.left}px`;
+        slide.frame.style.top = `${box.top}px`;
+        slide.frame.style.borderRadius = `${radiusPx}px`;
+    };
+    const setFrameBox = (box, radiusPx) => setSlideBox(slides[currentSlot], box, radiusPx);
+
+    const applyTrack = () => {
+        slides.forEach(slide => {
+            slide.frame.style.transform = `translateX(${slide.offset * pageWidth + trackDelta}px)`;
+        });
     };
 
     // Bakes wherever the frame currently, visually sits — including any
@@ -158,51 +247,130 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentSourceRect = () => activeButton.getBoundingClientRect();
     const tileRadiusOf = (button) => parseFloat(getComputedStyle(button).borderRadius) || OPEN_RADIUS;
 
-    // The full-resolution photo currently being fetched/decoded in the
-    // background, if any — tracked so a later photo can cancel it (see
-    // `loadPhotoInto`) instead of leaving it to keep running for nothing.
-    let pendingPreload = null;
+    // Exactly one grid tile is hidden at a time: the one whose photo is
+    // currently on screen, so the close animation never lands next to a
+    // duplicate of itself. Swiping moves that hidden marker along with the
+    // current index, which is what makes closing land on the right tile.
+    const setActiveButton = (button) => {
+        if (activeButton === button) return;
+        if (activeButton) activeButton.classList.remove('is-source-active');
+        activeButton = button;
+        if (activeButton) activeButton.classList.add('is-source-active');
+    };
 
-    const abandonPendingPreload = () => {
-        if (!pendingPreload) return;
+    // Swiping can walk a long way from the tile that was originally
+    // clicked, and every close shrinks back into whichever tile is current
+    // — so if that tile has scrolled out of view, the photo would fly off
+    // the edge of the screen to reach it. Pulling it into view the moment
+    // the swipe commits fixes that, and is never seen: the lightbox is
+    // covering the whole viewport at the time. The scroll lock comes off
+    // for the call because `overflow: hidden` on the viewport can block
+    // programmatic scrolling too, and goes straight back on within the same
+    // tick, so nothing renders in between.
+    const revealCurrentTile = () => {
+        if (!activeButton) return;
+        const wasLocked = document.body.classList.contains('no-scroll');
+        if (wasLocked) document.body.classList.remove('no-scroll');
+        try {
+            activeButton.scrollIntoView({ block: 'center', inline: 'center', behavior: 'instant' });
+        } catch (error) {
+            // Older engines reject `behavior: 'instant'` on the options form.
+            activeButton.scrollIntoView(true);
+        }
+        if (wasLocked) document.body.classList.add('no-scroll');
+    };
+
+    const abandonPreload = (slide) => {
+        if (!slide.preload) return;
         // Sets the request into a canceled state in every major browser —
         // the standard way to actually stop an in-flight `Image` fetch/
         // decode rather than just ignoring its result.
-        pendingPreload.src = '';
-        pendingPreload = null;
+        slide.preload.src = '';
+        slide.preload = null;
     };
+
+    const abandonAllPreloads = () => slides.forEach(abandonPreload);
 
     // Shows the grid tile's own (already-loaded) thumbnail immediately, then
     // swaps in the full-resolution photo once it's finished loading AND
     // decoding. Both crop identically via `object-fit: cover`, so the swap
     // never shifts position or shape — only sharpness.
-    const loadPhotoInto = (button) => {
+    const loadPhotoInto = (slide, button) => {
         const thumbImg = button.querySelector('img');
-        img.src = thumbImg ? thumbImg.src : '';
-        img.alt = button.dataset.alt || '';
+        slide.img.src = thumbImg ? thumbImg.src : '';
+        slide.img.alt = button.dataset.alt || '';
 
         // A previous photo's preload may still be downloading/decoding in
         // the background — left alone, it just keeps burning CPU and
         // bandwidth competing with this one (worse the heavier that photo
         // was), for a result nobody's going to see.
-        abandonPendingPreload();
+        abandonPreload(slide);
 
         const fullSrc = button.dataset.full;
         if (!fullSrc) return;
         const preload = new Image();
-        pendingPreload = preload;
+        slide.preload = preload;
         preload.src = fullSrc;
         // decode() resolves once the image is fully decoded and ready to
         // paint with no delay — unlike `onload`, which can fire before
         // decoding (the expensive part for a large photo) is actually
         // done, risking a stutter right as it's swapped in mid-animation.
         preload.decode().catch(() => {}).then(() => {
-            if (pendingPreload === preload) pendingPreload = null;
-            // The gallery could have been closed and a different photo
-            // opened (or this preload canceled) by the time a slow fetch
-            // finishes — only apply it if this is still the photo shown.
-            if (activeButton === button) img.src = fullSrc;
+            if (slide.preload === preload) slide.preload = null;
+            // Swiping may have recycled this slide onto a different photo
+            // (or closed the gallery) by the time a slow fetch finishes —
+            // only apply it if this is still what the slide is showing.
+            if (slide.button === button) slide.img.src = fullSrc;
         });
+    };
+
+    const refreshRestBox = (slide) => {
+        if (!slide.button) {
+            slide.restBox = null;
+            return;
+        }
+        const naturalWidth = parseInt(slide.button.dataset.width, 10) || 1;
+        const naturalHeight = parseInt(slide.button.dataset.height, 10) || 1;
+        slide.restBox = computeRestBox(naturalWidth, naturalHeight);
+    };
+
+    // Points a slide at a photo. The early return matters: when a swipe
+    // commits, the outgoing photo stays loaded in its recycled slide, and
+    // re-assigning it would throw away the full-resolution image it already
+    // has and visibly drop back to the thumbnail.
+    const assignPhoto = (slide, button) => {
+        if (slide.button === button) return;
+        slide.button = button;
+        abandonPreload(slide);
+        if (!button) {
+            // Past the first/last photo there is nothing to slide in.
+            slide.frame.style.display = 'none';
+            slide.restBox = null;
+            slide.img.removeAttribute('src');
+            return;
+        }
+        slide.frame.style.display = '';
+        loadPhotoInto(slide, button);
+    };
+
+    // Parks both neighbours off-screen at their own rest boxes, ready to be
+    // dragged in. Never touches the current slide — its box belongs to the
+    // open/close animation.
+    const layoutNeighbours = () => {
+        [-1, 1].forEach(offset => {
+            const slide = slotForOffset(offset);
+            assignPhoto(slide, items[currentIndex + offset] || null);
+            if (!slide.button) return;
+            refreshRestBox(slide);
+            slide.frame.style.transition = 'none';
+            setSlideBox(slide, slide.restBox, OPEN_RADIUS);
+            slide.frame.style.boxShadow = OPEN_SHADOW;
+        });
+    };
+
+    const updateArrows = () => {
+        if (prevArrow) prevArrow.classList.toggle('is-disabled', !items[currentIndex - 1]);
+        if (nextArrow) nextArrow.classList.toggle('is-disabled', !items[currentIndex + 1]);
     };
 
     // If a transition's start and end box happen to land on exactly the
@@ -229,12 +397,18 @@ document.addEventListener('DOMContentLoaded', () => {
             boxSettleTimer = null;
         }
     };
+    // Fades the drop shadow in on a frame that has just come to rest at
+    // full open size — shared by the open animation and by every swipe
+    // settle, which both end in exactly that state.
+    const fadeShadowIn = () => {
+        frame.style.transition = `box-shadow ${SHADOW_FADE_DURATION}ms ease`;
+        frame.style.boxShadow = OPEN_SHADOW;
+    };
     const markOpened = () => {
         disarmBoxSettle();
         if (state !== 'opening') return;
         state = 'open';
-        frame.style.transition = `box-shadow ${SHADOW_FADE_DURATION}ms ease`;
-        frame.style.boxShadow = OPEN_SHADOW;
+        fadeShadowIn();
     };
     const markClosed = () => {
         disarmBoxSettle();
@@ -267,37 +441,48 @@ document.addEventListener('DOMContentLoaded', () => {
     // Used both for a normal open and for a drag-that-didn't-dismiss —
     // resuming/re-growing to the full open size the same way either way.
     function growToRest() {
+        const restBox = slides[currentSlot].restBox;
         frame.style.transition = BOX_PROPERTIES.map(p => `${p} ${OPEN_DURATION}ms ${EASE_OPEN}`).join(', ');
         setFrameBox(restBox, OPEN_RADIUS);
         armBoxSettle(OPEN_DURATION, markOpened);
     }
 
-    function open(button) {
+    function open(index) {
         if (state !== 'closed') return;
         state = 'opening';
-        activeButton = button;
 
-        const sourceRect = currentSourceRect();
-        const naturalWidth = parseInt(button.dataset.width, 10) || sourceRect.width;
-        const naturalHeight = parseInt(button.dataset.height, 10) || sourceRect.height;
+        const button = items[index];
+        // Measured before setActiveButton() hides the tile — a hidden tile
+        // still reports a correct box, but there is no reason to rely on
+        // that here the way markClosed() has to.
+        const sourceRect = button.getBoundingClientRect();
 
-        restBox = computeRestBox(naturalWidth, naturalHeight);
-        loadPhotoInto(button);
+        currentIndex = index;
+        currentSlot = 0;
+        setRoles();
+        frame = slides[currentSlot].frame;
+
+        pageWidth = window.innerWidth + SWIPE_GAP;
+        setActiveButton(button);
+        assignPhoto(slides[currentSlot], button);
+        refreshRestBox(slides[currentSlot]);
 
         // Snap the frame's real box (not a transform) to exactly overlap the
         // clicked tile, so `object-fit: cover` on the photo crops it
         // identically to the tile's own thumbnail — nothing to hide yet.
         // No shadow either, matching the (shadowless) tile; it fades in
         // once the frame settles at its full open size (markOpened).
-        frame.style.transition = 'none';
-        frame.style.transform = 'none';
+        trackDelta = 0;
+        slides.forEach(slide => { slide.frame.style.transition = 'none'; });
+        layoutNeighbours();
         setFrameBox(sourceRect, tileRadiusOf(button));
+        applyTrack();
         frame.style.boxShadow = NO_SHADOW;
 
-        button.classList.add('is-source-active');
         lightbox.classList.add('is-open');
         lightbox.setAttribute('aria-hidden', 'false');
         document.body.classList.add('no-scroll');
+        updateArrows();
 
         // Force layout so the instant "snapped to the tile" box above
         // actually paints before we transition away from it.
@@ -311,6 +496,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function close() {
         if (state === 'closed' || state === 'closing') return;
+        // Mid-swipe-settle: resolve the swipe first so `activeButton` is
+        // the photo actually arriving, and the shrink therefore lands on
+        // its tile rather than on the one being left behind.
+        if (state === 'settling') finishSwipe();
         state = 'closing';
 
         const sourceRect = currentSourceRect();
@@ -339,6 +528,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // starts from exactly where things visually are right now.
         freezeCurrentBox();
 
+        // Closing part-way through a horizontal swipe: the current frame's
+        // on-screen position is now baked into its box, so drop the track
+        // offset and park the neighbours back off-screen. Otherwise a
+        // half-swiped-in neighbour would just sit there, frozen, for the
+        // whole shrink.
+        trackDelta = 0;
+        slides.forEach(slide => {
+            if (slide === slides[currentSlot]) return;
+            slide.frame.style.transition = 'none';
+            slide.frame.style.transform = `translateX(${slide.offset * pageWidth}px)`;
+        });
+
         // The shadow fade runs on its own, much shorter timer than the
         // shrink — it should be long gone well before the frame reaches
         // tile size, not still visibly fading right up to the end.
@@ -354,8 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function finishClose() {
         lightbox.classList.remove('is-open');
         lightbox.setAttribute('aria-hidden', 'true');
-        img.removeAttribute('src');
-        abandonPendingPreload();
+        abandonAllPreloads();
         frame.style.transition = 'none';
         // Now that the fade-out is done and the lightbox is invisible, it's
         // safe to drop any drag-time blur/tint override so the next open()
@@ -363,121 +563,312 @@ document.addEventListener('DOMContentLoaded', () => {
         backdrop.style.backdropFilter = '';
         backdrop.style.webkitBackdropFilter = '';
         backdrop.style.backgroundColor = '';
-        if (activeButton) activeButton.classList.remove('is-source-active');
+        setActiveButton(null);
         document.body.classList.remove('no-scroll');
-        activeButton = null;
-        restBox = null;
+        slides.forEach(slide => {
+            slide.img.removeAttribute('src');
+            slide.button = null;
+            slide.restBox = null;
+        });
         dragStart = null;
         dragBox = null;
+        dragAxis = null;
+        trackDelta = 0;
         state = 'closed';
     }
 
-    // A single, permanent listener rather than one added fresh per open()/
-    // close() call: if a transition gets interrupted mid-flight (exactly
-    // what happens when you open/close in quick succession), its own
-    // `transitionend` never fires, so a per-call listener waiting to
+    // --- Swipe settle / commit ---------------------------------------------
+    // `pendingSwipeDir` is the direction the in-flight settle is heading:
+    // +1 next, -1 previous, 0 snapping back to where it started. It's the
+    // single source of truth for what `finishSwipe()` should do, so an
+    // interruption (a new drag, a close) can cancel it by clearing it.
+    let pendingSwipeDir = null;
+    let swipeSettleTimer = null;
+
+    function settleTrack(dir) {
+        pendingSwipeDir = dir;
+        state = 'settling';
+
+        // Make sure the drag's last transform has actually been committed
+        // as a style before we attach a transition to the next one —
+        // otherwise the browser can coalesce both into a single change and
+        // there is nothing left to animate between.
+        void frame.offsetWidth;
+
+        const snappingBack = dir === 0;
+        const restBox = slides[currentSlot].restBox;
+        slides.forEach(slide => {
+            const parts = [`transform ${SWIPE_SETTLE_DURATION}ms ${EASE_SWIPE}`];
+            // A swipe can begin before the open animation has finished, in
+            // which case the current frame is frozen part-grown. When it
+            // springs back it has to finish growing at the same time as it
+            // slides home, so its box rides along in the same transition.
+            if (snappingBack && slide === slides[currentSlot] && restBox) {
+                parts.push(...BOX_PROPERTIES.map(p => `${p} ${OPEN_DURATION}ms ${EASE_OPEN}`));
+            }
+            slide.frame.style.transition = parts.join(', ');
+        });
+        if (snappingBack && restBox) setFrameBox(restBox, OPEN_RADIUS);
+
+        trackDelta = -dir * pageWidth;
+        applyTrack();
+
+        if (swipeSettleTimer) clearTimeout(swipeSettleTimer);
+        const wait = (snappingBack ? Math.max(SWIPE_SETTLE_DURATION, OPEN_DURATION) : SWIPE_SETTLE_DURATION) + 50;
+        swipeSettleTimer = setTimeout(finishSwipe, wait);
+    }
+
+    // Turns the finished slide motion into a new resting arrangement: the
+    // frame that arrived becomes the current one, the frame that left is
+    // recycled into the far slot with a new photo, and the track offset
+    // goes back to zero.
+    function finishSwipe() {
+        if (swipeSettleTimer) {
+            clearTimeout(swipeSettleTimer);
+            swipeSettleTimer = null;
+        }
+        const dir = pendingSwipeDir;
+        pendingSwipeDir = null;
+        if (dir === null) return;
+
+        if (dir !== 0) {
+            currentIndex += dir;
+            currentSlot = (currentSlot + dir + SLIDE_COUNT) % SLIDE_COUNT;
+            setRoles();
+            frame = slides[currentSlot].frame;
+            setActiveButton(items[currentIndex]);
+            revealCurrentTile();
+        }
+
+        trackDelta = 0;
+        slides.forEach(slide => { slide.frame.style.transition = 'none'; });
+        layoutNeighbours();
+        applyTrack();
+        updateArrows();
+
+        // Whichever photo we landed on is now fully open and at rest. The
+        // box/transform changes just above were made under `transition:
+        // none`; swapping the declaration to box-shadow only (before the
+        // next style recalc) means the shadow fades while everything else
+        // stays instant.
+        state = 'open';
+        fadeShadowIn();
+    }
+
+    // Freezes an in-flight settle exactly where it is, so a new gesture can
+    // pick the track up mid-motion instead of fighting a transition that's
+    // still running — what makes rapid, repeated swiping feel continuous.
+    const freezeTrack = () => {
+        if (swipeSettleTimer) {
+            clearTimeout(swipeSettleTimer);
+            swipeSettleTimer = null;
+        }
+        pendingSwipeDir = null;
+        const raw = getComputedStyle(frame).transform;
+        if (raw && raw !== 'none') {
+            try {
+                // The current slide's own page offset is 0, so its live
+                // translateX IS the track offset.
+                trackDelta = new DOMMatrixReadOnly(raw).m41;
+            } catch (error) {
+                /* keep the last known trackDelta */
+            }
+        }
+        slides.forEach(slide => { slide.frame.style.transition = 'none'; });
+        applyTrack();
+        void frame.offsetWidth;
+    };
+
+    // Arrow buttons and keyboard both drive the exact same motion a swipe
+    // does, just starting from a standstill.
+    function navigate(dir) {
+        if (state === 'settling') finishSwipe();
+        if (state !== 'open') return;
+        if (!items[currentIndex + dir]) return;
+        settleTrack(dir);
+    }
+
+    // A single, permanent listener per frame rather than one added fresh
+    // per open()/close() call: if a transition gets interrupted mid-flight
+    // (exactly what happens when you open/close in quick succession), its
+    // own `transitionend` never fires, so a per-call listener waiting to
     // remove itself never would either — leaking one closure per
     // interruption and, with it, a growing pile of never-cleaned-up
-    // listeners on `frame`. Checking `state` on a listener that's always
-    // there sidesteps that entirely.
-    frame.addEventListener('transitionend', (event) => {
-        if (event.target !== frame || event.propertyName !== 'width') return;
-        if (state === 'opening') markOpened();
-        else if (state === 'closing') markClosed();
+    // listeners. Checking `state` on a listener that's always there
+    // sidesteps that entirely.
+    slides.forEach(slide => {
+        slide.frame.addEventListener('transitionend', (event) => {
+            if (event.target !== slide.frame || slide.frame !== frame) return;
+            if (event.propertyName !== 'width') return;
+            if (state === 'opening') markOpened();
+            else if (state === 'closing') markClosed();
+        });
     });
 
-    items.forEach(button => button.addEventListener('click', () => open(button)));
+    items.forEach((button, index) => button.addEventListener('click', () => open(index)));
     closeButton.addEventListener('click', close);
     // No extra state check here — close() already only proceeds outside
     // 'closed'/'closing', which is exactly what lets a backdrop click (or
     // Escape, or the X) interrupt a still-opening photo, not just a fully
     // settled one.
     backdrop.addEventListener('click', close);
+    if (prevArrow) prevArrow.addEventListener('click', () => navigate(-1));
+    if (nextArrow) nextArrow.addEventListener('click', () => navigate(1));
     document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') close();
+        if (event.key === 'Escape') {
+            close();
+            return;
+        }
+        if (state === 'closed' || state === 'closing') return;
+        if (event.key === 'ArrowRight') navigate(1);
+        else if (event.key === 'ArrowLeft') navigate(-1);
     });
 
-    // Reposition the rest box on resize/orientation change, but only while
+    // Reposition the rest boxes on resize/orientation change, but only while
     // genuinely at rest — mid-animation or mid-drag this would fight the
     // box change already in flight.
     window.addEventListener('resize', () => {
+        pageWidth = window.innerWidth + SWIPE_GAP;
         if (state !== 'open' || !activeButton) return;
-        const naturalWidth = parseInt(activeButton.dataset.width, 10);
-        const naturalHeight = parseInt(activeButton.dataset.height, 10);
-        restBox = computeRestBox(naturalWidth, naturalHeight);
-        setFrameBox(restBox, OPEN_RADIUS);
+        slides.forEach(slide => {
+            if (!slide.button) return;
+            refreshRestBox(slide);
+            slide.frame.style.transition = 'none';
+            setSlideBox(slide, slide.restBox, OPEN_RADIUS);
+        });
+        trackDelta = 0;
+        applyTrack();
     });
 
-    // --- Drag (mouse + touch, via Pointer Events) to dismiss ---
-    // Uses `transform` (not the frame's real box) since this runs on every
+    // --- Drag (mouse + touch, via Pointer Events) ---------------------------
+    // Uses `transform` (not real box properties) since this runs on every
     // pointermove rather than as a single eased transition — transform is
-    // compositor-only and stays smooth under that. It only ever scales
-    // uniformly, so — unlike a mismatched-aspect open/close transform —
-    // it never distorts the photo. Allowed to start during 'opening' too
-    // (not just once settled 'open'), so the gesture can interrupt an
-    // in-progress open exactly like clicking the backdrop can.
+    // compositor-only and stays smooth under that. The vertical branch only
+    // ever scales uniformly, so — unlike a mismatched-aspect open/close
+    // transform — it never distorts the photo. Allowed to start during
+    // 'opening' too (not just once settled 'open'), so the gesture can
+    // interrupt an in-progress open exactly like clicking the backdrop can.
 
-    frame.addEventListener('pointerdown', (event) => {
-        if (state !== 'open' && state !== 'opening') return;
-        // Stops a mouse drag from also kicking off the browser's native
-        // text/image selection under the cursor.
-        event.preventDefault();
+    slides.forEach(slide => {
+        slide.frame.addEventListener('pointerdown', (event) => {
+            if (slide.frame !== frame) return;
+            if (state !== 'open' && state !== 'opening' && state !== 'settling') return;
+            // Stops a mouse drag from also kicking off the browser's native
+            // text/image selection under the cursor.
+            event.preventDefault();
 
-        if (state === 'opening') {
-            // Interrupting an in-progress open: freeze the frame at
-            // whatever size it's currently grown to, so the drag has a
-            // stable real box to work from instead of one still actively
-            // being animated out from under it.
-            freezeCurrentBox();
-        }
+            if (state === 'settling') {
+                // Grabbing a swipe that is still gliding: take over from
+                // wherever it has got to rather than from a rest position.
+                freezeTrack();
+            } else if (state === 'opening') {
+                // Interrupting an in-progress open: freeze the frame at
+                // whatever size it's currently grown to, so the drag has a
+                // stable real box to work from instead of one still actively
+                // being animated out from under it.
+                freezeCurrentBox();
+            }
 
-        state = 'dragging';
-        dragBox = frame.getBoundingClientRect();
-        dragStart = { x: event.clientX, y: event.clientY };
-        frame.setPointerCapture(event.pointerId);
-        frame.classList.add('is-grabbing');
-        frame.style.transition = 'none';
-        backdrop.style.transition = 'none';
-        // A previous spring-back's delayed cleanup could otherwise fire
-        // mid-drag and reset the backdrop out from under it.
-        if (backdropCleanupTimer) {
-            clearTimeout(backdropCleanupTimer);
-            backdropCleanupTimer = null;
-        }
+            state = 'dragging';
+            dragAxis = null;
+            dragBox = frame.getBoundingClientRect();
+            dragStart = { x: event.clientX, y: event.clientY, track: trackDelta };
+            swipeLast = { x: event.clientX, t: event.timeStamp };
+            swipePrev = swipeLast;
+            frame.setPointerCapture(event.pointerId);
+            frame.classList.add('is-grabbing');
+            frame.style.transition = 'none';
+            backdrop.style.transition = 'none';
+            // A previous spring-back's delayed cleanup could otherwise fire
+            // mid-drag and reset the backdrop out from under it.
+            if (backdropCleanupTimer) {
+                clearTimeout(backdropCleanupTimer);
+                backdropCleanupTimer = null;
+            }
+        });
+
+        slide.frame.addEventListener('pointermove', (event) => {
+            if (slide.frame !== frame) return;
+            if (state !== 'dragging' || !dragStart || !dragBox) return;
+            const dx = event.clientX - dragStart.x;
+            const dyRaw = event.clientY - dragStart.y;
+
+            // Until the pointer has moved far enough to say which gesture
+            // this is, do nothing at all — committing early would let a
+            // near-vertical swipe visibly nudge sideways first, or vice
+            // versa. Once decided, the axis is locked for the whole drag.
+            if (!dragAxis) {
+                if (Math.abs(dx) < AXIS_LOCK_THRESHOLD && Math.abs(dyRaw) < AXIS_LOCK_THRESHOLD) return;
+                dragAxis = Math.abs(dx) > Math.abs(dyRaw) ? 'x' : 'y';
+            }
+
+            if (dragAxis === 'x') {
+                swipePrev = swipeLast;
+                swipeLast = { x: event.clientX, t: event.timeStamp };
+                // Dragging right-to-left (negative dx) pulls the NEXT photo
+                // in from the right; left-to-right pulls in the previous.
+                let travel = dx;
+                const wanted = travel < 0 ? 1 : -1;
+                if (!items[currentIndex + wanted]) travel *= EDGE_RESISTANCE;
+                trackDelta = dragStart.track + travel;
+                applyTrack();
+                return;
+            }
+
+            // Resist dragging upward — this gesture is specifically "swipe down".
+            const dy = dyRaw < 0 ? dyRaw * 0.35 : dyRaw;
+            const scale = Math.max(0.72, 1 - Math.abs(dy) / 900);
+
+            // `transform-origin` is top-left, so scale() alone shrinks the
+            // frame toward its top-left corner — visibly drifting it away from
+            // the cursor as it shrinks. Adding back half of what the scale
+            // removes from each axis re-centers that shrink, so the frame
+            // tracks the pointer exactly instead. Uses `dragBox` (the frame's
+            // real size when this drag began), not the rest box — if this drag
+            // interrupted an in-progress open, those two can differ.
+            const compensateX = (dragBox.width / 2) * (1 - scale);
+            const compensateY = (dragBox.height / 2) * (1 - scale);
+
+            // The leading translateX keeps any track offset this drag
+            // inherited (from grabbing a settle mid-glide) instead of
+            // snapping the photo back to centre before it starts shrinking.
+            frame.style.transform = `translateX(${trackDelta}px) translate(${dx + compensateX}px, ${dy + compensateY}px) scale(${scale})`;
+
+            const backdropStrength = Math.max(0.15, 1 - Math.abs(dy) / 400);
+            backdrop.style.backdropFilter = `blur(${BACKDROP_BLUR_MAX * backdropStrength}px)`;
+            backdrop.style.webkitBackdropFilter = backdrop.style.backdropFilter;
+            backdrop.style.backgroundColor = `rgba(${BACKDROP_TINT_RGB}, ${BACKDROP_TINT_ALPHA_MAX * backdropStrength})`;
+        });
+
+        slide.frame.addEventListener('pointerup', endDrag);
+        slide.frame.addEventListener('pointercancel', endDrag);
     });
 
-    frame.addEventListener('pointermove', (event) => {
-        if (state !== 'dragging' || !dragStart || !dragBox) return;
-        const dx = event.clientX - dragStart.x;
-        const dyRaw = event.clientY - dragStart.y;
-        // Resist dragging upward — this gesture is specifically "swipe down".
-        const dy = dyRaw < 0 ? dyRaw * 0.35 : dyRaw;
-        const scale = Math.max(0.72, 1 - Math.abs(dy) / 900);
-
-        // `transform-origin` is top-left, so scale() alone shrinks the
-        // frame toward its top-left corner — visibly drifting it away from
-        // the cursor as it shrinks. Adding back half of what the scale
-        // removes from each axis re-centers that shrink, so the frame
-        // tracks the pointer exactly instead. Uses `dragBox` (the frame's
-        // real size when this drag began), not `restBox` — if this drag
-        // interrupted an in-progress open, those two can differ.
-        const compensateX = (dragBox.width / 2) * (1 - scale);
-        const compensateY = (dragBox.height / 2) * (1 - scale);
-
-        frame.style.transform = `translate(${dx + compensateX}px, ${dy + compensateY}px) scale(${scale})`;
-
-        const backdropStrength = Math.max(0.15, 1 - Math.abs(dy) / 400);
-        backdrop.style.backdropFilter = `blur(${BACKDROP_BLUR_MAX * backdropStrength}px)`;
-        backdrop.style.webkitBackdropFilter = backdrop.style.backdropFilter;
-        backdrop.style.backgroundColor = `rgba(${BACKDROP_TINT_RGB}, ${BACKDROP_TINT_ALPHA_MAX * backdropStrength})`;
-    });
-
-    const endDrag = (event) => {
+    function endDrag(event) {
         if (state !== 'dragging' || !dragStart) return;
         frame.classList.remove('is-grabbing');
         const dy = event.clientY - dragStart.y;
+        const axis = dragAxis;
         dragStart = null;
         dragBox = null;
+        dragAxis = null;
+
+        if (axis === 'x') {
+            // Commit on a flick even if it barely moved, or on distance even
+            // if it ended slow. `trackDelta` (not this drag's dx) is what
+            // counts, so a swipe that picked up a still-gliding previous one
+            // is judged on total travel rather than starting from scratch.
+            let velocity = 0;
+            if (swipeLast && swipePrev && swipeLast.t > swipePrev.t) {
+                velocity = (swipeLast.x - swipePrev.x) / (swipeLast.t - swipePrev.t);
+            }
+            let dir = 0;
+            if (Math.abs(velocity) > SWIPE_VELOCITY) dir = velocity < 0 ? 1 : -1;
+            else if (Math.abs(trackDelta) > swipeThreshold()) dir = trackDelta < 0 ? 1 : -1;
+            if (dir && !items[currentIndex + dir]) dir = 0;
+            settleTrack(dir);
+            return;
+        }
 
         if (dy > DISMISS_THRESHOLD) {
             close();
@@ -491,6 +882,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // cases identically.
         state = 'opening';
         freezeCurrentBox();
+        // freezeCurrentBox() baked this frame's on-screen position into its
+        // box, so the track offset has served its purpose — clear it and
+        // push the neighbours back to their parked positions, or they would
+        // keep an offset nothing is tracking any more.
+        trackDelta = 0;
+        applyTrack();
         growToRest();
 
         backdrop.style.transition = 'backdrop-filter 0.3s ease, background-color 0.3s ease';
@@ -510,8 +907,5 @@ document.addEventListener('DOMContentLoaded', () => {
             backdrop.style.backgroundColor = '';
             backdropCleanupTimer = null;
         }, BACKDROP_RESTORE_BUFFER);
-    };
-
-    frame.addEventListener('pointerup', endDrag);
-    frame.addEventListener('pointercancel', endDrag);
+    }
 });
