@@ -30,13 +30,13 @@
 
                     <p>CH81 8080 8009 8920 4749 1</p>
                 </div>
-                <div class="text-bubble-img-presentation paiement-text">
+                <div class="text-bubble-img-presentation paiement-text pos-abs">
                     <h1>Twint</h1>
                     <img src="/img/Twint.webp" alt="">
                 </div>
-                <div class="text-bubble-img-presentation">
+                <!-- <div class="text-bubble-img-presentation">
                     <p>Merci de votre inscription</p>
-                </div>
+                </div> -->
             </div>
         </div>
     </main>

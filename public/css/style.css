@@ -96,7 +96,9 @@ ul {
 li {
     list-style: none;
 }
-
+a{
+    color: var(--color1);
+}
 .main-title{
     font-size: 5rem;
     width: auto;
@@ -113,6 +115,22 @@ li {
 
 .titre h2 {
     margin-bottom: 32px;
+}
+.pos-abs{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* `left`/`top` position the margin edge, but the translate(-50%, -50%)
+       that recenters it only shifts by the element's own border-box size —
+       it doesn't know about any margin. Any class this combines with that
+       sets a non-zero margin (e.g. .text-bubble-img-presentation's 28px,
+       .button1's 12px) throws centering off by exactly that margin, most
+       visible on narrow/mobile widths. Zeroing it out here removes that
+       offset — !important because .pos-abs is a utility meant to override
+       whatever margin the paired class sets, at equal specificity, from
+       wherever in the cascade that class happens to be declared. */
+    margin: 0 !important;
 }
 
 /* New Page Load Transition */
@@ -178,6 +196,19 @@ body.loaded::before {
         animation: textBlurBtn .6s cubic-bezier(.12, 0, .18, 1);
         animation-timing-function: ease;
     }
+}
+/* Edge case where we need to redfine the transform properties.
+   Add the pos-abs class when using transform: translate */
+.button1.pos-abs{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.button1.pos-abs:hover {
+    transform: translate(-50%, -50%) scale(1.15);
+    cursor: pointer;
 }
 
 .button1:not(:hover) {
@@ -1421,4 +1452,294 @@ div.unBlur {
         min-width: 200px;
     }
 
+}
+
+/* ==========================================================================
+   Card components — reusable across any page, not tied to one section.
+   Originally built for the home page's "Cours" and "Au club" sections;
+   generalized here (and out of home.css) so other pages can use them too.
+   ========================================================================== */
+
+/* Generic section padding wrapper — put a heading + a *-card-grid inside. */
+.courses {
+    position: relative;
+    z-index: 1;
+    padding: 40px 24px 80px;
+}
+
+/* Same, just a bit less top padding — meant to sit right under a .courses
+   section (as on the home page), but works fine on its own. */
+.info {
+    position: relative;
+    z-index: 1;
+    padding: 60px 24px 80px;
+}
+
+@media screen and (max-width: 768px) {
+    .courses {
+        padding: 24px 16px 60px;
+    }
+
+    .info {
+        padding: 40px 16px 60px;
+    }
+}
+
+/* --- Big card: full content block — illustration, heading, list, link --- */
+
+.big-card-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 32px;
+    max-width: 1100px;
+    margin: 40px auto 0;
+}
+
+.big-card {
+    display: flex;
+    flex-direction: column;
+    /* Two per row on desktop, one per row once there is no longer space. */
+    flex: 1 1 420px;
+    max-width: 520px;
+    padding: 28px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.big-card-illustration {
+    /* Artwork is expected to sit on white, like the home hero decoration. */
+    mix-blend-mode: multiply;
+    align-self: center;
+    width: auto;
+    height: 200px;
+    max-width: 100%;
+    object-fit: contain;
+    margin-bottom: 16px;
+}
+
+.big-card-body {
+    display: flex;
+    flex-direction: column;
+    /* Lets the link sit on the baseline of the tallest card in a row, so
+       every card's link lines up even when their text differs in length. */
+    flex: 1;
+}
+
+.big-card h3 {
+    font-family: Rammetto-One;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.big-card-subtitle {
+    text-align: center;
+    font-weight: 700;
+    color: var(--color2);
+    margin-top: 4px;
+}
+
+.big-card-list {
+    margin: 20px 0 0;
+}
+
+.big-card-list li {
+    position: relative;
+    color: var(--color1);
+    line-height: 1.6;
+    padding: 6px 0 6px 22px;
+}
+
+.big-card-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 13px;
+    width: 14px;
+    height: 14px;
+    background: url("../img/tennisballBullet.webp") center / contain no-repeat;
+}
+
+.big-card-note {
+    margin-top: 16px;
+    font-weight: 700;
+    color: var(--color4);
+    text-align: center;
+}
+
+.big-card-link {
+    /* .button1 is 350px wide by default, which overflows a card on narrow
+       screens. */
+    width: 100%;
+    max-width: 320px;
+    text-decoration: none;
+}
+
+.big-card-link p {
+    color: var(--color1);
+    font-weight: 700;
+}
+
+/* --- Small card: compact side-photo card that dissolves into its text --- */
+
+.small-card-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+    max-width: 1100px;
+    margin: 40px auto 0;
+}
+
+.small-card {
+    position: relative;
+    display: flex;
+    flex: 1 1 440px;
+    max-width: 520px;
+    min-height: 220px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.10);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* --- The dissolving photo -------------------------------------------------
+   Absolutely positioned so it fills the card's full height and the text can
+   start over its tail. Three stacked copies of the same image, each blurrier
+   than the last and each masked to begin further right, give a blur that grows
+   across the image — CSS has no gradient blur, and stacking is far cheaper
+   here than the equivalent backdrop-filter layers (which Safari renders
+   inconsistently when nested). The photos are 200px squares, so the extra
+   copies cost almost nothing.
+
+   The wrapper's own mask fades the whole thing out before the text gets
+   dense. --image-url is set per card in the markup. */
+.small-card-media {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 62%;
+    -webkit-mask-image: linear-gradient(to right, #000 30%, transparent 92%);
+    mask-image: linear-gradient(to right, #000 30%, transparent 92%);
+}
+
+.small-card-media img,
+.small-card-media::before,
+.small-card-media::after {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.small-card-media::before,
+.small-card-media::after {
+    content: '';
+    background-image: var(--image-url);
+    background-size: cover;
+    background-position: center;
+}
+
+.small-card-media::before {
+    filter: blur(5px);
+    -webkit-mask-image: linear-gradient(to right, transparent 30%, #000 60%);
+    mask-image: linear-gradient(to right, transparent 30%, #000 60%);
+}
+
+.small-card-media::after {
+    filter: blur(14px);
+    -webkit-mask-image: linear-gradient(to right, transparent 52%, #000 85%);
+    mask-image: linear-gradient(to right, transparent 52%, #000 85%);
+}
+
+.small-card-body {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    /* Starts inside the photo's fade so the two overlap rather than sit side
+       by side; by here the image is nearly gone. */
+    padding: 24px 24px 24px 46%;
+}
+
+.small-card h3 {
+    font-family: Rammetto-One;
+    font-size: 1.2rem;
+}
+
+.small-card-link {
+    width: auto;
+    min-width: 0;
+    padding: 10px 20px;
+    font-size: 1rem;
+    text-decoration: none;
+    margin-top: auto;
+}
+
+.small-card-link p {
+    font-weight: 700;
+}
+
+@media screen and (max-width: 768px) {
+    .big-card {
+        padding: 20px;
+    }
+
+    .big-card-illustration {
+        height: 150px;
+    }
+
+    /* Stack: side-on leaves the text about 150px wide on a phone, so the
+       photo goes across the top and dissolves downward instead of
+       rightward. */
+    .small-card {
+        flex-direction: column;
+        text-align: center;
+        min-height: 0;
+    }
+
+    .small-card-media {
+        position: relative;
+        width: 100%;
+        height: 170px;
+        -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent 96%);
+        mask-image: linear-gradient(to bottom, #000 35%, transparent 96%);
+    }
+
+    .small-card-media::before {
+        -webkit-mask-image: linear-gradient(to bottom, transparent 35%, #000 70%);
+        mask-image: linear-gradient(to bottom, transparent 35%, #000 70%);
+    }
+
+    .small-card-media::after {
+        -webkit-mask-image: linear-gradient(to bottom, transparent 58%, #000 90%);
+        mask-image: linear-gradient(to bottom, transparent 58%, #000 90%);
+    }
+
+    .small-card-body {
+        align-items: center;
+        /* Pulled up under the photo's fade, same overlap as the desktop
+           layout has horizontally. */
+        padding: 0 20px 24px;
+        margin-top: -32px;
+    }
+
+    /* The global mobile `p { text-align: justify }` stretches these short
+       lines badly once they are centred. */
+    .small-card p {
+        text-align: center;
+    }
 }

@@ -45,6 +45,9 @@ function nav_active($path) {
                     <a href="/reservation"<?php echo nav_active('/reservation'); ?>>RÉSERVATION</a>
                 </li>
                 <li>
+                    <a href="/galerie"<?php echo nav_active('/galerie'); ?>>GALERIE</a>
+                </li>
+                <li>
                     <a href="/contact"<?php echo nav_active('/contact'); ?>>CONTACT</a>
                 </li>
             </ul>

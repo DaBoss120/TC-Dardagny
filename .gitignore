@@ -1,0 +1,6 @@
+node_modules/
+
+# Source video for the old adhesion-page intro, replaced by the parallax
+# foreground/background images. Kept on disk in case it is wanted again, but
+# it is no longer referenced by any page so there is no reason to ship it.
+public/video/

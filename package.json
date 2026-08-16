@@ -1,0 +1,25 @@
+{
+  "name": "tc-dardagny",
+  "version": "1.0.0",
+  "description": "Site internet du tennis club de Dardagny",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:gallery": "node scripts/build-gallery.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaBoss120/TC-Dardagny.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DaBoss120/TC-Dardagny/issues"
+  },
+  "homepage": "https://github.com/DaBoss120/TC-Dardagny#readme",
+  "devDependencies": {
+    "sharp": "^0.35.3"
+  }
+}

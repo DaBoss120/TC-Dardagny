@@ -40,9 +40,9 @@
                     var entry = performance.getEntriesByType('navigation')[0];
                     // performance.navigation is the deprecated fallback for
                     // browsers without the newer entry; 1 means TYPE_RELOAD.
-                    play = entry
-                        ? entry.type === 'reload'
-                        : performance.navigation.type === 1;
+                    play = entry ?
+                        entry.type === 'reload' :
+                        performance.navigation.type === 1;
                 } catch (error) {
                     play = false;
                 }
@@ -128,114 +128,134 @@
                  the diagonal bands — so the decoration runs unbroken across
                  "Cours collectifs" and "Au club" as one stretch of page. -->
             <div class="page-panel">
-            <div class="page-bands wipe-on-scroll" aria-hidden="true">
-                <div class="page-band page-band--1"></div>
-                <div class="page-band page-band--2"></div>
-                <div class="page-band page-band--vertical"></div>
-                <div class="page-band page-band--3"></div>
-                <div class="page-band page-band--cross"></div>
-                <div class="page-band page-band--vertical-right"></div>
-                <div class="page-band page-band--4"></div>
-            </div>
-
-            <section class="courses">
-                <div class="titre reveal-on-scroll">
-                    <h2>Cours collectifs</h2>
+                <div class="page-bands wipe-on-scroll" aria-hidden="true">
+                    <div class="page-band page-band--1"></div>
+                    <div class="page-band page-band--2"></div>
+                    <div class="page-band page-band--vertical"></div>
+                    <div class="page-band page-band--3"></div>
+                    <div class="page-band page-band--cross"></div>
+                    <div class="page-band page-band--vertical-right"></div>
+                    <div class="page-band page-band--4"></div>
                 </div>
 
-                <div class="course-cards">
-                    <article class="course-card reveal-on-scroll">
-                        <img class="course-illustration" src="/img/CoursJuniorsBalle.webp" alt="" loading="lazy" decoding="async">
-                        <div class="course-body">
-                            <h3>Cours juniors</h3>
-                            <p class="course-season">Saison 2026 &ndash; 2027</p>
-                            <ul class="course-details">
-                                <li>Pour les enfants et les jeunes d&egrave;s 4 ans</li>
-                                <li>Lundi, mercredi et vendredi apr&egrave;s-midi, durant les saisons d'automne et de printemps</li>
-                                <li>Mercredi matin, tout au long de l'ann&eacute;e</li>
-                            </ul>
-                            <p class="course-deadline">Inscription jusqu'au 18 ao&ucirc;t</p>
-                            <!-- class on the <a> rather than a <button> inside it: a
+                <section class="courses">
+                    <div class="titre reveal-on-scroll">
+                        <h2>Cours collectifs</h2>
+                    </div>
+
+                    <div class="big-card-grid">
+                        <article class="big-card reveal-on-scroll">
+                            <img class="big-card-illustration" src="/img/CoursJuniorsBalle.webp" alt="" loading="lazy" decoding="async">
+                            <div class="big-card-body">
+                                <h3>Cours juniors</h3>
+                                <p class="big-card-subtitle">Saison 2026 &ndash; 2027</p>
+                                <ul class="big-card-list">
+                                    <li>Pour les enfants et les jeunes d&egrave;s 4 ans</li>
+                                    <li>Lundi, mercredi et vendredi apr&egrave;s-midi, durant les saisons d'automne et de printemps</li>
+                                    <li>Mercredi matin, tout au long de l'ann&eacute;e</li>
+                                </ul>
+                                <p class="big-card-note">Inscription jusqu'au 18 ao&ucirc;t</p>
+                                <!-- class on the <a> rather than a <button> inside it: a
                              button nested in a link is invalid and breaks
                              keyboard activation. -->
-                            <a class="button1 btn-bg-blue course-link"
-                                href="/pdf/Annonce%20cours%20Juniors_Saison%202026-2027.pdf"
-                                target="_blank" rel="noopener">
-                                <p>Voir l'annonce (PDF)</p>
-                            </a>
-                            <a class="button1 course-link"
-                                href="/pdf/Conditions%20g%C3%A9n%C3%A9rales%20cours%20juniors%20Saison%202026-2027.pdf"
-                                target="_blank" rel="noopener">
-                                <p>Conditions générales</p>
-                            </a>
-                        </div>
-                    </article>
+                                <a class="button1 btn-bg-blue big-card-link"
+                                    href="/pdf/Annonce%20cours%20Juniors_Saison%202026-2027.pdf"
+                                    target="_blank" rel="noopener">
+                                    <p>Voir l'annonce (PDF)</p>
+                                </a>
+                                <a class="button1 big-card-link"
+                                    href="/pdf/Conditions%20g%C3%A9n%C3%A9rales%20cours%20juniors%20Saison%202026-2027.pdf"
+                                    target="_blank" rel="noopener">
+                                    <p>Conditions générales</p>
+                                </a>
+                            </div>
+                        </article>
 
-                    <article class="course-card reveal-on-scroll">
-                        <img class="course-illustration" src="/img/CoursAdultes.webp" alt="" loading="lazy" decoding="async">
-                        <div class="course-body">
-                            <h3>Cours adultes</h3>
-                            <p class="course-season">Automne 2026</p>
-                            <ul class="course-details">
-                                <li>Du 24 ao&ucirc;t au 5 novembre</li>
-                                <li>Lundi, mercredi et jeudi &mdash; 60 minutes entre 18h30 et 21h</li>
-                                <li>3 &agrave; 4 participants par groupe</li>
-                                <li>250 CHF (300 CHF pour les non-membres)</li>
-                            </ul>
-                            <p class="course-deadline">Inscription jusqu'au 18 ao&ucirc;t</p>
-                            <a class="button1 btn-bg-blue course-link"
-                                href="/pdf/Annonce%20cours%20Adultes_Automne%202026.pdf"
-                                target="_blank" rel="noopener">
-                                <p>Voir l'annonce (PDF)</p>
-                            </a>
-                            <a class="button1 course-link"
-                                href="/pdf/Conditions%20g%C3%A9n%C3%A9rales%20cours%20adultes%20Automne%202026%20TCD.pdf"
-                                target="_blank" rel="noopener">
-                                <p>Conditions générales</p>
-                            </a>
-                        </div>
-                    </article>
-                </div>
-            </section>
+                        <article class="big-card reveal-on-scroll">
+                            <img class="big-card-illustration" src="/img/CoursAdultes.webp" alt="" loading="lazy" decoding="async">
+                            <div class="big-card-body">
+                                <h3>Cours adultes</h3>
+                                <p class="big-card-subtitle">Automne 2026</p>
+                                <ul class="big-card-list">
+                                    <li>Du 24 ao&ucirc;t au 5 novembre</li>
+                                    <li>Lundi, mercredi et jeudi &mdash; 60 minutes entre 18h30 et 21h</li>
+                                    <li>3 &agrave; 4 participants par groupe</li>
+                                    <li>250 CHF (300 CHF pour les non-membres)</li>
+                                </ul>
+                                <p class="big-card-note">Inscription jusqu'au 18 ao&ucirc;t</p>
+                                <a class="button1 btn-bg-blue big-card-link"
+                                    href="/pdf/Annonce%20cours%20Adultes_Automne%202026.pdf"
+                                    target="_blank" rel="noopener">
+                                    <p>Voir l'annonce (PDF)</p>
+                                </a>
+                                <a class="button1 big-card-link"
+                                    href="/pdf/Conditions%20g%C3%A9n%C3%A9rales%20cours%20adultes%20Automne%202026%20TCD.pdf"
+                                    target="_blank" rel="noopener">
+                                    <p>Conditions générales</p>
+                                </a>
+                            </div>
+                        </article>
 
-            <!-- Permanent club info, carried over from the agenda page: these
+                    </div>
+                </section>
+
+                <!-- Permanent club info, carried over from the agenda page: these
                  two entries never go out of date, unlike the rest of that page.
                  --image-url feeds the blurred copies behind each photo; the
                  same trick the agenda page uses. -->
-            <section class="info">
-                <div class="titre reveal-on-scroll">
-                    <h2>Au club</h2>
-                </div>
+                <section class="info">
+                    <div class="titre reveal-on-scroll">
+                        <h2>Au club</h2>
+                    </div>
 
-                <div class="info-grid">
-                    <article class="info-card reveal-on-scroll">
-                        <div class="info-media" style="--image-url: url('/img/WomanServing.webp')" aria-hidden="true">
-                            <img src="/img/WomanServing.webp" alt="" width="200" height="200" loading="lazy" decoding="async">
-                        </div>
-                        <div class="info-body">
-                            <h3>Venez jouer</h3>
-                            <p>Venez jouer dans un magnifique d&eacute;cor de campagne&nbsp;!</p>
-                            <a class="button1 btn-bg-blue info-link" href="/reservation">
-                                <p>R&eacute;server un court</p>
-                            </a>
-                        </div>
-                    </article>
+                    <div class="small-card-grid">
+                        <article class="small-card reveal-on-scroll">
+                            <div class="small-card-media" style="--image-url: url('/img/WomanServing.webp')" aria-hidden="true">
+                                <img src="/img/WomanServing.webp" alt="" width="200" height="200" loading="lazy" decoding="async">
+                            </div>
+                            <div class="small-card-body">
+                                <h3>Venez jouer</h3>
+                                <p>Venez jouer dans un magnifique d&eacute;cor de campagne&nbsp;!</p>
+                                <a class="button1 btn-bg-blue small-card-link" href="/reservation">
+                                    <p>R&eacute;server un court</p>
+                                </a>
+                            </div>
+                        </article>
 
-                    <article class="info-card reveal-on-scroll">
-                        <div class="info-media" style="--image-url: url('/img/ServiceDeCordage.webp')" aria-hidden="true">
-                            <img src="/img/ServiceDeCordage.webp" alt="" width="200" height="200" loading="lazy" decoding="async">
-                        </div>
-                        <div class="info-body">
-                            <h3>Service de cordage</h3>
-                            <p><b>Vous avez un probl&egrave;me de cordage&nbsp;?</b></p>
-                            <p>Beno&icirc;t propose de corder votre raquette.</p>
-                            <a class="button1 info-link" href="/pdf/Service%20de%20cordage.pdf" target="_blank" rel="noopenerDeCordage">
-                                <p>Infos et tarifs</p>
-                            </a>
-                        </div>
-                    </article>
-                </div>
-            </section>
+                        <article class="small-card reveal-on-scroll">
+                            <div class="small-card-media" style="--image-url: url('/img/ServiceDeCordage.webp')" aria-hidden="true">
+                                <img src="/img/ServiceDeCordage.webp" alt="" width="200" height="200" loading="lazy" decoding="async">
+                            </div>
+                            <div class="small-card-body">
+                                <h3>Service de cordage</h3>
+                                <p><b>Vous avez un probl&egrave;me de cordage&nbsp;?</b></p>
+                                <p>Beno&icirc;t propose de corder votre raquette.</p>
+                                <a class="button1 small-card-link" href="/pdf/Service%20de%20cordage.pdf" target="_blank" rel="noopenerDeCordage">
+                                    <p>Infos et tarifs</p>
+                                </a>
+                            </div>
+                        </article>
+                        <article class="small-card reveal-on-scroll">
+                            <div class="small-card-media" style="--image-url: url('/img/Annonce-Recherche_Partenaires.webp')" aria-hidden="true">
+                                <img src="/img/Annonce_Recherche_Parteniares.webp" alt="" width="200" height="200" loading="lazy" decoding="async">
+                            </div>
+                            <div class="small-card-body">
+                                <h3>Recherche de partenaires</h3>
+                                <p><b>Pas de partenaire ?</b></p>
+                                <p>rejoins le groupe Whatsapp "Qui veut jouer ?"</p>
+                                <a class="button1 small-card-link" href="/pdf/Annonce%20recherche%20partenaires.pdf" target="_blank" rel="noopenerDeCordage">
+                                    <p>Rejoindre le groupe</p>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+                <section class="future">
+                    <div class="titre reveal-on-scroll">
+                        <h2>À venir</h2>
+                    </div>
+
+                </section>
             </div>
         </div>
         <!-- <div class="events">

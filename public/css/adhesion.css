@@ -1,8 +1,39 @@
 .devenirMembreContent {
-    justify-content: space-between;
-    background-image: url("../img/YelowBallSpinningWithWater.webp");
-    /* Changed from /WEB/IMG/... */
+    position: relative;
+    overflow: hidden;
+    /* justify-content: space-between; */
+    background-image: url("../img/adhesion/SpinningBallWithWaterBackground.webp");
     /* justify-content: center; */
+}
+
+/* The ball, cut out from the background plate. Sits above the background
+   image and below the text/button, and is pushed around by adhesion.js on
+   mousemove for a parallax feel. Slightly oversized (scale 1.08 in the
+   .is-visible state) so panning it never reveals an edge. */
+.parallax-foreground {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(1.12);
+    transition: opacity 1s ease, transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.parallax-foreground.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1.08);
+}
+
+/* .devenirMembreContent is a flex container, so its flex-item children can
+   take a z-index above the absolutely-positioned foreground image without
+   needing their own `position` changed (which would break
+   .button1.pos-abs's centering). */
+.devenirMembreContent > :not(.parallax-foreground) {
+    z-index: 2;
 }
 
 .text-bubble-img-presentation {
@@ -32,8 +63,20 @@ div.adhesion-bouton {
 .devenirMembreContent div:nth-of-type(3) p {
     color: white;
 }
+/* a.button1{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+a.button1:hover{
+    transform: translate(-50%, -50%) scale(1.15) !important;
+} */
+a.button1 {
+    text-decoration: none;
+}
 
-button p {
+a p {
     color: white;
 }
 
@@ -41,6 +84,12 @@ button p {
 
     .devenirMembreContent {
         background-image: url("../img/YelowBallSpinningWithWater-Mobile.webp");
+    }
+
+    /* No matching mobile crop for the cut-out ball, and no mouse to drive
+       the parallax — fall back to the single combined image. */
+    .parallax-foreground {
+        display: none;
     }
 
     button p {

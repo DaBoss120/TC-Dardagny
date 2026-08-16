@@ -22,9 +22,10 @@
                 <h1>Devenir membre</h1>
             </div>
             <div class="devenirMembreContent back-img-presentation">
+                <img class="parallax-foreground" src="/img/adhesion/SpinningBallWithWaterForeground.webp" alt="" aria-hidden="true">
                 <div class="text-bubble-img-presentation devenirMembre-text">
                     <p>Pour s'inscrire au club, veuillez svp télécharger le formulaire d'inscription,
-                        le remplir et l'envoyer par e-mail à info@tcdardagny.ch ou par courrier à :</p>
+                        le remplir et l'envoyer par e-mail à <a href="mailto:info@tcdardagny.ch" style="color: white;">info@tcdardagny.ch</a> ou par courrier à :</p>
                     <p><br><b>
                             Silvine Beucler<br>
                             Chemin du Rebiolon 9<br>
@@ -32,16 +33,16 @@
                         </b>
                     </p>
                 </div>
-                    <button class="button1">
+                <a class="button1 pos-abs" href="/pdf/Formulaire_adhesion_TCD_2026-2027.pdf">
                         <p>Formulaire d'adhesion</p>
-                    </button>
-                <div class="text-bubble-img-presentation">
+                </a>
+                <!-- <div class="text-bubble-img-presentation">
                     <p>Merci de votre inscription</p>
-                </div>
+                </div> -->
             </div>
         </div>
     </main>
-    <?php $page_scripts = []; include __DIR__ . '/../includes/footer.php'; ?>
+    <?php $page_scripts = ['adhesion.js']; include __DIR__ . '/../includes/footer.php'; ?>
 </body>
 
 </html>

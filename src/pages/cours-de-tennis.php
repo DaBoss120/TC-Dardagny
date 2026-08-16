@@ -47,16 +47,64 @@
             </div>
             <div class="cours-et-stages back-img-presentation">
                 <div class="img-presentation-titre">
-                    <h1>Cours Juniors Printemps 2024</h1>
+                    <h1>Cours collectifs</h1>
                 </div>
-                <div>
-                    <button class="button1">
-                        <p class="">Formulaire inscription</p>
-                    </button>
-                    <button class="button1">
-                        <p>Conditions générales</p>
-                    </button>
-                </div>
+                <section class="courses">
+                    <div class="big-card-grid">
+                        <article class="big-card reveal-on-scroll">
+                            <img class="big-card-illustration" src="/img/CoursJuniorsBalle.webp" alt="" loading="lazy" decoding="async">
+                            <div class="big-card-body">
+                                <h3>Cours juniors</h3>
+                                <p class="big-card-subtitle">Saison 2026 &ndash; 2027</p>
+                                <ul class="big-card-list">
+                                    <li>Pour les enfants et les jeunes d&egrave;s 4 ans</li>
+                                    <li>Lundi, mercredi et vendredi apr&egrave;s-midi, durant les saisons d'automne et de printemps</li>
+                                    <li>Mercredi matin, tout au long de l'ann&eacute;e</li>
+                                </ul>
+                                <p class="big-card-note">Inscription jusqu'au 18 ao&ucirc;t</p>
+                                <!-- class on the <a> rather than a <button> inside it: a
+                             button nested in a link is invalid and breaks
+                             keyboard activation. -->
+                                <a class="button1 btn-bg-blue big-card-link"
+                                    href="/pdf/Annonce%20cours%20Juniors_Saison%202026-2027.pdf"
+                                    target="_blank" rel="noopener">
+                                    <p>Voir l'annonce (PDF)</p>
+                                </a>
+                                <a class="button1 big-card-link"
+                                    href="/pdf/Conditions%20g%C3%A9n%C3%A9rales%20cours%20juniors%20Saison%202026-2027.pdf"
+                                    target="_blank" rel="noopener">
+                                    <p>Conditions générales</p>
+                                </a>
+                            </div>
+                        </article>
+
+                        <article class="big-card reveal-on-scroll">
+                            <img class="big-card-illustration" src="/img/CoursAdultes.webp" alt="" loading="lazy" decoding="async">
+                            <div class="big-card-body">
+                                <h3>Cours adultes</h3>
+                                <p class="big-card-subtitle">Automne 2026</p>
+                                <ul class="big-card-list">
+                                    <li>Du 24 ao&ucirc;t au 5 novembre</li>
+                                    <li>Lundi, mercredi et jeudi &mdash; 60 minutes entre 18h30 et 21h</li>
+                                    <li>3 &agrave; 4 participants par groupe</li>
+                                    <li>250 CHF (300 CHF pour les non-membres)</li>
+                                </ul>
+                                <p class="big-card-note">Inscription jusqu'au 18 ao&ucirc;t</p>
+                                <a class="button1 btn-bg-blue big-card-link"
+                                    href="/pdf/Annonce%20cours%20Adultes_Automne%202026.pdf"
+                                    target="_blank" rel="noopener">
+                                    <p>Voir l'annonce (PDF)</p>
+                                </a>
+                                <a class="button1 big-card-link"
+                                    href="/pdf/Conditions%20g%C3%A9n%C3%A9rales%20cours%20adultes%20Automne%202026%20TCD.pdf"
+                                    target="_blank" rel="noopener">
+                                    <p>Conditions générales</p>
+                                </a>
+                            </div>
+                        </article>
+
+                    </div>
+                </section>
                 <div class="text-bubble-img-presentation">
                     <p> Toutes propositions pour des cours enfants ou adultes, en privé ou en groupe, sont les
                         bienvenues.</p>
@@ -67,7 +115,10 @@
             </div>
         </div>
     </main>
-    <?php $page_scripts = []; include __DIR__ . '/../includes/footer.php'; ?>
+    <script src="/js/enterAnimation.js"></script>
+
+    <?php $page_scripts = ['revealOnScroll.js'];
+    include __DIR__ . '/../includes/footer.php'; ?>
 </body>
 
 </html>

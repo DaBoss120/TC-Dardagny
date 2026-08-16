@@ -23,7 +23,7 @@
             </div>
             <div class="reglement-et-statuts-contnent back-img-presentation">
                 <div>
-                    <a href="/pdf/Reglement-2023-2024.pdf">
+                    <a href="/pdf/Règlement 2026-2027.pdf">
                         <button class="button1">
                             <p>Règlement TC Dardagny</p>
                         </button>

@@ -1,0 +1,204 @@
+.gallery-empty {
+    text-align: center;
+    margin: 60px 0;
+}
+
+/* --- Grid ------------------------------------------------------------- */
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    max-width: 1400px;
+    margin: 40px auto 80px;
+    padding: 0 24px;
+}
+
+.gallery-item {
+    /* Reset button chrome rather than `all: unset`, so we keep box-sizing
+       from the sitewide `html * { box-sizing: border-box }` reset. */
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background: var(--color3);
+    display: block;
+    width: 100%;
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 14px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+/* Hover zoom only where there is a real pointer to hover with. On a touch
+   screen `:hover` latches onto the last-tapped element and stays there —
+   so tapping a tile to open it left that tile stuck at scale(1.06), which
+   the lightbox then measured as the tile's real size (transforms count
+   toward getBoundingClientRect) and shrank to a box ~6% too big before
+   snapping down on the swap. That is why the closing jump appeared on
+   phones and on any touch-capable emulation regardless of screen width,
+   but never with a plain mouse. galerie.js no longer measures a
+   transformed element at all, so this is belt-and-braces — but the zoom
+   is a pointer affordance that has no business firing on tap anyway. */
+@media (hover: hover) and (pointer: fine) {
+    .gallery-item:hover img {
+        transform: scale(1.06);
+    }
+}
+
+/* Kept outside the media query: keyboard focus needs the cue on any device. */
+.gallery-item:focus-visible img {
+    transform: scale(1.06);
+}
+
+.gallery-item:focus-visible {
+    outline: 3px solid var(--color4);
+    outline-offset: 2px;
+}
+
+/* Hidden while its photo is showing in the lightbox, so there's never a
+   duplicate: one under the overlay and one moving above it. The lightbox
+   frame below crops with the same `object-fit: cover` rule as this tile's
+   own image, so the handoff needs no fade to hide a mismatch — it can just
+   be a hard toggle. */
+.gallery-item.is-source-active {
+    visibility: hidden;
+}
+
+/* --- Lightbox ----------------------------------------------------------
+   `.gallery-lightbox-frame` is the `position: fixed` box sized/placed at
+   its rest (centered, viewport-fit) dimensions by galerie.js; opening/
+   closing is done purely by animating `transform`, computed to align that
+   box with the clicked grid tile (the FLIP technique) — cheap to animate
+   and what lets the frame convincingly grow out of, and shrink back into,
+   its tile.
+
+   The photo itself always fills the frame at `object-fit: cover`, exactly
+   like a grid tile's own image fills its square tile — so as the frame's
+   aspect ratio morphs between the tile's square and the photo's natural
+   shape over the course of the animation, the crop reveals/hides more of
+   the photo continuously, instead of snapping between two differently-
+   cropped images. galerie.js starts the frame off showing the already-
+   loaded thumbnail (so opening never waits on a network fetch) and swaps
+   in the full-resolution photo once it's loaded — since both crop
+   identically, that swap only changes sharpness, not shape. */
+
+.gallery-lightbox {
+    position: fixed;
+    inset: 0;
+    /* Above `header`'s z-index: 10000 (style.css) — the lightbox is a
+       full-screen takeover, so it needs to sit above the site nav too, both
+       visually and so the nav doesn't steal clicks/drags over the photo. */
+    z-index: 10500;
+    display: none;
+    /* On desktop, dragging the photo down to dismiss it would otherwise
+       also start a native text/image selection under the cursor. */
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.gallery-lightbox.is-open {
+    display: block;
+}
+
+.gallery-lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 15, 26, 0.92);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.gallery-lightbox.is-visible .gallery-lightbox-backdrop {
+    opacity: 1;
+}
+
+.gallery-lightbox-frame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* width/height/left/top/border-radius/box-shadow (the rest box, and
+       whether the drop shadow is showing) are all set inline by
+       galerie.js; everything else about the open/close motion is
+       `transform`. No box-shadow default here — it's off while the frame
+       is snapped to a tile (matching the tile, which has none) and only
+       fades in once fully open. */
+    transform-origin: top left;
+    overflow: hidden;
+    border-radius: 12px;
+    cursor: grab;
+    touch-action: none;
+    /* The width/height transition (needed for the crop to stay correct —
+       see galerie.js) forces a layout reflow every frame, unlike a plain
+       transform. This tells the browser the frame's box changes never
+       affect anything outside it, so it can scope that reflow to just this
+       element instead of re-checking the rest of the page each frame. */
+    contain: layout paint;
+}
+
+.gallery-lightbox-frame.is-grabbing {
+    cursor: grabbing;
+}
+
+.gallery-lightbox-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    -webkit-user-drag: none;
+}
+
+.gallery-lightbox-close {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 1001;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: white;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease;
+    pointer-events: none;
+}
+
+.gallery-lightbox.is-visible .gallery-lightbox-close {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+.gallery-lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.28);
+}
+
+@media screen and (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 6px;
+        padding: 0 12px;
+    }
+
+    .gallery-item {
+        border-radius: 8px;
+    }
+}

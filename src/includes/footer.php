@@ -29,6 +29,7 @@
                     <li><a href="/">Accueil</a></li>
                     <!-- <li><a href="/agenda">Agenda</a></li> -->
                     <li><a href="/reservation">R&eacute;servation</a></li>
+                    <li><a href="/galerie">Galerie</a></li>
                     <li><a href="/contact">Contact</a></li>
                 </ul>
             </div>
