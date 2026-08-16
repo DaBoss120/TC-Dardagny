@@ -24,9 +24,11 @@ body {
     /* Prevent horizontal scrolling caused by elements using 100vw or positioned off-screen */
     /* overflow-x: hidden; */
 }
-body{
+
+body {
     min-height: 100vh;
 }
+
 :root {
     --color1: #1a3150;
     --color2: #385c8a;
@@ -96,10 +98,12 @@ ul {
 li {
     list-style: none;
 }
-a{
+
+a {
     color: var(--color1);
 }
-.main-title{
+
+.main-title {
     font-size: 5rem;
     width: auto;
 }
@@ -116,7 +120,8 @@ a{
 .titre h2 {
     margin-bottom: 32px;
 }
-.pos-abs{
+
+.pos-abs {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -197,9 +202,10 @@ body.loaded::before {
         animation-timing-function: ease;
     }
 }
+
 /* Edge case where we need to redfine the transform properties.
    Add the pos-abs class when using transform: translate */
-.button1.pos-abs{
+.button1.pos-abs {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -219,6 +225,23 @@ body.loaded::before {
 
 .button1 button p {
     color: white;
+}
+
+.button1.small {
+    width: auto;
+    min-width: 0;
+    padding: 10px 20px;
+    font-size: 1rem;
+    text-decoration: none;
+    margin-top: 8px;
+}
+.button1.medium{
+    width: auto;
+    min-width: 0;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    margin-top: 8px;
 }
 
 .button2 {
@@ -270,9 +293,13 @@ body.loaded::before {
     }
 }
 
-.button1.btn-bg-blue, .button2.btn-bg-blue {
+.button1.btn-bg-blue,
+.button2.btn-bg-blue {
     background: var(--color1);
-   p{ color: white;}
+
+    p {
+        color: white;
+    }
 }
 
 /* .button1.btn-bg-blue:hover, .button2.btn-bg-blue:hover { */
@@ -866,6 +893,7 @@ div.unBlur {
 .bar {
     display: none;
 }
+
 /* Site footer with the site map. */
 .site-footer {
     background-color: var(--color1);
@@ -1512,7 +1540,7 @@ div.unBlur {
     border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
-.big-card-illustration {
+.big-card .illustration {
     /* Artwork is expected to sit on white, like the home hero decoration. */
     mix-blend-mode: multiply;
     align-self: center;
@@ -1523,7 +1551,7 @@ div.unBlur {
     margin-bottom: 16px;
 }
 
-.big-card-body {
+.big-card .body {
     display: flex;
     flex-direction: column;
     /* Lets the link sit on the baseline of the tallest card in a row, so
@@ -1537,25 +1565,25 @@ div.unBlur {
     text-align: center;
 }
 
-.big-card-subtitle {
+.big-card .subtitle {
     text-align: center;
     font-weight: 700;
     color: var(--color2);
     margin-top: 4px;
 }
 
-.big-card-list {
+.big-card .list {
     margin: 20px 0 0;
 }
 
-.big-card-list li {
+.big-card .list li {
     position: relative;
     color: var(--color1);
     line-height: 1.6;
     padding: 6px 0 6px 22px;
 }
 
-.big-card-list li::before {
+.big-card .list li::before {
     content: '';
     position: absolute;
     left: 0;
@@ -1565,14 +1593,14 @@ div.unBlur {
     background: url("../img/tennisballBullet.webp") center / contain no-repeat;
 }
 
-.big-card-note {
+.big-card .note {
     margin-top: 16px;
     font-weight: 700;
     color: var(--color4);
     text-align: center;
 }
 
-.big-card-link {
+.big-card .link {
     /* .button1 is 350px wide by default, which overflows a card on narrow
        screens. */
     width: 100%;
@@ -1580,10 +1608,11 @@ div.unBlur {
     text-decoration: none;
 }
 
-.big-card-link p {
+/* 
+.big-card .link p {
     color: var(--color1);
     font-weight: 700;
-}
+} */
 
 /* --- Small card: compact side-photo card that dissolves into its text --- */
 
@@ -1622,19 +1651,16 @@ div.unBlur {
 
    The wrapper's own mask fades the whole thing out before the text gets
    dense. --image-url is set per card in the markup. */
-.small-card-media {
+.small-card .media {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     width: 62%;
-    -webkit-mask-image: linear-gradient(to right, #000 30%, transparent 92%);
-    mask-image: linear-gradient(to right, #000 30%, transparent 92%);
 }
 
-.small-card-media img,
-.small-card-media::before,
-.small-card-media::after {
+.small-card .media img,
+.small-card .media::before {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -1642,27 +1668,27 @@ div.unBlur {
     object-fit: cover;
 }
 
-.small-card-media::before,
-.small-card-media::after {
+/* The blurred copy is the actual <img>, faded out late (70-100%) so it
+   lingers. The sharp copy is the ::before duplicate, layered on top via
+   z-index and faded out early (40-90%) so it thins out first — revealing
+   the blur underneath in the overlap before both reach transparent. */
+.small-card .media img {
+    filter: blur(12px);
+    -webkit-mask-image: linear-gradient(to right, #000 70%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 70%, transparent 100%);
+}
+
+.small-card .media::before {
+    z-index: 1;
     content: '';
     background-image: var(--image-url);
     background-size: cover;
     background-position: center;
+    -webkit-mask-image: linear-gradient(to right, #000 40%, transparent 90%);
+    mask-image: linear-gradient(to right, #000 40%, transparent 90%);
 }
 
-.small-card-media::before {
-    filter: blur(5px);
-    -webkit-mask-image: linear-gradient(to right, transparent 30%, #000 60%);
-    mask-image: linear-gradient(to right, transparent 30%, #000 60%);
-}
-
-.small-card-media::after {
-    filter: blur(14px);
-    -webkit-mask-image: linear-gradient(to right, transparent 52%, #000 85%);
-    mask-image: linear-gradient(to right, transparent 52%, #000 85%);
-}
-
-.small-card-body {
+.small-card .body {
     position: relative;
     z-index: 1;
     display: flex;
@@ -1680,7 +1706,7 @@ div.unBlur {
     font-size: 1.2rem;
 }
 
-.small-card-link {
+.small-card .link {
     width: auto;
     min-width: 0;
     padding: 10px 20px;
@@ -1689,9 +1715,110 @@ div.unBlur {
     margin-top: auto;
 }
 
-.small-card-link p {
+.small-card .link p {
     font-weight: 700;
 }
+
+.medium-card-grid {
+    display: flex;
+    flex-wrap: wrap;
+    /* stretch is default for flex wrap. make it flex-start for every card to take only the necessary size to it's own content. */
+    align-items: stretch;
+    justify-content: center;
+    gap: 32px;
+    max-width: 1100px;
+    margin: 40px auto 0;
+}
+
+.medium-card {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    flex: 1 1 440px;
+    max-width: 520px;
+    /* padding: 28px; */
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    overflow: hidden;
+}
+
+.medium-card .body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px 24px 24px;
+}
+
+.medium-card h3 {
+    font-family: Rammetto-One;
+    font-size: 1.2rem;
+}
+
+.medium-card .link {
+    width: auto;
+    min-width: 0;
+    padding: 10px 20px;
+    font-size: 1rem;
+    text-decoration: none;
+    margin-top: 8px;
+}
+
+.medium-card .link p {
+    font-weight: 700;
+}
+
+/* Same dissolving-image trick as .small-card, rotated 90deg: the photo
+   fades and blurs into the card's bottom edge instead of its right edge,
+   so it blends into the translucent body below rather than ending in a
+   hard line. */
+.medium-card .media {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 250px;
+}
+
+.medium-card .media img,
+.medium-card .media::before {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* One shared mask on the sharp image and the blurred copy beneath it: as
+   both fade out together, the sharp layer thins first (it's on top) and
+   lets the blur show through in the middle of the fade, before everything
+   reaches transparent. No separate "blur band" vs "fade band" needed. */
+.medium-card .media img
+ {
+    filter: blur(12px);
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+}
+.medium-card .media::before {
+
+    z-index : 1;
+    content: '';
+    background-image: var(--image-url);
+    background-size: cover;
+    background-position: center;
+    /* filter: blur(12px); */
+    mask-image: linear-gradient(to bottom, #000 40%, transparent 90%);
+    /* object-position: 0 30% */
+
+
+}
+
+.medium-card.card-expandable {}
 
 @media screen and (max-width: 768px) {
     .big-card {
@@ -1711,29 +1838,29 @@ div.unBlur {
         min-height: 0;
     }
 
-    .small-card-media {
+    .small-card .media {
         position: relative;
         width: 100%;
         height: 170px;
-        -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent 96%);
-        mask-image: linear-gradient(to bottom, #000 35%, transparent 96%);
     }
 
-    .small-card-media::before {
-        -webkit-mask-image: linear-gradient(to bottom, transparent 35%, #000 70%);
-        mask-image: linear-gradient(to bottom, transparent 35%, #000 70%);
+    /* Same blurred-img-under-sharp-::before trick as the desktop layout,
+       rotated to fade downward instead of rightward. */
+    .small-card .media img {
+        -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+        mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
     }
 
-    .small-card-media::after {
-        -webkit-mask-image: linear-gradient(to bottom, transparent 58%, #000 90%);
-        mask-image: linear-gradient(to bottom, transparent 58%, #000 90%);
+    .small-card .media::before {
+        -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent 90%);
+        mask-image: linear-gradient(to bottom, #000 40%, transparent 90%);
     }
 
-    .small-card-body {
+    .small-card .body {
         align-items: center;
         /* Pulled up under the photo's fade, same overlap as the desktop
            layout has horizontally. */
-        padding: 0 20px 24px;
+        padding: 36px 20px 24px;
         margin-top: -32px;
     }
 
@@ -1741,5 +1868,56 @@ div.unBlur {
        lines badly once they are centred. */
     .small-card p {
         text-align: center;
+    }
+    .small-card .link{
+        margin: 0px;
+        margin-top: 6px
+    }
+
+    /* Touch has no hover: on mobile the "grow" hover feedback is replaced
+       by a "shrink" press feedback instead, using :active. The hover rules
+       are neutralised here so a lingering :hover after tap can't fight
+       with :active. Same letter-compress text animation either way. */
+    .button1:hover,
+    .button2:hover {
+        transform: none;
+    }
+
+    .button1:hover p,
+    .button2:hover p {
+        animation: none;
+    }
+
+    .button1:active {
+        transform: scale(0.9);
+        animation: transform .6s cubic-bezier(.11,.06,.55,1);
+        cursor: pointer;
+        box-shadow: 0 0px 30px rgba(0, 0, 0, 0.30);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+    }
+
+    .button1.pos-abs:active {
+        transform: translate(-50%, -50%) scale(0.9);
+        cursor: pointer;
+    }
+
+    .button2:active {
+        transform: scale(0.9);
+        cursor: pointer;
+        box-shadow: 0 0px 30px rgba(0, 0, 0, 0.30);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+
+    .button1:active p,
+    .button2:active p {
+        animation: textBlurBtnUnhover .6s cubic-bezier(.12, 0, .18, 1);
+        animation-timing-function: ease;
+    }
+
+    .button1:not(:active) p,
+    .button2:not(:active) p {
+        animation: textBlurBtn .6s cubic-bezier(.12, 0, .18, 1);
     }
 }

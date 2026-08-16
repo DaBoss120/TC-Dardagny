@@ -116,6 +116,8 @@
     background: rgba(8, 15, 26, 0.92);
     opacity: 0;
     transition: opacity 0.35s ease;
+    backdrop-filter: blur(16px);
+
 }
 
 .gallery-lightbox.is-visible .gallery-lightbox-backdrop {

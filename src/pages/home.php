@@ -145,25 +145,25 @@
 
                     <div class="big-card-grid">
                         <article class="big-card reveal-on-scroll">
-                            <img class="big-card-illustration" src="/img/CoursJuniorsBalle.webp" alt="" loading="lazy" decoding="async">
-                            <div class="big-card-body">
+                            <img class="illustration" src="/img/CoursJuniorsBalle.webp" alt="" loading="lazy" decoding="async">
+                            <div class="body">
                                 <h3>Cours juniors</h3>
-                                <p class="big-card-subtitle">Saison 2026 &ndash; 2027</p>
-                                <ul class="big-card-list">
+                                <p class="subtitle">Saison 2026 &ndash; 2027</p>
+                                <ul class="list">
                                     <li>Pour les enfants et les jeunes d&egrave;s 4 ans</li>
                                     <li>Lundi, mercredi et vendredi apr&egrave;s-midi, durant les saisons d'automne et de printemps</li>
                                     <li>Mercredi matin, tout au long de l'ann&eacute;e</li>
                                 </ul>
-                                <p class="big-card-note">Inscription jusqu'au 18 ao&ucirc;t</p>
+                                <p class="note">Inscription jusqu'au 18 ao&ucirc;t</p>
                                 <!-- class on the <a> rather than a <button> inside it: a
                              button nested in a link is invalid and breaks
                              keyboard activation. -->
-                                <a class="button1 btn-bg-blue big-card-link"
+                                <a class="button1 btn-bg-blue link"
                                     href="/pdf/Annonce%20cours%20Juniors_Saison%202026-2027.pdf"
                                     target="_blank" rel="noopener">
                                     <p>Voir l'annonce (PDF)</p>
                                 </a>
-                                <a class="button1 big-card-link"
+                                <a class="button1 link"
                                     href="/pdf/Conditions%20g%C3%A9n%C3%A9rales%20cours%20juniors%20Saison%202026-2027.pdf"
                                     target="_blank" rel="noopener">
                                     <p>Conditions générales</p>
@@ -172,23 +172,23 @@
                         </article>
 
                         <article class="big-card reveal-on-scroll">
-                            <img class="big-card-illustration" src="/img/CoursAdultes.webp" alt="" loading="lazy" decoding="async">
-                            <div class="big-card-body">
+                            <img class="illustration" src="/img/CoursAdultes.webp" alt="" loading="lazy" decoding="async">
+                            <div class="body">
                                 <h3>Cours adultes</h3>
-                                <p class="big-card-subtitle">Automne 2026</p>
-                                <ul class="big-card-list">
+                                <p class="subtitle">Automne 2026</p>
+                                <ul class="list">
                                     <li>Du 24 ao&ucirc;t au 5 novembre</li>
                                     <li>Lundi, mercredi et jeudi &mdash; 60 minutes entre 18h30 et 21h</li>
                                     <li>3 &agrave; 4 participants par groupe</li>
                                     <li>250 CHF (300 CHF pour les non-membres)</li>
                                 </ul>
-                                <p class="big-card-note">Inscription jusqu'au 18 ao&ucirc;t</p>
-                                <a class="button1 btn-bg-blue big-card-link"
+                                <p class="note">Inscription jusqu'au 18 ao&ucirc;t</p>
+                                <a class="button1 btn-bg-blue link"
                                     href="/pdf/Annonce%20cours%20Adultes_Automne%202026.pdf"
                                     target="_blank" rel="noopener">
                                     <p>Voir l'annonce (PDF)</p>
                                 </a>
-                                <a class="button1 big-card-link"
+                                <a class="button1 link"
                                     href="/pdf/Conditions%20g%C3%A9n%C3%A9rales%20cours%20adultes%20Automne%202026%20TCD.pdf"
                                     target="_blank" rel="noopener">
                                     <p>Conditions générales</p>
@@ -210,40 +210,40 @@
 
                     <div class="small-card-grid">
                         <article class="small-card reveal-on-scroll">
-                            <div class="small-card-media" style="--image-url: url('/img/WomanServing.webp')" aria-hidden="true">
+                            <div class="media" style="--image-url: url('/img/WomanServing.webp')" aria-hidden="true">
                                 <img src="/img/WomanServing.webp" alt="" width="200" height="200" loading="lazy" decoding="async">
                             </div>
-                            <div class="small-card-body">
+                            <div class="body">
                                 <h3>Venez jouer</h3>
                                 <p>Venez jouer dans un magnifique d&eacute;cor de campagne&nbsp;!</p>
-                                <a class="button1 btn-bg-blue small-card-link" href="/reservation">
+                                <a class="button1 btn-bg-blue link" href="/reservation">
                                     <p>R&eacute;server un court</p>
                                 </a>
                             </div>
                         </article>
 
                         <article class="small-card reveal-on-scroll">
-                            <div class="small-card-media" style="--image-url: url('/img/ServiceDeCordage.webp')" aria-hidden="true">
+                            <div class="media" style="--image-url: url('/img/ServiceDeCordage.webp')" aria-hidden="true">
                                 <img src="/img/ServiceDeCordage.webp" alt="" width="200" height="200" loading="lazy" decoding="async">
                             </div>
-                            <div class="small-card-body">
+                            <div class="body">
                                 <h3>Service de cordage</h3>
                                 <p><b>Vous avez un probl&egrave;me de cordage&nbsp;?</b></p>
                                 <p>Beno&icirc;t propose de corder votre raquette.</p>
-                                <a class="button1 small-card-link" href="/pdf/Service%20de%20cordage.pdf" target="_blank" rel="noopenerDeCordage">
+                                <a class="button1 link" href="/pdf/Service%20de%20cordage.pdf" target="_blank" rel="noopenerDeCordage">
                                     <p>Infos et tarifs</p>
                                 </a>
                             </div>
                         </article>
                         <article class="small-card reveal-on-scroll">
-                            <div class="small-card-media" style="--image-url: url('/img/Annonce-Recherche_Partenaires.webp')" aria-hidden="true">
+                            <div class="media" style="--image-url: url('/img/Annonce_Recherche_Parteniares.webp')" aria-hidden="true">
                                 <img src="/img/Annonce_Recherche_Parteniares.webp" alt="" width="200" height="200" loading="lazy" decoding="async">
                             </div>
-                            <div class="small-card-body">
+                            <div class="body">
                                 <h3>Recherche de partenaires</h3>
                                 <p><b>Pas de partenaire ?</b></p>
                                 <p>rejoins le groupe Whatsapp "Qui veut jouer ?"</p>
-                                <a class="button1 small-card-link" href="/pdf/Annonce%20recherche%20partenaires.pdf" target="_blank" rel="noopenerDeCordage">
+                                <a class="button1 link" href="/pdf/Annonce%20recherche%20partenaires.pdf" target="_blank" rel="noopenerDeCordage">
                                     <p>Rejoindre le groupe</p>
                                 </a>
                             </div>
@@ -254,7 +254,66 @@
                     <div class="titre reveal-on-scroll">
                         <h2>À venir</h2>
                     </div>
+                    <div class="medium-card-grid">
+                        <article class="medium-card reveal-on-scroll expandable-card">
+                            <div class="media" style="--image-url: url('/img/tennisemoijs.webp')" aria-hidden="true">
+                                <img src="/img/tennisemoijs.webp" alt="" loading="lazy" decoding="async">
+                            </div>
+                            <div class="body">
+                                <h3>Tennis Surprise Automne 2026</h3>
+                                <p> Le <b>TC Dardagny</b> vous concoctera un événement cet automne <b>sportif, festif et légèrement imprévisible, </b> ouvert à toutes et tous : <b>adultes, jeunes et enfants.</b>
 
+                                </p>
+                                <p>
+                                    Au programme ? Eh bien… on ne vous le dira pas ! parce qu'on ne le sait pas encore nous-mêmes ! Mais ce sera fun, c'est promis. »
+                                </p>
+                                <p>
+                                    Cela pourrait être des matchs amicaux, des défis farfelus, des jeux en équipe, des surprises mystérieuses… le tout soupoudré de rires, de rebondissements, et d’un soupçon de folie douce.
+                                </p>
+                                <p>
+                                    Et après l'effort… le réconfort ! <b>Apéritif offert</b> pour reprendre vos esprits et partager vos exploits.
+                                </p>
+                                <p>
+                                    <b>Date </b>: Cet Automne <br>
+                                    <b>Lieu </b>: TC Dardagny <br>
+                                    <b>Heure </b>: à définir <br>
+                                </p>
+                                <!-- <button class="button1 medium expand">
+                                    <p>Plus d'infos</p>
+                                </button> -->
+                                <!-- <a class="button1 expand" href="/pdf/Annonce%20recherche%20partenaires.pdf" target="_blank" rel="noopenerDeCordage">
+                                    <p>Rejoindre le groupe</p>
+                                </a> -->
+                            </div>
+                        </article>
+                        <article class="medium-card reveal-on-scroll expandable-card">
+                            <div class="media" style="--image-url: url('/img/Tennis_Apero_Logo_Couleur.webp')" aria-hidden="true">
+                                <img src="/img/Tennis_Apero_Logo_Couleur.webp" alt="" loading="lazy" decoding="async">
+                            </div>
+                            <div class="body">
+                                <h3>Tennis Ap&eacute;ro</h3>
+                                <p> Le « Tennis Apéro » est un rendez-vous convivial ouvert à toutes et tous, membres, non-membres, débutants, joueurs confirmés, jeunes, moins jeunes…
+                                </p>
+                                <p>
+                                    On joue, on échange, on rit, puis on partage un apéro autour des courts. </p>
+                                <p>
+                                    Envie de rencontrer de nouveaux partenaires, de progresser ou simplement de passer un bon moment sur le terrain ? </p>
+                                <p>
+                                    Rejoignez-nous pour un tennis qui fait du bien ! </p>
+                                <p>
+                                    Prochain « Tennis Apéro » au mois de septembre.
+                                </p>
+                                <p>Date suivra prochainement!</p>
+                                <!-- <button class="button1 medium expand">
+                                    <p>Plus d'infos</p>
+                                </button> -->
+                                <!-- <a class="button1 expand" href="/pdf/Annonce%20recherche%20partenaires.pdf" target="_blank" rel="noopenerDeCordage">
+                                    <p>Rejoindre le groupe</p>
+                                </a> -->
+                            </div>
+                        </article>
+                        
+                    </div>
                 </section>
             </div>
         </div>
