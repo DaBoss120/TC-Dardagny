@@ -174,7 +174,7 @@
 
                     <div class="big-card-grid">
                         <article class="big-card reveal-on-scroll">
-                            <img class="illustration" src="/img/cours-de-tennis/CoursJuniorsBalleNobackground.webp" alt="" loading="lazy" decoding="async">
+                            <img class="illustration" src="/img/cours-de-tennis/CoursJuniorsBalleNoBackground.webp" alt="" loading="lazy" decoding="async">
                             <div class="body">
                                 <h3>Cours juniors</h3>
                                 <p class="subtitle">Saison 2026 &ndash; 2027</p>
