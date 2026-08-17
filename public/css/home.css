@@ -505,6 +505,19 @@ body>main {
     padding-top: 2vh;
 }
 
+.sub-title,
+.hero .main-title {
+    /* A soft white halo rather than a hard box: several blurred, low-opacity
+       white shadows stacked at increasing radii. Barely visible where the
+       text already sits on white, but it lifts the navy text off the blue
+       band by fading the band's edge right around each letter, without
+       reading as a distinct gradient shape. */
+    text-shadow:
+        0 0 0px rgba(255, 255, 255, 0.85),
+        0 0 10px rgba(255, 255, 255, 0.55),
+        0 0 22px rgba(255, 255, 255, 0.35);
+}
+
 .sub-title {
     /* Block-level auto width fills .hero-text, which is as wide as the title,
        so this centres the subtitle under it. */
