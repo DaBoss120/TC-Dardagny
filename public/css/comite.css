@@ -3,25 +3,56 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    /* flex-wrap: wrap; */
+    flex-wrap: wrap;
+
+    padding: 40px;
+    
     
     /* height: 80vh; */
-    background-image: url("../img/TennisServe.webp");
+    background-image: url("../img/comite/TennisServe.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
     /* margin-left: 15vw; */
 }
+.equipe-comite-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    max-width: 1500px;
+}
+
+.personne-slot {
+    position: relative;
+    margin: 24px;
+}
+
+.personne-slot-ghost {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+    padding: 25px;
+    border: 1px solid transparent;
+    visibility: hidden;
+    pointer-events: none;
+}
 
 .personnes-comite {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: absolute;
+    inset: 0;
 /* margin: 0 40px; */
     height: fit-content;
     /* margin-top: 25px; */
     padding: 25px;
+    margin: 0;
     background: rgba(255, 255, 255, 0.25);
     border-radius: 36px;
     box-shadow: 0 0px 30px rgba(0, 0, 0, 0.15);
@@ -31,7 +62,8 @@
     transition: all 0.5s cubic-bezier(.12, 0, .18, 1);
 }
 
-.personnes-comite img {
+.personnes-comite img,
+.personne-slot-ghost img {
     border-radius: 16px;
     margin-bottom: 20px;
     /* width: 200px; */
@@ -54,8 +86,11 @@
 .personnes-comite:hover {
     transition: all 0.3;
     transform: scale(1.1);
+    bottom: auto;
+    height: fit-content;
     padding-bottom: 50px;
     box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.4);
+    z-index: 2;
     p {
         opacity: 1;
         visibility: visible;
@@ -73,27 +108,36 @@
     .equipe-comite {
         flex-direction: column;
         align-items: center;
-        background-image: url("../img/TennisServe-Mobile.webp");
+        background-image: url("../img/comite/TennisServe-Mobile.webp");
 
     }
 
-    .personnes-comite {
+    .personne-slot-ghost {
+        display: none;
+    }
+    .personne-slot {
+        position: static;
         margin: 20px 0px;
+    }
+    .personnes-comite {
+        position: static;
+        margin: 0;
         padding-bottom: 50px;
     }
-    .personnes-comite:first-of-type {
+    .personne-slot:first-of-type {
         margin-top: 40px;
     }
-    .personnes-comite:last-of-type {
+    .personne-slot:last-of-type {
         margin-bottom: 40px;
     }
     .personnes-comite p{
         visibility: visible;
         opacity: 1;
         filter: blur(0px);
-        
+
     }
-    .personnes-comite img {
+    .personnes-comite img,
+    .personne-slot-ghost img {
         width: 40vw;
         /* height: 60vw; */
         aspect-ratio: 1 / 1;
@@ -101,13 +145,10 @@
     .personnes-comite:hover {
         animation: none;
         transform: scale(1);
+        padding-bottom: 50px;
         p{
             animation: none;
         }
-        /* transform: scale(1);
-        padding-bottom: 50px;
-        box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.4); */
-        
     }
     .personnes-comite:not(:hover) p{
         animation: none;

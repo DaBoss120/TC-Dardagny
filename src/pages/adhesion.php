@@ -7,6 +7,17 @@
     <meta name="description" content="Devenir membre du Tennis-Club Dardagny : téléchargez le formulaire d'inscription et rejoignez le club.">
     <title>Adhésion - TC Dardagny</title>
     <link rel="canonical" href="/adhesion">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Tennis-Club Dardagny">
+    <meta property="og:title" content="Adhésion - TC Dardagny">
+    <meta property="og:description" content="Devenir membre du Tennis-Club Dardagny : téléchargez le formulaire d'inscription et rejoignez le club.">
+    <meta property="og:url" content="https://tcdardagny.ch/adhesion">
+    <meta property="og:image" content="https://tcdardagny.ch/img/shared/TCD_Logo_Square.png">
+    <meta property="og:locale" content="fr_CH">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Adhésion - TC Dardagny">
+    <meta name="twitter:description" content="Devenir membre du Tennis-Club Dardagny : téléchargez le formulaire d'inscription et rejoignez le club.">
+    <meta name="twitter:image" content="https://tcdardagny.ch/img/shared/TCD_Logo_Square.png">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/adhesion.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

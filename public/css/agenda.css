@@ -101,7 +101,8 @@
 
 
 
-.agendaElement h1 {
+.agendaElement h2 {
+    font-family: Rammetto-One;
     font-size: clamp(18px, 1.8vw, 28px);
 }
 
@@ -189,7 +190,7 @@
         border-radius: 20px;
     } */
 
-    .agendaElement h1 {
+    .agendaElement h2 {
         font-size: 24px;
     }
     .agendaElement button p{

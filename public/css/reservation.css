@@ -101,7 +101,7 @@ a {
     position: absolute;
     inset: -6%;
 
-    background-image: url("../img/court2.webp");
+    background-image: url("../img/reservation/court2.webp");
     /* Changed from /WEB/IMG/... */
     filter: blur(20px);
     -webkit-filter: blur(20px);

@@ -13,7 +13,7 @@ function nav_active($path) {
 ?>
 <header>
     <div class="top_header">
-        <a href="/"><img src="/img/TCD_Logo_Square.png" alt="TCD_Logo_Square" class="TCD_Logo_Square"></a>
+        <a href="/"><img src="/img/shared/TCD_Logo_Square.png" alt="TCD_Logo_Square" class="TCD_Logo_Square"></a>
         <label class="bar" for="check">
             <input type="checkbox" id="check">
             <span class="top"></span>
@@ -22,7 +22,7 @@ function nav_active($path) {
         </label>
     </div>
     <div class="bottom_header">
-        <a href="/"><img src="/img/TCD_Logo.png" alt="TCD_Logo" class="TCD_Logo" srcset=""></a>
+        <a href="/"><img src="/img/shared/TCD_Logo.png" alt="TCD_Logo" class="TCD_Logo" srcset=""></a>
         <nav>
             <ul>
                 <li>

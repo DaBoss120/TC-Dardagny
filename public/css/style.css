@@ -121,6 +121,15 @@ a {
     margin-bottom: 32px;
 }
 
+/* "Nos cours et stages" was demoted from h1 to h2 for SEO (one h1 per page),
+   but should keep looking like the other section titles, not the subtitle
+   that follows it. */
+.titre-inscriptions h2:first-of-type {
+    font-family: Rammetto-One;
+    font-size: 2em;
+    margin-bottom: 16px;
+}
+
 .pos-abs {
     position: absolute;
     top: 50%;
@@ -301,6 +310,15 @@ body.loaded::before {
         color: white;
     }
 }
+.button1.btn-bg-orange,
+.button2.btn-bg-orange{
+    background: var(--color4);
+
+    p {
+        color: white;
+    }
+}
+
 
 /* .button1.btn-bg-blue:hover, .button2.btn-bg-blue:hover { */
 
@@ -748,7 +766,7 @@ header {
        expands when there is not. */
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100vh !important;
 }
 
 #copyableText:hover {
@@ -1590,7 +1608,7 @@ div.unBlur {
     top: 13px;
     width: 14px;
     height: 14px;
-    background: url("../img/tennisballBullet.webp") center / contain no-repeat;
+    background: url("../img/shared/tennisballBullet.webp") center / contain no-repeat;
 }
 
 .big-card .note {

@@ -25,6 +25,17 @@ if (is_file($manifestPath)) {
     <meta name="description" content="Galerie photo du Tennis-Club Dardagny : tournois, cours et moments de club.">
     <title>Galerie - TC Dardagny</title>
     <link rel="canonical" href="/galerie">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Tennis-Club Dardagny">
+    <meta property="og:title" content="Galerie - TC Dardagny">
+    <meta property="og:description" content="Galerie photo du Tennis-Club Dardagny : tournois, cours et moments de club.">
+    <meta property="og:url" content="https://tcdardagny.ch/galerie">
+    <meta property="og:image" content="https://tcdardagny.ch/img/shared/TCD_Logo_Square.png">
+    <meta property="og:locale" content="fr_CH">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Galerie - TC Dardagny">
+    <meta name="twitter:description" content="Galerie photo du Tennis-Club Dardagny : tournois, cours et moments de club.">
+    <meta name="twitter:image" content="https://tcdardagny.ch/img/shared/TCD_Logo_Square.png">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/galerie.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

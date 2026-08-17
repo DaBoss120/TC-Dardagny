@@ -7,12 +7,41 @@
     <meta name="description" content="Tennis-Club Dardagny : deux courts extérieurs, cours pour enfants et adultes, réservations en ligne et événements du club près de Genève.">
     <title>TC Dardagny - Tennis club de Dardagny - Suisse</title>
     <link rel="canonical" href="/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Tennis-Club Dardagny">
+    <meta property="og:title" content="TC Dardagny - Tennis club de Dardagny - Suisse">
+    <meta property="og:description" content="Tennis-Club Dardagny : deux courts extérieurs, cours pour enfants et adultes, réservations en ligne et événements du club près de Genève.">
+    <meta property="og:url" content="https://tcdardagny.ch/">
+    <meta property="og:image" content="https://tcdardagny.ch/img/shared/TCD_Logo_Square.png">
+    <meta property="og:locale" content="fr_CH">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TC Dardagny - Tennis club de Dardagny - Suisse">
+    <meta name="twitter:description" content="Tennis-Club Dardagny : deux courts extérieurs, cours pour enfants et adultes, réservations en ligne et événements du club près de Genève.">
+    <meta name="twitter:image" content="https://tcdardagny.ch/img/shared/TCD_Logo_Square.png">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/home.css">
     <link rel="stylesheet" href="/css/carousel.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="theme-color" content="#1a3150">
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SportsActivityLocation",
+        "name": "Tennis-Club Dardagny",
+        "url": "https://tcdardagny.ch/",
+        "image": "https://tcdardagny.ch/img/shared/TCD_Logo_Square.png",
+        "email": "info@tcdardagny.ch",
+        "sport": "Tennis",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Rte de la Donzelle 22",
+            "postalCode": "1283",
+            "addressLocality": "Dardagny",
+            "addressCountry": "CH"
+        }
+    }
+    </script>
     <script>
         // Decide before the first paint whether the enter animation runs, so the
         // closed fences never flash on a load where they are not wanted.
@@ -69,7 +98,7 @@
     <!-- Sits on the closed fences and blows out as they part. Only rendered
          while the intro runs — see .fence-logo in home.css. -->
     <div class="fence-logo" aria-hidden="true">
-        <img src="/img/TCD_Logo_Square.webp" alt="" width="200" height="200" fetchpriority="high" decoding="async">
+        <img src="/img/shared/TCD_Logo_Square.webp" alt="" width="200" height="200" fetchpriority="high" decoding="async">
     </div>
 
     <main style="opacity: 0;">
@@ -89,11 +118,11 @@
              Dardagny's vineyards. Empty alt + aria-hidden keeps them out of
              the accessibility tree. Positions live in css/home.css. -->
                 <div class="hero-decor" aria-hidden="true">
-                    <img class="decor decor--racket enter-reveal" src="/img/Tennis-racket-with-ball.webp" alt="" loading="eager" decoding="async">
-                    <img class="decor decor--grapes enter-reveal" src="/img/Grape.webp" alt="" loading="eager" decoding="async">
-                    <img class="decor decor--grape-a enter-reveal" src="/img/Unique-grape.webp" alt="" loading="eager" decoding="async">
-                    <img class="decor decor--grape-b enter-reveal" src="/img/Unique-grape.webp" alt="" loading="eager" decoding="async">
-                    <img class="decor decor--grape-c enter-reveal" src="/img/Unique-grape.webp" alt="" loading="eager" decoding="async">
+                    <!-- <img class="decor decor--racket enter-reveal" src="/img/home/Tennis-racket-with-ball.webp" alt="" loading="eager" decoding="async"> -->
+                    <!-- <img class="decor decor--grapes enter-reveal" src="/img/home/premium_vector-1718180285784-0a4e0a8a3890-removebg-preview.png" alt="" loading="eager" decoding="async"> -->
+                    <img class="decor decor--grape-a enter-reveal" src="/img/home/Unique-grape.webp" alt="" loading="eager" decoding="async">
+                    <img class="decor decor--grape-b enter-reveal" src="/img/home/Unique-grape.webp" alt="" loading="eager" decoding="async">
+                    <img class="decor decor--grape-c enter-reveal" src="/img/home/Unique-grape.webp" alt="" loading="eager" decoding="async">
                     <!-- The 3D tennis balls, split across three stacked canvases by
                  depth so each can carry its own blur. No `enter-reveal` here on
                  purpose: they fly in from the sides, driven by heroBalls.js. -->
@@ -145,7 +174,7 @@
 
                     <div class="big-card-grid">
                         <article class="big-card reveal-on-scroll">
-                            <img class="illustration" src="/img/CoursJuniorsBalle.webp" alt="" loading="lazy" decoding="async">
+                            <img class="illustration" src="/img/cours-de-tennis/CoursJuniorsBalleNobackground.webp" alt="" loading="lazy" decoding="async">
                             <div class="body">
                                 <h3>Cours juniors</h3>
                                 <p class="subtitle">Saison 2026 &ndash; 2027</p>
@@ -159,11 +188,11 @@
                              button nested in a link is invalid and breaks
                              keyboard activation. -->
                                 <a class="button1 btn-bg-blue link"
-                                    href="/pdf/Annonce%20cours%20Juniors_Saison%202026-2027.pdf"
+                                    href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAFicWHwkNpUMjUzMlRYTkZYNTRTWk5LNEQ5T0RTVFBPQy4u"
                                     target="_blank" rel="noopener">
-                                    <p>Voir l'annonce (PDF)</p>
+                                    <p>Inscription</p>
                                 </a>
-                                <a class="button1 link"
+                                <a class="button1 btn-bg-orange link"
                                     href="/pdf/Conditions%20g%C3%A9n%C3%A9rales%20cours%20juniors%20Saison%202026-2027.pdf"
                                     target="_blank" rel="noopener">
                                     <p>Conditions générales</p>
@@ -172,7 +201,7 @@
                         </article>
 
                         <article class="big-card reveal-on-scroll">
-                            <img class="illustration" src="/img/CoursAdultes.webp" alt="" loading="lazy" decoding="async">
+                            <img class="illustration" src="/img/shared/CoursAdultes.webp" alt="" loading="lazy" decoding="async">
                             <div class="body">
                                 <h3>Cours adultes</h3>
                                 <p class="subtitle">Automne 2026</p>
@@ -184,11 +213,11 @@
                                 </ul>
                                 <p class="note">Inscription jusqu'au 18 ao&ucirc;t</p>
                                 <a class="button1 btn-bg-blue link"
-                                    href="/pdf/Annonce%20cours%20Adultes_Automne%202026.pdf"
+                                    href="https://forms.cloud.microsoft/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAFicWHwkNpURFZCSjRaRlJNRkFHV0dXQzFQRjhUSUxDVy4u&route=shorturl"
                                     target="_blank" rel="noopener">
-                                    <p>Voir l'annonce (PDF)</p>
+                                    <p>Inscription</p>
                                 </a>
-                                <a class="button1 link"
+                                <a class="button1 btn-bg-orange link"
                                     href="/pdf/Conditions%20g%C3%A9n%C3%A9rales%20cours%20adultes%20Automne%202026%20TCD.pdf"
                                     target="_blank" rel="noopener">
                                     <p>Conditions générales</p>
@@ -205,13 +234,13 @@
                  same trick the agenda page uses. -->
                 <section class="main-section-secondary">
                     <div class="titre reveal-on-scroll">
-                        <h2>Au club</h2>
+                        <h2>Club</h2>
                     </div>
 
                     <div class="small-card-grid">
                         <article class="small-card reveal-on-scroll">
-                            <div class="media" style="--image-url: url('/img/WomanServing.webp')" aria-hidden="true">
-                                <img src="/img/WomanServing.webp" alt="" width="200" height="200" loading="lazy" decoding="async">
+                            <div class="media" style="--image-url: url('/img/agenda/WomanServing.webp')" aria-hidden="true">
+                                <img src="/img/agenda/WomanServing.webp" alt="" width="200" height="200" loading="lazy" decoding="async">
                             </div>
                             <div class="body">
                                 <h3>Venez jouer</h3>
@@ -223,27 +252,27 @@
                         </article>
 
                         <article class="small-card reveal-on-scroll">
-                            <div class="media" style="--image-url: url('/img/ServiceDeCordage.webp')" aria-hidden="true">
-                                <img src="/img/ServiceDeCordage.webp" alt="" width="200" height="200" loading="lazy" decoding="async">
+                            <div class="media" style="--image-url: url('/img/home/ServiceCordage.webp')" aria-hidden="true">
+                                <img src="/img/home/ServiceCordage.webp" alt="" width="200" height="200" loading="lazy" decoding="async">
                             </div>
                             <div class="body">
                                 <h3>Service de cordage</h3>
                                 <p><b>Vous avez un probl&egrave;me de cordage&nbsp;?</b></p>
                                 <p>Beno&icirc;t propose de corder votre raquette.</p>
-                                <a class="button1 link" href="/pdf/Service%20de%20cordage.pdf" target="_blank" rel="noopenerDeCordage">
+                                <a class="button1 btn-bg-blue link" href="/pdf/Service%20de%20cordage.pdf" target="_blank" rel="noopenerDeCordage">
                                     <p>Infos et tarifs</p>
                                 </a>
                             </div>
                         </article>
                         <article class="small-card reveal-on-scroll">
-                            <div class="media" style="--image-url: url('/img/Annonce_Recherche_Parteniares.webp')" aria-hidden="true">
-                                <img src="/img/Annonce_Recherche_Parteniares.webp" alt="" width="200" height="200" loading="lazy" decoding="async">
+                            <div class="media" style="--image-url: url('/img/home/Annonce_Recherche_Parteniares.webp')" aria-hidden="true">
+                                <img src="/img/home/Annonce_Recherche_Parteniares.webp" alt="" width="200" height="200" loading="lazy" decoding="async">
                             </div>
                             <div class="body">
                                 <h3>Recherche de partenaires</h3>
                                 <p><b>Pas de partenaire ?</b></p>
-                                <p>rejoins le groupe Whatsapp "Qui veut jouer ?"</p>
-                                <a class="button1 link" href="/pdf/Annonce%20recherche%20partenaires.pdf" target="_blank" rel="noopenerDeCordage">
+                                <p>Rejoignez le groupe Whatsapp "Qui veut jouer ?"</p>
+                                <a class="button1 btn-bg-blue link" href="/pdf/Annonce%20recherche%20partenaires.pdf" target="_blank" rel="noopenerDeCordage">
                                     <p>Rejoindre le groupe</p>
                                 </a>
                             </div>
@@ -256,8 +285,8 @@
                     </div>
                     <div class="medium-card-grid">
                         <article class="medium-card reveal-on-scroll expandable-card">
-                            <div class="media" style="--image-url: url('/img/tennisemoijs.webp')" aria-hidden="true">
-                                <img src="/img/tennisemoijs.webp" alt="" loading="lazy" decoding="async">
+                            <div class="media" style="--image-url: url('/img/home/tennisemoijs.webp')" aria-hidden="true">
+                                <img src="/img/home/tennisemoijs.webp" alt="" loading="lazy" decoding="async">
                             </div>
                             <div class="body">
                                 <h3>Tennis Surprise Automne 2026</h3>
@@ -276,7 +305,7 @@
                                 <p>
                                     <b>Date </b>: Cet Automne <br>
                                     <b>Lieu </b>: TC Dardagny <br>
-                                    <b>Heure </b>: à définir <br>
+                                    <b>Heure </b>: A définir <br>
                                 </p>
                                 <!-- <button class="button1 medium expand">
                                     <p>Plus d'infos</p>
@@ -287,8 +316,8 @@
                             </div>
                         </article>
                         <article class="medium-card reveal-on-scroll expandable-card">
-                            <div class="media" style="--image-url: url('/img/Tennis_Apero_Logo_Couleur.webp')" aria-hidden="true">
-                                <img src="/img/Tennis_Apero_Logo_Couleur.webp" alt="" loading="lazy" decoding="async">
+                            <div class="media" style="--image-url: url('/img/home/Tennis_Apero_Logo_Couleur.webp')" aria-hidden="true">
+                                <img src="/img/home/Tennis_Apero_Logo_Couleur.webp" alt="" loading="lazy" decoding="async">
                             </div>
                             <div class="body">
                                 <h3>Tennis Ap&eacute;ro</h3>
@@ -303,7 +332,7 @@
                                 <p>
                                     Prochain « Tennis Apéro » au mois de septembre.
                                 </p>
-                                <p>Date suivra prochainement!</p>
+                                <p><b>Date suivra prochainement!</b></p>
                                 <!-- <button class="button1 medium expand">
                                     <p>Plus d'infos</p>
                                 </button> -->
@@ -331,7 +360,7 @@
                     <p>Incription et renseignements ci-dessous ou à info@tcdardagny.ch
                     </p>
                 </div>
-                <img src="/img/CampPaques2024.webp" alt="Affiche Camp de paques 2024">
+                <img src="/img/home/CampPaques2024.webp" alt="Affiche Camp de paques 2024">
             </div>
 
             <div class="event2">
@@ -351,7 +380,7 @@
                     <p>En cas de pluie, l'événement sera reporté au jeudi 25 avril de 17h à 20h
                     </p>
                 </div>
-                <img src="/img/TennisApero18Avril.webp" alt="Affiche tennis apreo 18 Avril">
+                <img src="/img/home/TennisApero18Avril.webp" alt="Affiche tennis apreo 18 Avril">
             </div>
         </div> -->
     </main>

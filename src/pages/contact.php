@@ -7,6 +7,17 @@
     <meta name="description" content="Contactez le Tennis-Club Dardagny par e-mail à info@tcdardagny.ch.">
     <title>Contact - TC Dardagny</title>
     <link rel="canonical" href="/contact">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Tennis-Club Dardagny">
+    <meta property="og:title" content="Contact - TC Dardagny">
+    <meta property="og:description" content="Contactez le Tennis-Club Dardagny par e-mail à info@tcdardagny.ch.">
+    <meta property="og:url" content="https://tcdardagny.ch/contact">
+    <meta property="og:image" content="https://tcdardagny.ch/img/shared/TCD_Logo_Square.png">
+    <meta property="og:locale" content="fr_CH">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contact - TC Dardagny">
+    <meta name="twitter:description" content="Contactez le Tennis-Club Dardagny par e-mail à info@tcdardagny.ch.">
+    <meta name="twitter:image" content="https://tcdardagny.ch/img/shared/TCD_Logo_Square.png">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/contact.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -30,7 +41,7 @@
                     <h1>Contactez-nous</h1>
 
                     <a href="mailto:%20info@tcdardagny.ch"><img class="bubble-hover round-img-in-bubble"
-                            src="/img/Email.webp" alt="Email image" style="border-radius: 100%;"></a>
+                            src="/img/contact/Email.webp" alt="Email image" style="border-radius: 100%;"></a>
                     <div class="text-bubble-img-presentation2 bubble-hover text-in-bubble" id="copyableText"
                         onclick="CopyEmail()">
                         <p>info@tcdardagny.ch</p>

@@ -1,5 +1,5 @@
 .contactContent {
-    background-image: url("../img/MailWithGradient.webp"); /* Changed from /WEB/IMG/... */
+    background-image: url("../img/contact/MailWithGradient.webp"); /* Changed from /WEB/IMG/... */
     display: flex;
     flex-direction: column;
     align-items: center;

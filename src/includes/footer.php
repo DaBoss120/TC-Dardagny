@@ -7,7 +7,7 @@
 <footer class="site-footer">
     <div class="site-footer-inner">
         <div class="footer-brand">
-            <img src="/img/TCD_Logo_Square.png" alt="Tennis-Club Dardagny" class="footer-logo" width="64" height="64">
+            <img src="/img/shared/TCD_Logo_Square.png" alt="Tennis-Club Dardagny" class="footer-logo" width="64" height="64">
             <p>Deux courts ext&eacute;rieurs &agrave; Dardagny, pr&egrave;s de Gen&egrave;ve.</p>
         </div>
 

@@ -1,5 +1,5 @@
 .paiement-content {
-    background-image: url("../img/BallOnRacketUpClose.webp");
+    background-image: url("../img/paiement/BallOnRacketUpClose.webp");
     /* Changed from /WEB/IMG/... */
     justify-content: space-between;
     /* flex-wrap: wrap; */
@@ -22,6 +22,11 @@
     color: white;
 }
 
+.text-bubble-img-presentation h2 {
+    font-family: Rammetto-One;
+    font-size: 2em;
+}
+
 .text-bubble-img-presentation img {
     /* object-fit: contain; */
     width: 50vw;
@@ -42,7 +47,7 @@
 
 @media screen and (max-width: 768px) {
     .paiement-content {     
-        background-image: url("../img/BallOnRacketUpClose-Mobile.webp");
+        background-image: url("../img/paiement/BallOnRacketUpClose-Mobile.webp");
     }
     .text-bubble-img-presentation img {
         width: 100%;
@@ -50,7 +55,7 @@
         /* max-width: 600px; */
     }
 
-    .text-bubble-img-presentation h1 {
+    .text-bubble-img-presentation h2 {
         font-size: 2rem;
     }
 

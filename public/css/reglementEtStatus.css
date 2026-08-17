@@ -3,7 +3,7 @@
 }
 
 .reglement-et-statuts-contnent {
-    background-image: url("../img/PLAY.webp"); /* Changed from /WEB/IMG/... */
+    background-image: url("../img/reglement/PLAY.webp"); /* Changed from /WEB/IMG/... */
     justify-content: space-around;
     background-size: cover;
     background-repeat: no-repeat;
@@ -18,7 +18,7 @@ button p{
 }
 @media screen and (max-width: 768px) {
     .reglement-et-statuts-contnent {
-        background-image: url("../img/PLAY-Mobile.webp");
+        background-image: url("../img/reglement/PLAY-Mobile.webp");
     }
     
 }

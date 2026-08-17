@@ -28,7 +28,7 @@
     justify-content: space-around;
     align-items: center;
     /* height: 80vh; */
-    background-image: url("../img/YellowTennisBallOnConcrete.webp");
+    background-image: url("../img/cours-de-tennis/YellowTennisBallOnConcrete.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -121,11 +121,13 @@
 
 
 .cours-et-stages {
-    background-image: url('../img/TennisFloorCourtWithLines.webp');
-    justify-content: space-between;
+    background-image: url('../img/cours-de-tennis/TennisFloorCourtWithLines.webp');
+    justify-content: center;
 }
 
-.cours-et-stages h1 {
+.cours-et-stages h2 {
+    font-family: Rammetto-One;
+    font-size: 2em;
     color: white;
     text-align: center;
     padding-top: 36px;
@@ -146,10 +148,10 @@ button p {
 
 
     .equipe-professeurs {
-        background-image: url("../img/YellowTennisBallOnConcrete-Mobile.webp");
+        background-image: url("../img/cours-de-tennis/YellowTennisBallOnConcrete-Mobile.webp");
     }
     .cours-et-stages {
-        background-image: url('../img/TennisFloorCourtWithLines-Mobile.webp');
+        background-image: url('../img/cours-de-tennis/TennisFloorCourtWithLines-Mobile.webp');
     }
     .personnes-professeurs {
         padding-bottom: 150px;
