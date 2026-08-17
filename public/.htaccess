@@ -5,6 +5,7 @@
     AddOutputFilterByType DEFLATE text/html text/css text/plain
     AddOutputFilterByType DEFLATE application/javascript text/javascript
     AddOutputFilterByType DEFLATE application/json image/svg+xml
+    AddOutputFilterByType DEFLATE application/xml text/xml
     # .glb is already compressed internally; leave it alone.
 </IfModule>
 
