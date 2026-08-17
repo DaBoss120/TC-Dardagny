@@ -21,6 +21,13 @@ body {
 h1 {
     z-index: 2;
 }
+.back-img-presentation{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url("../img/reservation/simone-viani-2XPHSXVT_Ls-unsplash.webp");
+}
 
 .court-img {
     filter: blur(0px);

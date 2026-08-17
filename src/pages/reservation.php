@@ -26,35 +26,37 @@
              height at all — the container was sized by a 105vh blurred spacer
              instead, and that spacer ran on over the footer. -->
         <div class="background-container">
-            <div class="img-with-gadient" aria-hidden="true"></div>
-            <div class="img-with-gadient-content">
-            <div>
-                <div class="court-img">
-                    <img src="/img/court2.webp" alt="court image">
+            <div class="back-img-presentation" aria-hidden="true">
+                <div class="img-with-gadient-content">
                     <div>
-                        <p>Court No 1</p>
+                        <div class="court-img">
+                            <img src="/img/court2.webp" alt="court image">
+                            <div>
+                                <p>Court No 1</p>
+                            </div>
+                            <div>
+                                <p>Court No 2</p>
+                            </div>
+                        </div>
+                        <div class="map-container">
+                            <iframe
+                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAKS5FD1Ce1crnKu0BYIhOB-1oq1aWVvEM&q=Tennis,Dardagny&maptype=satellite"
+                                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
                     </div>
-                    <div>
-                        <p>Court No 2</p>
-                    </div>
+                    <a href="https://ballejaune.com/club/tcdardagny">
+                        <button class="button1">
+                            <p>Réserver</p>
+                        </button>
+                    </a>
                 </div>
-                <div class="map-container">
-                    <iframe
-                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAKS5FD1Ce1crnKu0BYIhOB-1oq1aWVvEM&q=Tennis,Dardagny&maptype=satellite"
-                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
-                </div>
-            </div>
-                <a href="https://ballejaune.com/club/tcdardagny">
-                    <button class="button1">
-                        <p>Réserver</p>
-                    </button>
-                </a>
             </div>
         </div>
     </main>
-    <?php $page_scripts = []; include __DIR__ . '/../includes/footer.php'; ?>
+    <?php $page_scripts = [];
+    include __DIR__ . '/../includes/footer.php'; ?>
 </body>
 
 </html>
