@@ -17,5 +17,5 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd ~/web/new_custom_site
+            cd ~/web/tcdardagny
             git pull origin main
