@@ -180,7 +180,7 @@
                                 <p class="subtitle">Saison 2026 &ndash; 2027</p>
                                 <ul class="list">
                                     <li>Pour les enfants et les jeunes d&egrave;s 4 ans</li>
-                                    <li>Lundi, mercredi et vendredi apr&egrave;s-midi, durant les saisons d'automne et de printemps</li>
+                                    <li>Lundi, mercredi et jeudi apr&egrave;s-midi, durant les saisons d'automne et de printemps</li>
                                     <li>Mercredi matin, tout au long de l'ann&eacute;e</li>
                                 </ul>
                                 <p class="note">Inscription jusqu'au 18 ao&ucirc;t</p>
@@ -193,7 +193,7 @@
                                     <p>Inscription</p>
                                 </a>
                                 <a class="button1 btn-bg-orange link"
-                                    href="/pdf/Conditions%20g%C3%A9n%C3%A9rales%20cours%20juniors%20Saison%202026-2027.pdf"
+                                    href="/pdf/Conditions_générales_cours_juniors_Saison_2026-2027.pdf"
                                     target="_blank" rel="noopener">
                                     <p>Conditions générales</p>
                                 </a>
