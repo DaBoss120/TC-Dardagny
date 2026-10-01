@@ -32,11 +32,14 @@ function nav_active($path) {
                     <a href="#">LE CLUB <i class="fa fa-caret-down"></i></a>
                     <div class="subnav-content">
                         <a href="/comite"<?php echo nav_active('/comite'); ?>>COMITE</a>
-                        <a href="/cours-de-tennis"<?php echo nav_active('/cours-de-tennis'); ?>>COURS DE TENNIS</a>
+                        <!-- <a href="/cours-de-tennis"<?php echo nav_active('/cours-de-tennis'); ?>>COURS DE TENNIS</a> -->
                         <a href="/adhesion"<?php echo nav_active('/adhesion'); ?>>ADHESION</a>
                         <a href="/paiement"<?php echo nav_active('/paiement'); ?>>PAIEMENT</a>
                         <a href="/reglement-et-statuts"<?php echo nav_active('/reglement-et-statuts'); ?>>REGLEMENT ET STATUTS</a>
                     </div>
+                </li>
+                <li>
+                        <a href="/cours-de-tennis"<?php echo nav_active('/cours-de-tennis'); ?>>COURS ET CAMPS</a>
                 </li>
                 <!-- <li>
                     <a href="/agenda"<?php echo nav_active('/agenda'); ?>>AGENDA</a>

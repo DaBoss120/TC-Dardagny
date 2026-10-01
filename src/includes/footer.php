@@ -16,7 +16,7 @@
                 <h2>Le club</h2>
                 <ul>
                     <li><a href="/comite">Comit&eacute;</a></li>
-                    <li><a href="/cours-de-tennis">Cours de tennis</a></li>
+                    <li><a href="/cours-de-tennis">Cours et camps</a></li>
                     <li><a href="/adhesion">Adh&eacute;sion</a></li>
                     <li><a href="/paiement">Paiement</a></li>
                     <li><a href="/reglement-et-statuts">R&egrave;glement et statuts</a></li>

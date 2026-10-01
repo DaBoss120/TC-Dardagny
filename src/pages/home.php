@@ -330,7 +330,7 @@
                                 <p>
                                     Rejoignez-nous pour un tennis qui fait du bien ! </p>
                                 <p>
-                                    Prochain « Tennis Apéro » au mois de septembre.
+                                    Prochain « Tennis Apéro » au mois d'octobre.
                                 </p>
                                 <p><b>Date suivra prochainement!</b></p>
                                 <!-- <button class="button1 medium expand">

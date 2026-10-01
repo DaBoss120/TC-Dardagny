@@ -1260,6 +1260,9 @@ div.unBlur {
         /* animation-delay: 0.6s; */
         transition-delay: 0.6s
     }
+    .bottom_header nav.show ul li:nth-of-type(6) a {
+        transition-delay: 0.7s
+    }
 
     .bottom_header nav.closing ul li a {
         /* animation: linkAnimationOut 0.4s ease forwards; */
@@ -1337,9 +1340,10 @@ div.unBlur {
     }
 
     .bottom_header .LeClub.subnav-open .subnav-content {
-        /* Check height with auto and then set exact number for best result and animation */
-        height: 236.67px;
-        /* Adjust if you have more items */
+        /* --subnav-height is measured from scrollHeight in script.js on toggle */
+        /* Fallback must be 0px, not auto: on the first open the variable isn't set yet when
+           script.js forces a style recalc by reading scrollHeight, and auto can't be animated from */
+        height: var(--subnav-height, 0px);
     }
 
     .bottom_header .subnav-content a {

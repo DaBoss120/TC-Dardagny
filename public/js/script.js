@@ -97,6 +97,13 @@ function initNavigation() {
         if (window.innerWidth <= 768) {
             event.preventDefault(); // Prevent link from navigating
             event.currentTarget.parentElement.classList.toggle('subnav-open');
+            // Measure the open height (after the toggle, so the links' open padding is applied)
+            // and hand it to CSS so the height transition has a real px target instead of auto.
+            // Only on open: measuring after closing would store the collapsed (padding 0) height.
+            const subnav = event.currentTarget.parentElement.querySelector('.subnav-content');
+            if (event.currentTarget.parentElement.classList.contains('subnav-open')) {
+                subnav.style.setProperty('--subnav-height', subnav.scrollHeight + 'px');
+            }
             if (document.querySelector('.subnav-open')) {
                 document.querySelector('.subnav-content').style.overflow = 'hidden';
             }
