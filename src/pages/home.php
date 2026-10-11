@@ -25,22 +25,22 @@
     <meta name="theme-color" content="#1a3150">
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SportsActivityLocation",
-        "name": "Tennis-Club Dardagny",
-        "url": "https://tcdardagny.ch/",
-        "image": "https://tcdardagny.ch/img/shared/TCD_Logo_Square.png",
-        "email": "info@tcdardagny.ch",
-        "sport": "Tennis",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Rte de la Donzelle 22",
-            "postalCode": "1283",
-            "addressLocality": "Dardagny",
-            "addressCountry": "CH"
+        {
+            "@context": "https://schema.org",
+            "@type": "SportsActivityLocation",
+            "name": "Tennis-Club Dardagny",
+            "url": "https://tcdardagny.ch/",
+            "image": "https://tcdardagny.ch/img/shared/TCD_Logo_Square.png",
+            "email": "info@tcdardagny.ch",
+            "sport": "Tennis",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Rte de la Donzelle 22",
+                "postalCode": "1283",
+                "addressLocality": "Dardagny",
+                "addressCountry": "CH"
+            }
         }
-    }
     </script>
     <script>
         // Decide before the first paint whether the enter animation runs, so the
@@ -169,10 +169,39 @@
 
                 <section class="main-section-primary">
                     <div class="titre reveal-on-scroll">
+                        <h2>&Eacute;v&eacute;nements</h2>
+                    </div>
+                    <div class="big-card-grid">
+                        <article class="big-card reveal-on-scroll">
+                            <img class="illustration" src="/img/home/Feu_d_artifice_4-removebg-preview.png" alt="" loading="lazy" decoding="async">
+                            <div class="body">
+                                <h3>Tennis surprise</h3>
+                                <p class="subtitle">Adultes - Jeunes - Enfants</p>
+                                <ul class="list">
+                                    <li>Dimanche 8 novembre 2026</li>
+                                    <li>9h00 - 12h00</li>
+                                    <li>Pour tous les membres !</li>
+                                    <li>Inscription : indiquer les nom et pr&eacute;nom des participants</li>
+                                </ul>
+                                <p class="note">Inscription jusqu'au 3 novembre</p>
+                                <a class="button1 btn-bg-blue link"
+                                    href="/pdf/Tennis-Surprise-8-novembre-2026.pdf"
+                                    target="_blank" rel="noopener">
+                                    <p>Information</p>
+                                </a>
+                                <a class="button1 btn-bg-orange link"
+                                    href="mailto:info@tcdardagny.ch"
+                                    target="_blank" rel="noopener">
+                                    <p>Inscription</p>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                    <!-- <div class="titre reveal-on-scroll">
                         <h2>Cours collectifs</h2>
                     </div>
 
-                    <div class="big-card-grid">
+                    
                         <article class="big-card reveal-on-scroll">
                             <img class="illustration" src="/img/cours-de-tennis/CoursJuniorsBalleNoBackground.webp" alt="" loading="lazy" decoding="async">
                             <div class="body">
@@ -183,11 +212,11 @@
                                     <li>Lundi, mercredi et jeudi apr&egrave;s-midi, durant les saisons d'automne et de printemps</li>
                                     <li>Mercredi matin, tout au long de l'ann&eacute;e</li>
                                 </ul>
-                                <p class="note">Inscription jusqu'au 18 ao&ucirc;t</p>
-                                <!-- class on the <a> rather than a <button> inside it: a
+                                <p class="note">Inscription jusqu'au 18 ao&ucirc;t</p> -->
+                    <!-- class on the <a> rather than a <button> inside it: a
                              button nested in a link is invalid and breaks
                              keyboard activation. -->
-                                <a class="button1 btn-bg-blue link"
+                    <!-- <a class="button1 btn-bg-blue link"
                                     href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAFicWHwkNpUMjUzMlRYTkZYNTRTWk5LNEQ5T0RTVFBPQy4u"
                                     target="_blank" rel="noopener">
                                     <p>Inscription</p>
@@ -225,7 +254,7 @@
                             </div>
                         </article>
 
-                    </div>
+                    -->
                 </section>
 
                 <!-- Permanent club info, carried over from the agenda page: these
@@ -341,7 +370,7 @@
                                 </a> -->
                             </div>
                         </article>
-                        
+
                     </div>
                 </section>
             </div>
